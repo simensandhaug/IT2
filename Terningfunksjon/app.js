@@ -95,7 +95,7 @@ function calculatePercent(){
     for(let i = 0; i<percent3; i++){
         star3+="*"
     }
-    for(let i = 0; i<(percent4; i++){
+    for(let i = 0; i<percent4; i++){
         star4+="*"
     }
     for(let i = 0; i<percent5; i++){
