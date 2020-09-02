@@ -78,67 +78,67 @@ function calculatePercent(){
     var star11 = "";
     var star12 = "";
 
-    var percent2 = amount2/runs * 100;
-    var percent3 = amount3/runs * 100;
-    var percent4 = amount4/runs * 100;
-    var percent5 = amount5/runs * 100;
-    var percent6 = amount6/runs * 100;
-    var percent7 = amount7/runs * 100;
-    var percent8 = amount8/runs * 100;
-    var percent9 = amount9/runs * 100;
-    var percent10 = amount10/runs * 100;
-    var percent11 = amount11/runs * 100;
-    var percent12 = amount12/runs  * 100;
+    var percent2 = Math.round(amount2/runs * 100);
+    var percent3 = Math.round(amount3/runs * 100);
+    var percent4 = Math.round(amount4/runs * 100);
+    var percent5 = Math.round(amount5/runs * 100);
+    var percent6 = Math.round(amount6/runs * 100);
+    var percent7 = Math.round(amount7/runs * 100);
+    var percent8 = Math.round(amount8/runs * 100);
+    var percent9 = Math.round(amount9/runs * 100);
+    var percent10 = Math.round(amount10/runs * 100);
+    var percent11 = Math.round(amount11/runs * 100);
+    var percent12 = Math.round(amount12/runs  * 100);
     for(let i = 0; i<Math.round(percent2); i++){
         star2+="*"
     }
-    for(let i = 0; i<Math.round(percent3); i++){
+    for(let i = 0; i<percent3; i++){
         star3+="*"
     }
-    for(let i = 0; i<Math.round(percent4); i++){
+    for(let i = 0; i<(percent4; i++){
         star4+="*"
     }
-    for(let i = 0; i<Math.round(percent5); i++){
+    for(let i = 0; i<percent5; i++){
         star5+="*"
     }
-    for(let i = 0; i<Math.round(percent6); i++){
+    for(let i = 0; i<percent6; i++){
         star6+="*"
     }
-    for(let i = 0; i<Math.round(percent7); i++){
+    for(let i = 0; i<percent7; i++){
         star7+="*"
     }
-    for(let i = 0; i<Math.round(percent8); i++){
+    for(let i = 0; i<percent8; i++){
         star8+="*"
     }
-    for(let i = 0; i<Math.round(percent9); i++){
+    for(let i = 0; i<percent9; i++){
         star9+="*"
     }
-    for(let i = 0; i<Math.round(percent10); i++){
+    for(let i = 0; i<percent10; i++){
         star10+="*"
     }
-    for(let i = 0; i<Math.round(percent11); i++){
+    for(let i = 0; i<percent11; i++){
         star11+="*"
     }
-    for(let i = 0; i<Math.round(percent12); i++){
+    for(let i = 0; i<percent12; i++){
         star12+="*"
     }
 
-    console.log("2:  " +star2 + "  " + Math.round(percent2) + "%");
-    console.log("3:  " +star3 + "  " + Math.round(percent3) + "%");
-    console.log("4:  " +star4 + "  " + Math.round(percent4) + "%");
-    console.log("5:  " +star5 + "  " + Math.round(percent5) + "%");
-    console.log("6:  " +star6 + "  " + Math.round(percent6) + "%");
-    console.log("7:  " +star7 + "  " + Math.round(percent7) + "%");
-    console.log("8:  " +star8 + "  " + Math.round(percent8) + "%");
-    console.log("9:  " +star9 + "  " + Math.round(percent9) + "%");
-    console.log("10: " +star10 + "  " + Math.round(percent10) + "%");
-    console.log("11: " +star11 + "  " + Math.round(percent11) + "%");
-    console.log("12: " +star12 + "  " + Math.round(percent12) + "%");
+    console.log("2:  " +star2 + "  " + percent2 + "%");
+    console.log("3:  " +star3 + "  " + percent3 + "%");
+    console.log("4:  " +star4 + "  " + percent4 + "%");
+    console.log("5:  " +star5 + "  " + percent5 + "%");
+    console.log("6:  " +star6 + "  " + percent6 + "%");
+    console.log("7:  " +star7 + "  " + percent7 + "%");
+    console.log("8:  " +star8 + "  " + percent8 + "%");
+    console.log("9:  " +star9 + "  " + percent9 + "%");
+    console.log("10: " +star10 + "  " + percent10 + "%");
+    console.log("11: " +star11 + "  " + percent11 + "%");
+    console.log("12: " +star12 + "  " + percent12 + "%");
     
-    var TotalPercent = Math.round(percent2) + Math.round(percent3) + 
-    Math.round(percent4) + Math.round(percent5) + Math.round(percent6) + 
-    Math.round(percent7) + Math.round(percent8) + Math.round(percent9) + 
-    Math.round(percent10) + Math.round(percent11) + Math.round(percent12) -1; 
+    var TotalPercent = percent2 + percent3 + 
+    percent4 + percent5 + percent6 + 
+    percent7 + percent8 + percent9 + 
+    percent10 + percent11 + percent12 -1; 
 
     console.log("Total percent accounted for: " + TotalPercent + "%");
 }
