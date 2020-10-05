@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprettball</title>
+    <style>
+        body {
+            align-items: center;
+        }
+
+        #myCanvas {
+            margin: auto;
+            background-color: black;
+            position: absolute;
+            z-index: 1;
+            border: 1px solid black;
+        }
+
+        #endScreen {
+            text-align: center;
+            margin: auto;
+            position: absolute;
+            background-color: gray;
+            opacity: 0.75;
+            z-index: 2;
+            height: 0;
+            width: 0;
+        }
+
+        #gameOver {
+            color: white;
+            font-size: 40px;
+            text-shadow: -1px 1px 2px #000,
+                1px 1px 2px #000,
+                1px -1px 0 #000,
+                -1px -1px 0 #000;
+        }
+
+        #endingScore {
+            color: white;
+            font-size: 20px;
+            text-shadow: -1px 1px 2px #000,
+                1px 1px 2px #000,
+                1px -1px 0 #000,
+                -1px -1px 0 #000;
+        }
+
+        #restart {
+            color: white;
+            font-size: 15px;
+            text-shadow: -1px 1px 2px #000,
+                1px 1px 2px #000,
+                1px -1px 0 #000,
+                -1px -1px 0 #000;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="endScreen">
+        <h1 id="gameOver"></h1>
+        <p id="endingScore"></p>
+        <p id="restart"></p>
+    </div>
+    <script src="script.js"></script>
+    <h1 id="count">Bounces: 0</h1>
+    <canvas id="myCanvas" width="500" height="500">
+    </canvas>
+</body>
+
+</html>
