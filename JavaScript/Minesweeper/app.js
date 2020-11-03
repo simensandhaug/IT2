@@ -11,6 +11,7 @@ let mineCount;
 let time;
 let board;
 let timer;
+let mouseDown;
 
 //Images
 const imgs = []

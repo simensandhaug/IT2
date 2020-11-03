@@ -19,7 +19,8 @@ function setup() {
     getCellValues();
     draw();
 
-    document.addEventListener("click", click);
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mouseup", click);
     document.addEventListener("contextmenu", flag);
     document.addEventListener("dblclick", expand);
     document.addEventListener("auxclick", expand);
@@ -95,7 +96,7 @@ function getNeigbourMines(x, y) {
         for (let x2 = -1; x2 < 2; x2++) {
             if (y2 == 0 && x2 == 0) continue
             if (board[x + x2] && board[x + x2][y + y2]) {
-                if(board[x + x2][y + y2].isMine) amount++;
+                if (board[x + x2][y + y2].isMine) amount++;
             }
         }
     }
@@ -167,7 +168,8 @@ function getRandomNum(num) {
 }
 
 function gameOver(x, y) {
-    document.removeEventListener('click', click);
+    document.removeEventListener("mousedown", handleMouseDown);
+    document.removeEventListener('mouseup', click);
     document.removeEventListener('contextmenu', flag);
     document.removeEventListener("dblclick", expand);
     document.removeEventListener("auxclick", expand);
@@ -183,7 +185,8 @@ function gameOver(x, y) {
 }
 
 function gameWin() {
-    document.removeEventListener('click', click);
+    document.removeEventListener("mousedown", handleMouseDown);
+    document.removeEventListener('mouseup', click);
     document.removeEventListener('contextmenu', flag);
     document.removeEventListener("dblclick", expand);
     document.removeEventListener("auxclick", expand);
@@ -231,14 +234,59 @@ function flag(evt) {
 }
 
 function click(evt) {
-    let mousePos = getMousePos(canvas, evt);
+    document.removeEventListener("mousemove", updateMousePos);
+    if (evt.which == 1) {
+        mouseDown = false;
+        let mousePos = getMousePos(canvas, evt);
+        let targetCell = {
+            x: Math.floor(mousePos.x / scale),
+            y: Math.floor(mousePos.y / scale),
+        }
+        if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
+            openCell(targetCell.x, targetCell.y);
+        }
+        draw();
+        if (checkWin()) gameWin();
+    } else if (evt.which == 2) {
+        expand(evt);
+    }
+}
+
+function handleMouseDown(e) {
+    document.addEventListener("mousemove", updateMousePos);
+    mouseDown = true;
+    let mousePos = getMousePos(canvas, e);
     let targetCell = {
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
     }
-    if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
-        openCell(targetCell.x, targetCell.y);
+    if (e.which == 1) {
+        if (board[targetCell.x] && board[targetCell.x][targetCell.y]) {
+            if (!board[targetCell.x][targetCell.y].isClicked && !board[targetCell.x][targetCell.y].isFlagged) {
+                ctx.drawImage(imgs[0], targetCell.x * scale, targetCell.y * scale, scale, scale);
+            }
+        }
+    } else if (e.which == 2) {
+        if (board[targetCell.x] && board[targetCell.x][targetCell.y]) {
+            if (board[targetCell.x][targetCell.y].isClicked) {
+                for (let y2 = -1; y2 < 2; y2++) {
+                    for (let x2 = -1; x2 < 2; x2++) {
+                        if (y2 == 0 && x2 == 0) continue
+                        if (board[targetCell.x + x2] && board[targetCell.x + x2][targetCell.y + y2]) {
+                            if (!board[targetCell.x + x2][targetCell.y + y2].isClicked && !board[targetCell.x + x2][targetCell.y + y2].isFlagged) {
+                                ctx.drawImage(imgs[0], (targetCell.x + x2) * scale, (targetCell.y + y2) * scale, scale, scale);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-    draw();
-    if (checkWin()) gameWin();
+}
+
+function updateMousePos(e) {
+    if (mouseDown) {
+        draw();
+        handleMouseDown(e);
+    }
 }
