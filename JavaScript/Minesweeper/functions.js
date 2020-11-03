@@ -1,24 +1,25 @@
-function setup() {
-    clearInterval(timer);
-    buttonEl.src = "images/Smile.png";
-    winScreenEl.style.visibility = 'hidden';
-    board = Array.from(Array(canvas.width / scale), () => new Array(canvas.height / scale));
-    mines = 99;
-    mineCount = mines;
-    time = 0;
-    mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
-    timerEl.innerHTML = String(time).padStart(3, '0');
+function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier osv
+    clearInterval(timer); //Resetter timer
+    buttonEl.src = "images/Smile.png"; //Smilefjesbilde på knappen
+    winScreenEl.style.visibility = 'hidden'; //Winscreenen er invsible
+    board = Array.from(Array(canvas.width / scale), () => new Array(canvas.height / scale)); //Lager et 2d array
+    mines = 99; //Self explanatory
+    mineCount = mines; //Variabel brukt for å vise antall miner igjen i mineDisplay;
+    time = 0; ////Variabel brukt for å vise tiden i timeDisplay;
+    mineCountEl.innerHTML = String(mineCount).padStart(3, '0'); //Viser mineCount med 3 siffer eks 007
+    timerEl.innerHTML = String(time).padStart(3, '0'); //Viser time med 3 siffer eks 007
 
-    timer = setInterval(function () {
+    timer = setInterval(function () { //Timer
         time++;
-        timerEl.innerHTML = String(time).padStart(3, '0');
-    }, 1000)
+        timerEl.innerHTML = String(time).padStart(3, '0'); //Oppdaterer timecount
+    }, 1000) //Kjører hvert 1000 ms
 
-    makeBoard();
-    placeMines();
-    getCellValues();
-    draw();
+    makeBoard(); //Lager cellene i boardet
+    placeMines(); //Plasserer miner
+    getCellValues(); //Får celleverdier
+    draw(); //Tegner board
 
+    //Deklarerer eventlisteners
     document.addEventListener("mousedown", handleMouseDown);
     document.addEventListener("mouseup", click);
     document.addEventListener("contextmenu", flag);
@@ -26,7 +27,7 @@ function setup() {
     document.addEventListener("auxclick", expand);
 }
 
-function Cell(x, y, w, h, isMine, isFlagged, isClicked) {
+function Cell(x, y, w, h, isMine, isFlagged, isClicked) { //Constructor funksjon (ganske lik class) som blir brukt under dannelsen av boardet
     this.x = x;
     this.y = y;
     this.w = w;
@@ -39,7 +40,7 @@ function Cell(x, y, w, h, isMine, isFlagged, isClicked) {
     else this.value = 0;
 }
 
-function makeBoard() {
+function makeBoard() { //Fyller board med celler
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             board[i][j] = new Cell(i * scale, j * scale, scale, scale, false, false, false);
@@ -47,7 +48,7 @@ function makeBoard() {
     }
 }
 
-function placeMines() {
+function placeMines() { //Velger random x og y verdier i tabellen og gjør de til miner
     for (let k = 0; k < mines; k++) {
         let x = getRandomNum(canvas.width / scale);
         let y = getRandomNum(canvas.height / scale);
@@ -57,32 +58,30 @@ function placeMines() {
     }
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = 'black';
-    ctx.fillStyle = 'white';
+function draw() { //Tegner boardet
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //Klargjør for tegning
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
-            if (board[i][j].isClicked && board[i][j].isMine) {
-                if (board[i][j].deathMine) {
+            if (board[i][j].isClicked && board[i][j].isMine) { //Tegner miner
+                if (board[i][j].deathMine) { //Hvis det er minen man døde på gir den rød bakgrunn
                     ctx.fillStyle = 'red';
                     ctx.fillRect(i * scale, j * scale, scale, scale);
-                } else {
+                } else { //Hvis ikke gir den grå bakgrunn
                     ctx.drawImage(imgs[0], i * scale, j * scale, scale, scale);
                 }
-                ctx.drawImage(imgMine, i * scale, j * scale, scale, scale);
-            } else if (board[i][j].isFlagged) {
+                ctx.drawImage(imgMine, i * scale, j * scale, scale, scale); //Tegner et png bildet av en mine oppå bakgrunnen ^^ 
+            } else if (board[i][j].isFlagged) { //Tegner flagg
                 ctx.drawImage(imgFlag, i * scale, j * scale, scale, scale);
-            } else if (board[i][j].isClicked) {
+            } else if (board[i][j].isClicked) { //Hvis den er trykket på, tegner hvor mange miner er rundt
                 ctx.drawImage(imgs[board[i][j].value], i * scale, j * scale, scale, scale);
-            } else {
+            } else { //Ellers er den ikke åpnet dermed tegn en celle
                 ctx.drawImage(imgOpen, i * scale, j * scale, scale, scale);
             }
         }
     }
 }
 
-function getCellValue(cell) {
+function getCellValue(cell) { //Gir en celle(x, y) en value avhenging av hvor mange miner som er rundt
     let x = cell.x / scale;
     let y = cell.y / scale;
     let value = getNeigbourMines(x, y);
@@ -90,7 +89,7 @@ function getCellValue(cell) {
     draw();
 }
 
-function getNeigbourMines(x, y) {
+function getNeigbourMines(x, y) { //Returnerer hvor mange miner som er rundt en celle med x, y
     let amount = 0;
     for (let y2 = -1; y2 < 2; y2++) {
         for (let x2 = -1; x2 < 2; x2++) {
@@ -103,7 +102,7 @@ function getNeigbourMines(x, y) {
     return amount;
 }
 
-function getCellValues() {
+function getCellValues() { //Finner verdier for alle cellene i boardet
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             getCellValue(board[i][j]);
@@ -111,36 +110,39 @@ function getCellValues() {
     }
 }
 
-function openCell(x, y) {
-    if (board[x] && board[x][y]) {
-        if (board[x][y].isFlagged) return;
-        else if (board[x][y].isMine) gameOver(x, y);
-        else if (board[x][y].value == 0) {
-            if (!board[x][y].isClicked) {
-                board[x][y].isClicked = true;
+function openCell(x, y) { //Åpner en celle
+    if (board[x] && board[x][y]) { //Hvis den finnes
+        if (board[x][y].isFlagged) return; //Hvis det er et flagg skal man ikke gjøre noe
+        else if (board[x][y].isMine) gameOver(x, y); //Hvis det er en mine er spillet over x, y korresponderer til minen man trykker på når man taper aka den som vil få rød bakgrunn
+        else if (board[x][y].value == 0) { //Hvis den ikke har verdi (Åpen)
+            if (!board[x][y].isClicked) { //Hvis den ikke er åpnet
+                board[x][y].isClicked = true; //Åpner cella
+                //Åpner alle cellene rundt
                 for (let y2 = -1; y2 < 2; y2++) {
                     for (let x2 = -1; x2 < 2; x2++) {
-                        if (y2 == 0 && x2 == 0) continue
-                        openCell(x + x2, y + y2);
+                        if (y2 == 0 && x2 == 0) continue //Hvis det er den opprinnelige cella skip til neste
+                        openCell(x + x2, y + y2); //Rekursiv hell yeah
                     }
                 }
             }
-        } else if (!board[x][y].isClicked) {
-            board[x][y].isClicked = true;
-        } else return;
+        } else if (!board[x][y].isClicked) { //Hvis ingen andre ting er sant og den ikke er åpen
+            board[x][y].isClicked = true; //Åpne den
+        } else return; //Ellers gjør ingenting
     }
-    draw();
+    draw(); //Tegn boardet
 }
 
-function expand(evt) {
+function expand(evt) { //Kjører når man trykker på musehjulet og sjekker om flaggene rundt er lik verdien til cella og åpner alle åpne celler rundt
     let mousePos = getMousePos(canvas, evt);
-    let targetCell = {
+    let targetCell = { //Cella man trykker på
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
-    }
-    if (board[targetCell.x] && board[targetCell.x][targetCell.y]) {
-        if (board[targetCell.x][targetCell.y].isClicked) {
-            let value = board[targetCell.x][targetCell.y].value;
+    } 
+    if (board[targetCell.x] && board[targetCell.x][targetCell.y]) { //Hvis den finnes
+        if (board[targetCell.x][targetCell.y].isClicked) { //Hvis den er åpnet
+            let value = board[targetCell.x][targetCell.y].value; //Finner hvor mange miner som må være rundt
+
+            //Looper for å finne alle flaggene rundt og inkrementerer amountOfFlags
             let amountOfFlags = 0;
             for (let y2 = -1; y2 < 2; y2++) {
                 for (let x2 = -1; x2 < 2; x2++) {
@@ -149,6 +151,7 @@ function expand(evt) {
                     }
                 }
             }
+            //Hvis antall flagg rundt er lik verdier, åpne alle cellene rundt
             if (amountOfFlags === value) {
                 for (let y2 = -1; y2 < 2; y2++) {
                     for (let x2 = -1; x2 < 2; x2++) {
@@ -159,44 +162,46 @@ function expand(evt) {
             }
         }
     }
-    draw();
-    if (checkWin()) gameWin();
+    draw(); //Tegn boardet
+    if (checkWin()) gameWin(); //Sjekk om man har vunnet
 }
 
-function getRandomNum(num) {
-    return Math.floor(Math.random() * num);
+function getRandomNum(n) { //Random nummer mellom 0 og n
+    return Math.floor(Math.random() * n);
 }
 
-function gameOver(x, y) {
+function gameOver(x, y) { //Når man trykker på en mine
+    //Fjern alle eventlisteners slik at man ikke kan trykke på boardet noe mer
     document.removeEventListener("mousedown", handleMouseDown);
     document.removeEventListener('mouseup', click);
     document.removeEventListener('contextmenu', flag);
     document.removeEventListener("dblclick", expand);
     document.removeEventListener("auxclick", expand);
-    buttonEl.src = "images/Dead.png";
-    for (let i = 0; i < board.length; i++) {
+    buttonEl.src = "images/Dead.png"; //Smiley er død
+    for (let i = 0; i < board.length; i++) { //Viser hvor alle minene er
         for (let j = 0; j < board[i].length; j++) {
             if (board[i][j].isMine) board[i][j].isClicked = true;
         }
     }
-    board[x][y].deathMine = true;
-    draw();
-    clearInterval(timer);
+    board[x][y].deathMine = true; //Deathmina blir satt og får rød bakgrunn når man kjører draw()
+    draw(); //Tegner boardet
+    clearInterval(timer); //Stopper timer
 }
 
 function gameWin() {
+    //Fjerner alle eventlisteners
     document.removeEventListener("mousedown", handleMouseDown);
     document.removeEventListener('mouseup', click);
     document.removeEventListener('contextmenu', flag);
     document.removeEventListener("dblclick", expand);
     document.removeEventListener("auxclick", expand);
     buttonEl.src = "images/Cool.png";
-    clearInterval(timer);
-    winScreenEl.style.visibility = 'visible';
-    winScreenTimeEl.innerHTML = 'You Won! \<br>\ Time: ' + time;
+    clearInterval(timer); //Stopper timer
+    winScreenEl.style.visibility = 'visible'; //Endscreen er synlig
+    winScreenTimeEl.innerHTML = 'You Won! \<br>\ Time: ' + time; //Viser at man vant og hva tiden var
 }
 
-function getMousePos(canvas, evt) {
+function getMousePos(canvas, evt) { //Finner hvor musa er og sender x og y verdiene tilbake
     let rect = canvas.getBoundingClientRect(), // abs. size of element
         scaleX = canvas.width / rect.width, // relationship bitmap vs. element for X
         scaleY = canvas.height / rect.height; // relationship bitmap vs. element for Y
@@ -207,12 +212,12 @@ function getMousePos(canvas, evt) {
     }
 }
 
-function checkWin() {
+function checkWin() { //Returnerer true når alle celler er flagged ELLER åpnet
     return board.every(row => row.every(cell => cell.isClicked || cell.isFlagged));
 }
 
-function flag(evt) {
-    evt.preventDefault();
+function flag(evt) { //Flagger en celle
+    evt.preventDefault(); //Gjør at man ikke får opp rullegardin når man trykker på høyreklikk i browser
     let mousePos = getMousePos(canvas, evt);
     let targetCell = {
         x: Math.floor(mousePos.x / scale),
