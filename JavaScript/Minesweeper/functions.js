@@ -27,11 +27,9 @@ function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier 
     document.addEventListener("auxclick", expand);
 }
 
-function Cell(x, y, w, h, isMine, isFlagged, isClicked) { //Constructor funksjon (ganske lik class) som blir brukt under dannelsen av boardet
+function Cell(x, y, isMine, isFlagged, isClicked) { //Constructor funksjon (ganske lik class) som blir brukt under dannelsen av boardet
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
     this.isMine = isMine;
     this.isClicked = isClicked;
     this.isFlagged = isFlagged;
@@ -43,7 +41,7 @@ function Cell(x, y, w, h, isMine, isFlagged, isClicked) { //Constructor funksjon
 function makeBoard() { //Fyller board med celler
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
-            board[i][j] = new Cell(i * scale, j * scale, scale, scale, false, false, false);
+            board[i][j] = new Cell(i * scale, j * scale, false, false, false);
         }
     }
 }
