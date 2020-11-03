@@ -17,7 +17,6 @@ const imgs = []
 for(let i = 0; i < 9; i++){
     imgs[i] = document.getElementById(String(i))
 }
-
 const imgOpen = document.getElementById("open");
 const imgMine = document.getElementById("mine");
 const imgFlag = document.getElementById("flag");

@@ -131,7 +131,15 @@ function openCell(x, y) {
     if (board[x][y].isFlagged) return;
     else if (board[x][y].isMine) gameOver(x, y);
     else if (board[x][y].value == 0) {
-        if (!board[x][y].isClicked) findZeros(x, y);
+        if (!board[x][y].isClicked) {
+            board[x][y].isClicked = true;
+            for(let y2 = -1; y2<2; y2++){
+                for(let x2 = -1; x2<2; x2++){
+                    if(y2==0 && x2==0) continue
+                    openCell(x+x2, y+y2);
+                }
+            }
+        }
     } else if (!board[x][y].isClicked) {
         board[x][y].isClicked = true;
     } else return;
@@ -171,56 +179,6 @@ function getMousePos(canvas, evt) {
           x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
           y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
         }
-}
-
-function findZeros(x, y) {
-    if (board[x][y] === undefined) return;
-    else if (board[x][y].value == 0) {
-        board[x][y].isClicked = true;
-
-        if (x - 1 >= 0 && y - 1 >= 0) {
-            if (!board[x - 1][y - 1].isClicked && !board[x - 1][y - 1].isMine && !board[x - 1][y - 1].isFlagged) {
-                openCell(x - 1, y - 1);
-            }
-        }
-        if (x - 1 >= 0 && y >= 0 && y <= 24) {
-            if (!board[x - 1][y].isClicked && !board[x - 1][y].isMine && !board[x - 1][y].isFlagged) {
-                openCell(x - 1, y);
-            }
-        }
-        if (x - 1 >= 0 && y + 1 <= 24) {
-            if (!board[x - 1][y + 1].isClicked && !board[x - 1][y + 1].isMine && !board[x - 1][y + 1].isFlagged) {
-                openCell(x - 1, y + 1);
-            }
-        }
-        if (y - 1 >= 0 && x >= 0 && x <= 24) {
-            if (!board[x][y - 1].isClicked && !board[x][y - 1].isMine && !board[x][y - 1].isFlagged) {
-                openCell(x, y - 1);
-            }
-        }
-        if (y + 1 <= 24 && x >= 0 && x <= 24) {
-            if (!board[x][y + 1].isClicked && !board[x][y + 1].isMine && !board[x][y + 1].isFlagged) {
-                openCell(x, y + 1);
-            }
-        }
-        if (x + 1 <= 24 && y - 1 >= 0) {
-            if (!board[x + 1][y - 1].isClicked && !board[x + 1][y - 1].isMine && !board[x + 1][y - 1].isFlagged) {
-                openCell(x + 1, y - 1);
-            }
-        }
-        if (x + 1 <= 24 && y >= 0 && y <= 24) {
-            if (!board[x + 1][y].isClicked && !board[x + 1][y].isMine && !board[x + 1][y].isFlagged) {
-                openCell(x + 1, y);
-            }
-        }
-        if (x + 1 <= 24 && y + 1 <= 24) {
-            if (!board[x + 1][y + 1].isClicked && !board[x + 1][y + 1].isMine && !board[x + 1][y + 1].isFlagged) {
-                openCell(x + 1, y + 1);
-            }
-        }
-    } else {
-        return;
-    }
 }
 
 function checkWin() {
