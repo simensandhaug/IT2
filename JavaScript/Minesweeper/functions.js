@@ -1,4 +1,5 @@
 function setup() {
+    clearInterval(timer);
     buttonEl.src = "images/Smile.png";
     winScreenEl.style.visibility = 'hidden';
     board = Array.from(Array(canvas.width / scale), () => new Array(canvas.height / scale));
@@ -70,7 +71,7 @@ function draw() {
             } else if (board[i][j].isFlagged) {
                 ctx.drawImage(imgFlag, i * scale, j * scale, scale, scale);
             } else if (board[i][j].isClicked) {
-                ctx.drawImage(imgs[board[i][j].value], i*scale, j*scale, scale, scale);
+                ctx.drawImage(imgs[board[i][j].value], i * scale, j * scale, scale, scale);
             } else {
                 ctx.drawImage(imgOpen, i * scale, j * scale, scale, scale);
             }
@@ -128,21 +129,23 @@ function getCellValues() {
 }
 
 function openCell(x, y) {
-    if (board[x][y].isFlagged) return;
-    else if (board[x][y].isMine) gameOver(x, y);
-    else if (board[x][y].value == 0) {
-        if (!board[x][y].isClicked) {
-            board[x][y].isClicked = true;
-            for(let y2 = -1; y2<2; y2++){
-                for(let x2 = -1; x2<2; x2++){
-                    if(y2==0 && x2==0) continue
-                    openCell(x+x2, y+y2);
+    if (board[x] && board[x][y]) {
+        if (board[x][y].isFlagged) return;
+        else if (board[x][y].isMine) gameOver(x, y);
+        else if (board[x][y].value == 0) {
+            if (!board[x][y].isClicked) {
+                board[x][y].isClicked = true;
+                for (let y2 = -1; y2 < 2; y2++) {
+                    for (let x2 = -1; x2 < 2; x2++) {
+                        if (y2 == 0 && x2 == 0) continue
+                        openCell(x + x2, y + y2);
+                    }
                 }
             }
-        }
-    } else if (!board[x][y].isClicked) {
-        board[x][y].isClicked = true;
-    } else return;
+        } else if (!board[x][y].isClicked) {
+            board[x][y].isClicked = true;
+        } else return;
+    }
 }
 
 function getRandomNum(num) {
@@ -171,14 +174,14 @@ function gameWin() {
 }
 
 function getMousePos(canvas, evt) {
-        let rect = canvas.getBoundingClientRect(), // abs. size of element
-            scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
-            scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
-      
-        return {
-          x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
-          y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
-        }
+    let rect = canvas.getBoundingClientRect(), // abs. size of element
+        scaleX = canvas.width / rect.width, // relationship bitmap vs. element for X
+        scaleY = canvas.height / rect.height; // relationship bitmap vs. element for Y
+
+    return {
+        x: (evt.clientX - rect.left) * scaleX, // scale mouse coordinates after they have
+        y: (evt.clientY - rect.top) * scaleY // been adjusted to be relative to element
+    }
 }
 
 function checkWin() {
@@ -192,16 +195,18 @@ function flag(evt) {
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
     }
-    if (!board[targetCell.x][targetCell.y].isFlagged && !board[targetCell.x][targetCell.y].isClicked) {
-        board[targetCell.x][targetCell.y].isFlagged = true;
-        mineCount--;
-        mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
-    } else if (board[targetCell.x][targetCell.y].isFlagged) {
-        board[targetCell.x][targetCell.y].isFlagged = false;
-        mineCount++;
-        mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
+    if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
+        if (!board[targetCell.x][targetCell.y].isFlagged && !board[targetCell.x][targetCell.y].isClicked) {
+            board[targetCell.x][targetCell.y].isFlagged = true;
+            mineCount--;
+            mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
+        } else if (board[targetCell.x][targetCell.y].isFlagged) {
+            board[targetCell.x][targetCell.y].isFlagged = false;
+            mineCount++;
+            mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
+        }
+        draw();
     }
-    draw();
     if (checkWin()) gameWin();
 }
 
@@ -211,7 +216,6 @@ function click(evt) {
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
     }
-    // console.log(targetCell)
     if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
         openCell(targetCell.x, targetCell.y);
         draw();
