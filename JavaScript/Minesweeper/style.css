@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico&display=swap');
+
+body {
+    background-color: #777777;
+    text-align: center;
+    user-select: none;
+    overflow: hidden;
+}
+
+#canvas {
+    margin: auto;
+    border: 8px solid #dadada;
+    border-style: ridge;
+}
+
+img {
+    width: 0;
+}
+
+#header {
+    background-color: #aaa9a9;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+    border: 8px solid #dadada;
+    border-style: ridge;
+}
+
+#button {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-image: url('images/facingDown.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0px 0px 2px 3px #888888;
+    padding: 0;
+}
+
+#mineCount {
+    font-family: 'Quantico', sans-serif;
+    font-size: 20px;
+    color: red;
+    background-color: black;
+    box-shadow: 0px 0px 2px 3px #888888;
+    margin-right: 125px;
+    padding: 0;
+}
+
+#timer {
+    font-family: 'Quantico', sans-serif;
+    font-size: 20px;
+    color: red;
+    background-color: black;
+    box-shadow: 0px 0px 2px 3px #888888;
+    height: 30;
+    margin-left: 125px;
+    padding: 0;
+}
+
+#winScreen {
+    background-color: #777777;
+    opacity: 0.9;
+    width: 501px;
+    height: 501px;
+    position: absolute;
+    left: 50%;
+    margin-left: -251px;
+    margin-top: -514px;
+}
+
+#endTime {
+    opacity: 1;
+    color: black;
+}
+
+#Smiley {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
