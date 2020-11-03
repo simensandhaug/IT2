@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oliver Spinner</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .rotate {
+            animation: rotation 0.75s;
+        }
+
+        @keyframes rotation {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(359deg);
+            }
+        }
+
+        .linear {
+            animation-timing-function: linear;
+        }
+
+        .infinite {
+            animation-iteration-count: infinite;
+        }
+
+        .rotate-image {
+            animation: rotation 0.5s linear infinite;
+        }
+
+        .wrapper {
+            height: 100%;
+            width: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+            background-size: 1800% 1800%;
+
+            -webkit-animation: rainbow 0.5s ease infinite;
+            -z-animation: rainbow 0.5s ease infinite;
+            -o-animation: rainbow 0.5s ease infinite;
+            animation: rainbow 0.5s ease infinite;
+        }
+
+        @-webkit-keyframes rainbow {
+            0% {
+                background-position: 0% 82%
+            }
+
+            50% {
+                background-position: 100% 19%
+            }
+
+            100% {
+                background-position: 0% 82%
+            }
+        }
+
+        @-moz-keyframes rainbow {
+            0% {
+                background-position: 0% 82%
+            }
+
+            50% {
+                background-position: 100% 19%
+            }
+
+            100% {
+                background-position: 0% 82%
+            }
+        }
+
+        @-o-keyframes rainbow {
+            0% {
+                background-position: 0% 82%
+            }
+
+            50% {
+                background-position: 100% 19%
+            }
+
+            100% {
+                background-position: 0% 82%
+            }
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 82%
+            }
+
+            50% {
+                background-position: 100% 19%
+            }
+
+            100% {
+                background-position: 0% 82%
+            }
+        }
+
+        @keyframes rainbowA {
+
+            100%,
+            0% {
+                color: rgb(255, 0, 0);
+                font-size: 1px;
+            }
+
+            8% {
+                color: rgb(255, 127, 0);
+                font-size: 8px;
+            }
+
+            16% {
+                color: rgb(255, 255, 0);
+                font-size: 16px;
+            }
+
+            25% {
+                color: rgb(127, 255, 0);
+                font-size: 25px;
+            }
+
+            33% {
+                color: rgb(0, 255, 0);
+                font-size: 33px;
+            }
+
+            41% {
+                color: rgb(0, 255, 127);
+                font-size: 41px;
+            }
+
+            50% {
+                color: rgb(0, 255, 255);
+                font-size: 50px;
+            }
+
+            58% {
+                color: rgb(0, 127, 255);
+                font-size: 58px;
+            }
+
+            66% {
+                color: rgb(0, 0, 255);
+                font-size: 66px;
+            }
+
+            75% {
+                color: rgb(127, 0, 255);
+                font-size: 75px;
+            }
+
+            83% {
+                color: rgb(255, 0, 255);
+                font-size: 83px;
+            }
+
+            91% {
+                color: rgb(255, 0, 127);
+                font-size: 100px;
+            }
+        }
+
+        .Skrift {
+            position: relative;
+            font-size: 100px;
+            padding: 0;
+            margin: 0;
+            color: #ff2400;
+            animation-name: rainbowA;
+            animation-duration: 0.2s;
+            animation-iteration-count: infinite;
+        }
+        #Oons_Oons {
+            margin: auto;
+            position: relative;
+            transform: rotate(60deg);
+        }
+        #GuttaBois {
+            margin: auto;
+            text-align: right;
+            position: relative;
+            transform: rotate(-60deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class = "Skrift" id="Stemning">Stemning!</h1>
+        <img src="Oliver.png" class="rotate linear infinite" width="450" height="450" />
+        <h1 class = "Skrift" id="Oons_Oons">Oons Oons</h1>
+        <h1 class = "Skrift" id="GuttaBois">GuttaBois</h1>
+    </div>
+</body>
+
+</html>

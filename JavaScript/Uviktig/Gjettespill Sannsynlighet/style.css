@@ -1,0 +1,18 @@
+body{
+    background: rgb(112, 107, 107);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.input{
+    font-family: 'Courier New', Courier, monospace;
+    color:white;
+    background: rgb(182, 180, 180);
+    width: 165px;
+}
+
+.button{
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background: rgb(182, 180, 180);
+
+}

@@ -1,0 +1,93 @@
+body {
+    background-color: rgb(87, 83, 83);
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+}
+
+th {
+    border: 1px solid black;
+}
+
+tr {
+    margin: auto;
+    padding: auto;
+}
+
+.IT2 {
+    background-color: #ffadad;
+    margin: 0;
+}
+
+.time {
+    background-color: #ffd6a5;
+    margin: 0;
+}
+
+.header {
+    background-color: #fdffb6;
+    margin: 0;
+}
+
+.Fysikk {
+    background-color: #caffbf;
+    margin: 0;
+}
+
+.Norsk {
+    background-color: #9bf6ff;
+    margin: 0;
+}
+
+.Kjemi {
+    background-color: #a0c4ff;
+    margin: 0;
+}
+
+.Samfunnsfag {
+    background-color: #bdb2ff;
+    margin: 0;
+}
+
+.Historie {
+    background-color: #ffc6ff;
+    margin: 0;
+}
+
+.Matte {
+    background-color: #ffbe0b;
+    margin: 0;
+}
+
+.Spansk {
+    background-color: #fb5607;
+    margin: 0;
+}
+
+.Leksehjelp {
+    background-color: #ff006e;
+    margin: 0;
+}
+
+.Gym {
+    background-color: #8338ec;
+    margin: 0;
+}
+
+.Ktime {
+    background-color: #3a86ff;
+    margin: 0;
+}
+
+h3 {
+    padding: 0;
+    margin: 0;
+}
+p {
+    margin: 0;
+}

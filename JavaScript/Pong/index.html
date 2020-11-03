@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: darkgray;
+        }
+
+        #canvas {
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+    </style>
+    <audio id="pongLyd" src="pong.mp3"></audio>
+</head>
+
+<body>
+    <canvas id="canvas" height="500" width="500"></canvas>
+    <script src="pong.js"></script>
+    <h1 id="score">Score: 0</h1>
+    <h1 id="gameEnd"></h1>
+    <p id="restart"></p>
+    <h3>Instructions</h3>
+    <p id="Instructions">
+        <div class="instructionsList">
+            <ul>
+                <li>Move to the left and right with the arrow keys</li>
+                <li>Get score every time you hit the ball with the paddle</li>
+                <li>Try to keep the ball off the ground, or else you will lose</li>
+            </ul>
+        </div>
+    </p>
+    <p>
+        <a href="https://no.wikipedia.org/wiki/Pong" target="blank_">Pong Wikipedia</a>
+    </p>
+</body>
+</html>

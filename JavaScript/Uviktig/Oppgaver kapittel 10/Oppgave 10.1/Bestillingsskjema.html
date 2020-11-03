@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgaver kapittel 10</title>
+    <style> 
+    .container {
+        background-color: #7a7a7a;
+        border-radius: 5px;
+        width: 50%;
+        padding: 5px;
+        margin: auto;
+        border: 3px solid black;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 2px;
+        font-family: inherit;
+        color: #666666;
+        border: 1px solid rgba(0,0,0,0,1);
+        border-radius: 4px;
+        padding: 5px;
+        box-shadow: 0 1px 5px rgba(0,0,0,0,7);
+        box-sizing: border-box;
+    }
+    
+    .button {
+        padding: 10px;
+        color: white;
+        text-shadow: 0 -1px 1px #335166;
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 4px;
+        background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+        background-color: #5588AA;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+        outline: none;
+        cursor: pointer;
+    }
+    
+    button:active {
+        transform: translate(1px, 1px);
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <h1>Bestillingsskjema</h1>
+            <label for="navn">Navn:</label><input type="text" name="navn" id="navn" placeholder="Fornavn Etternavn"><br>
+            <label for="tlf">Tlf:</label><input type="text" name="tlf" id="tlf"><br>
+
+            <label for="antallGjester">Antall Gjester:</label>
+            <select name="antallGjester" id="antallGjester">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select><br>
+
+            Frokost (200 kr): <br>
+            <label for="frokostJa">Ja</label>
+            <input type="radio" name="frokost" id="frokostJa" value="Ja" checked>
+            <label for="frokostNei">Nei</label>
+            <input type="radio" name="frokost" id="frokostNei" value="Nei"><br> <br>
+
+            Ekstra Aktiviteter: <br>
+            <input type="checkbox" name="esktraAktiviteter" id="dagspassBo" value="Dagspass Bø"> Dagspass til Bø Sommarland (300 kr)<br>
+            <input type="checkbox" name="esktraAktiviteter" id="dagspassHoyt" value="Dagspass klatrepark"> Dagspass til Høyt og Lavt
+            klatrepark (250 kr) <br>
+            <input type="checkbox" name="esktraAktiviteter" id="omvisning" value="Omvisning"> Omvisning på fruktgår (200 kr) <br>
+            <input type="checkbox" name="esktraAktiviteter" id="dagsturTelemark" value="Dagstur"> Dagstur på Telemarkskanalen (800 kr) <br>
+
+            <br>
+            <input class="button" type="Submit" value="Submit">
+
+            <p id="totalPris"></p>
+        </form>
+    </div>
+</body>
+<script src="pris.js"></script>
+
+</html>

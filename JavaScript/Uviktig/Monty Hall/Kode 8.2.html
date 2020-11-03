@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Monty Hall</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #323232;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #f2f2f2;
+    }
+
+    img:hover {
+      cursor: pointer;
+    }
+
+    img {
+      margin-right: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Monty Hall</h1>
+  <p>Hvilken dør vil du velge?</p>
+  <img id="r" data_index="1" src="rod.png" width="227" alt="Dør">
+  <img id="g" data_index="2" src="gronn.png" width="227" alt="Dør">
+  <img id="b" data_index="3" src="blaa.png" width="227" alt="Dør">
+  <h2 id="output"></h2>
+
+  <script>
+    let rEl = document.querySelector("#r");
+    let gEl = document.querySelector("#g");
+    let bEl = document.querySelector("#b");
+    let outputEl = document.querySelector("#output");
+    let n = randomWinningDoor();
+    let firstChoose = true;
+    let rOpen = false;
+    let gOpen = false;
+    let bOpen = false;
+
+    rEl.addEventListener("click", sjekkDor);
+    gEl.addEventListener("click", sjekkDor);
+    bEl.addEventListener("click", sjekkDor);
+
+    function sjekkDor(e) {
+      let dorTrykket = parseInt(e.target.getAttribute("data_index"));
+      if (firstChoose) {
+        if (dorTrykket == 1) {
+          if (dorTrykket + 1 != n) {
+            gEl.src = "jonnern1.png";
+            outputEl.innerHTML = "Sad";
+            gOpen = true;
+          } else {
+            bEl.src = "jonnern1.png";
+            outputEl.innerHTML = "Sad";
+            bOpen = true;
+          }
+        } else if (dorTrykket == 2) {
+          if (dorTrykket + 1 != n) {
+            bEl.src = "jonnern1.png";
+            outputEl.innerHTML = "Sad";
+            bOpen = true;
+          } else if (dorTrykket - 1 != n) {
+            rEl.src = "jonnern1.png";
+            outputEl.innerHTML = "Sad";
+            rOpen = true;
+          }
+        } else if (dorTrykket == 3) {
+          if (dorTrykket - 1 != n) {
+            gEl.src = "jonnern1.png";
+            outputEl.innerHTML = "Sad";
+            gOpen = true;
+          } else if (dorTrykket - 2 != n) {
+            rEl.src = "jonnern1.png";
+            outputEl.innerHTML = "Sad";
+            rOpen = true;
+          }
+        }
+        firstChoose = false;
+        outputEl.innerHTML = "Bytte?"
+      } else {
+        if(dorTrykket = 1 && rOpen == true) outputEl.innerHTML = "Click Another Image";
+        if(dorTrykket = 2 && gOpen == true) outputEl.innerHTML = "Click Another Image";
+        if(dorTrykket = 3 && bOpen == true) outputEl.innerHTML = "Click Another Image";
+
+        if(dorTrykket = 1 && rOpen == false) {
+          if(n == 1) {
+            outputEl.innerHTML = "Du vant!";
+            rEl.src = "jonnern2.png";
+          }
+          else {
+            outputEl.innerHTML = "Du tapte!";
+            rEl.src = "jonnern1.png";
+          }
+        }
+        if(dorTrykket = 2 && gOpen == false) {
+          if(n == 2) {
+            outputEl.innerHTML = "Du vant!";
+            gEl.src = "jonnern2.png";
+          }
+          else {
+            outputEl.innerHTML = "Du tapte!";
+            gEl.src = "jonnern1.png";
+          }
+        }
+        if(dorTrykket = 3 && bOpen == false) {
+          if(n == 3) {
+            outputEl.innerHTML = "Du vant!";
+            bEl.src = "jonnern2.png";
+          }
+          else {
+            outputEl.innerHTML = "Du tapte!";
+            bEl.src = "jonnern1.png";
+          }
+        }
+      }
+
+
+
+
+      // if (dorTrykket === n) {
+      //   outputEl.innerHTML = "Du vant!";
+      //   if (n == 1) rEl.src = "jonnern2.png";
+      //   else if (n == 2) gEl.src = "jonnern2.png";
+      //   else if (n == 3) bEl.src = "jonnern2.png";
+      // } else {
+      //   outputEl.innerHTML = "Du tapte!"
+      //   if (dorTrykket == 1) rEl.src = "jonnern1.png";
+      //   else if (dorTrykket == 2) gEl.src = "jonnern1.png";
+      //   else if (dorTrykket == 3) bEl.src = "jonnern1.png";
+
+      // }
+    }
+
+    function randomWinningDoor() {
+      return Math.floor(Math.random() * 3) + 1;
+    }
+  </script>
+</body>
+
+</html>
