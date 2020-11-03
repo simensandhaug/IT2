@@ -13,19 +13,14 @@ let board;
 let timer;
 
 //Images
+const imgs = []
+for(let i = 0; i < 9; i++){
+    imgs[i] = document.getElementById(String(i))
+}
+
 const imgOpen = document.getElementById("open");
 const imgMine = document.getElementById("mine");
 const imgFlag = document.getElementById("flag");
-
-const img0 = document.getElementById("0");
-const img1 = document.getElementById("1");
-const img2 = document.getElementById("2");
-const img3 = document.getElementById("3");
-const img4 = document.getElementById("4");
-const img5 = document.getElementById("5");
-const img6 = document.getElementById("6");
-const img7 = document.getElementById("7");
-const img8 = document.getElementById("8");
 
 document.getElementById("button").addEventListener("click", setup);
 

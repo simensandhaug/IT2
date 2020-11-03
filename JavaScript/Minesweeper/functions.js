@@ -70,15 +70,7 @@ function draw() {
             } else if (board[i][j].isFlagged) {
                 ctx.drawImage(imgFlag, i * scale, j * scale, scale, scale);
             } else if (board[i][j].isClicked) {
-                if (board[i][j].value === 0) ctx.drawImage(img0, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 1) ctx.drawImage(img1, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 2) ctx.drawImage(img2, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 3) ctx.drawImage(img3, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 4) ctx.drawImage(img4, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 5) ctx.drawImage(img5, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 6) ctx.drawImage(img6, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 7) ctx.drawImage(img7, i * scale, j * scale, scale, scale);
-                else if (board[i][j].value === 8) ctx.drawImage(img8, i * scale, j * scale, scale, scale);
+                ctx.drawImage(imgs[board[i][j].value], i*scale, j*scale, scale, scale);
             } else {
                 ctx.drawImage(imgOpen, i * scale, j * scale, scale, scale);
             }
@@ -151,7 +143,7 @@ function getRandomNum(num) {
 
 function gameOver(x, y) {
     document.removeEventListener('click', click);
-    document.removeEventListener('contextmeny', flag);
+    document.removeEventListener('contextmenu', flag);
     buttonEl.src = "images/Dead.png";
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
