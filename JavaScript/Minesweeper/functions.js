@@ -82,44 +82,23 @@ function draw() {
 }
 
 function getCellValue(cell) {
-    let i = cell.x / scale;
-    let j = cell.y / scale;
-    let value = 0;
-
-    //Mid left
-    if (i - 1 >= 0 && j >= 0) {
-        if (board[i - 1][j].isMine) value++;
-    }
-    //Top left
-    if (i - 1 >= 0 && j - 1 >= 0) {
-        if (board[i - 1][j - 1].isMine) value++;
-    }
-    //Bottom left
-    if (i - 1 >= 0 && j + 1 < 25) {
-        if (board[i - 1][j + 1].isMine) value++;
-    }
-    //Mid top
-    if (i >= 0 && j - 1 >= 0) {
-        if (board[i][j - 1].isMine) value++;
-    }
-    //Mid bottom
-    if (i >= 0 && j + 1 < 25) {
-        if (board[i][j + 1].isMine) value++;
-    }
-    //Mid right
-    if (i + 1 < 25 && j >= 0) {
-        if (board[i + 1][j].isMine) value++;
-    }
-    //Top right
-    if (i + 1 < 25 && j - 1 >= 0) {
-        if (board[i + 1][j - 1].isMine) value++;
-    }
-    //Bottom right
-    if (i + 1 < 25 && j + 1 < 25) {
-        if (board[i + 1][j + 1].isMine) value++;
-    }
-
+    let x = cell.x / scale;
+    let y = cell.y / scale;
+    let value = getNeigbourMines(x, y);
     cell.value = value;
+}
+
+function getNeigbourMines(x, y) {
+    let amount = 0;
+    for (let y2 = -1; y2 < 2; y2++) {
+        for (let x2 = -1; x2 < 2; x2++) {
+            if (y2 == 0 && x2 == 0) continue
+            if (board[x + x2] && board[x + x2][y + y2]) {
+                if(board[x + x2][y + y2].isMine) amount++;
+            }
+        }
+    }
+    return amount;
 }
 
 function getCellValues() {
@@ -175,10 +154,10 @@ function expand(evt) {
                     }
                 }
             }
-            draw();
         }
     }
     draw();
+    if (checkWin()) gameWin();
 }
 
 function getRandomNum(num) {
