@@ -64,7 +64,7 @@ function draw() {
                     ctx.fillStyle = 'red';
                     ctx.fillRect(i * scale, j * scale, scale, scale);
                 } else {
-                    ctx.drawImage(img0, i * scale, j * scale, scale, scale);
+                    ctx.drawImage(imgs[0], i * scale, j * scale, scale, scale);
                 }
                 ctx.drawImage(imgMine, i * scale, j * scale, scale, scale);
             } else if (board[i][j].isFlagged) {
