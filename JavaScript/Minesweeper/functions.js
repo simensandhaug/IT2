@@ -86,6 +86,7 @@ function getCellValue(cell) {
     let y = cell.y / scale;
     let value = getNeigbourMines(x, y);
     cell.value = value;
+    draw();
 }
 
 function getNeigbourMines(x, y) {
@@ -127,6 +128,7 @@ function openCell(x, y) {
             board[x][y].isClicked = true;
         } else return;
     }
+    draw();
 }
 
 function expand(evt) {
@@ -223,8 +225,8 @@ function flag(evt) {
             mineCount++;
             mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
         }
-        draw();
     }
+    draw();
     if (checkWin()) gameWin();
 }
 
@@ -236,7 +238,7 @@ function click(evt) {
     }
     if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
         openCell(targetCell.x, targetCell.y);
-        draw();
     }
+    draw();
     if (checkWin()) gameWin();
 }
