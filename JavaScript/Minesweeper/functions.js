@@ -21,6 +21,8 @@ function setup() {
 
     document.addEventListener("click", click);
     document.addEventListener("contextmenu", flag);
+    document.addEventListener("dblclick", expand);
+    document.addEventListener("auxclick", expand);
 }
 
 function Cell(x, y, w, h, isMine, isFlagged, isClicked) {
@@ -148,6 +150,37 @@ function openCell(x, y) {
     }
 }
 
+function expand(evt) {
+    let mousePos = getMousePos(canvas, evt);
+    let targetCell = {
+        x: Math.floor(mousePos.x / scale),
+        y: Math.floor(mousePos.y / scale),
+    }
+    if (board[targetCell.x] && board[targetCell.x][targetCell.y]) {
+        if (board[targetCell.x][targetCell.y].isClicked) {
+            let value = board[targetCell.x][targetCell.y].value;
+            let amountOfFlags = 0;
+            for (let y2 = -1; y2 < 2; y2++) {
+                for (let x2 = -1; x2 < 2; x2++) {
+                    if (board[targetCell.x + x2] && board[targetCell.x + x2][targetCell.y + y2]) {
+                        if (board[targetCell.x + x2][targetCell.y + y2].isFlagged) amountOfFlags++;
+                    }
+                }
+            }
+            if (amountOfFlags === value) {
+                for (let y2 = -1; y2 < 2; y2++) {
+                    for (let x2 = -1; x2 < 2; x2++) {
+                        if (y2 == 0 && x2 == 0) continue
+                        openCell(targetCell.x + x2, targetCell.y + y2);
+                    }
+                }
+            }
+            draw();
+        }
+    }
+    draw();
+}
+
 function getRandomNum(num) {
     return Math.floor(Math.random() * num);
 }
@@ -155,6 +188,8 @@ function getRandomNum(num) {
 function gameOver(x, y) {
     document.removeEventListener('click', click);
     document.removeEventListener('contextmenu', flag);
+    document.removeEventListener("dblclick", expand);
+    document.removeEventListener("auxclick", expand);
     buttonEl.src = "images/Dead.png";
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
@@ -167,10 +202,14 @@ function gameOver(x, y) {
 }
 
 function gameWin() {
+    document.removeEventListener('click', click);
+    document.removeEventListener('contextmenu', flag);
+    document.removeEventListener("dblclick", expand);
+    document.removeEventListener("auxclick", expand);
     buttonEl.src = "images/Cool.png";
     clearInterval(timer);
     winScreenEl.style.visibility = 'visible';
-    winScreenTimeEl.innerHTML = 'Game Over! \<br>\ Time: ' + time;
+    winScreenTimeEl.innerHTML = 'You Won! \<br>\ Time: ' + time;
 }
 
 function getMousePos(canvas, evt) {
