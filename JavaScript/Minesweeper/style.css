@@ -3,7 +3,6 @@
 body {
     background-color: white;
     user-select: none;
-    overflow: hidden;
 }
 
 #canvas {
