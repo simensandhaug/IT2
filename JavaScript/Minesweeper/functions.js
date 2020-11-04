@@ -1,6 +1,10 @@
 function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier osv
     settingsBoxEl.style.visibility = 'hidden';
     //Gamevindu
+
+
+
+    
     if (document.getElementById('Intermediate').checked) {
         canvas.width = scale * 16;
         canvas.height = scale * 16;
