@@ -1,9 +1,42 @@
 function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier osv
+    settingsBoxEl.style.visibility = 'hidden';
+    //Gamevindu
+    if (document.getElementById('Intermediate').checked) {
+        canvas.width = scale * 16;
+        canvas.height = scale * 16;
+        mines = 40;
+        headerEl.style.width = scale * 16 + 'px';
+        taskbarEl.style.width = scale * 16 + 'px';
+        settingsBoxEl.style.marginLeft = -8 * scale + 'px';
+    } else if (document.getElementById('Expert').checked) {
+        canvas.width = scale * 30;
+        canvas.height = scale * 16;
+        mines = 99;
+        headerEl.style.width = scale * 30 + 'px';
+        taskbarEl.style.width = scale * 30 + 'px';
+        settingsBoxEl.style.marginLeft = -15 * scale + 'px';
+    } else if (document.getElementById('Beginner').checked) {
+        canvas.width = scale * 9;
+        canvas.height = scale * 9;
+        mines = 10;
+        headerEl.style.width = scale * 9 + 'px';
+        taskbarEl.style.width = scale * 9 + 'px';
+        settingsBoxEl.style.marginLeft = -4.5 * scale + 'px';
+    } else if (document.getElementById('Custom').checked) {
+        if(parseInt(document.getElementById("customWidth").value) < 9 || parseInt(document.getElementById("customWidth").value) > 50) return;
+        if(parseInt(document.getElementById("customHeight").value > 16 || parseInt(document.getElementById("customHeight").value) < 9)) return;
+        canvas.width = scale * parseInt(document.getElementById("customWidth").value);
+        canvas.height = scale * parseInt(document.getElementById("customHeight").value);
+        mines = parseInt(document.getElementById("customMines").value);
+        headerEl.style.width = scale * parseInt(document.getElementById("customWidth").value) + 'px';
+        taskbarEl.style.width = scale * parseInt(document.getElementById("customWidth").value) + 'px';
+        settingsBoxEl.style.marginLeft = scale * -(parseInt(document.getElementById("customWidth").value)/2) + 'px';
+    }
+
+    //Setup
     clearInterval(timer); //Resetter timer
     buttonEl.src = "images/Smile.png"; //Smilefjesbilde på knappen
-    winScreenEl.style.visibility = 'hidden'; //Winscreenen er invsible
     board = Array.from(Array(canvas.width / scale), () => new Array(canvas.height / scale)); //Lager et 2d array
-    mines = 99; //Self explanatory
     mineCount = mines; //Variabel brukt for å vise antall miner igjen i mineDisplay;
     time = 0; ////Variabel brukt for å vise tiden i timeDisplay;
     mineCountEl.innerHTML = String(mineCount).padStart(3, '0'); //Viser mineCount med 3 siffer eks 007
@@ -13,6 +46,7 @@ function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier 
         time++;
         timerEl.innerHTML = String(time).padStart(3, '0'); //Oppdaterer timecount
     }, 1000) //Kjører hvert 1000 ms
+    25
 
     makeBoard(); //Lager cellene i boardet
     placeMines(); //Plasserer miner
@@ -20,11 +54,11 @@ function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier 
     draw(); //Tegner board
 
     //Deklarerer eventlisteners
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", click);
-    document.addEventListener("contextmenu", flag);
-    document.addEventListener("dblclick", expand);
-    document.addEventListener("auxclick", expand);
+    document.addEventListener("mousedown", handleMouseDown); //Mus ned
+    document.addEventListener("mouseup", click); //Mus opp
+    document.addEventListener("contextmenu", flag); //Høyreklikk
+    document.addEventListener("dblclick", expand); //Dobbel klikk
+    document.addEventListener("auxclick", expand); //Musehjul klikk
 }
 
 function Cell(x, y, isMine, isFlagged, isClicked) { //Constructor funksjon (ganske lik class) som blir brukt under dannelsen av boardet
@@ -33,9 +67,7 @@ function Cell(x, y, isMine, isFlagged, isClicked) { //Constructor funksjon (gans
     this.isMine = isMine;
     this.isClicked = isClicked;
     this.isFlagged = isFlagged;
-    if (this.isFlagged) this.value = 9;
-    else if (this.isMine) this.value = 10;
-    else this.value = 0;
+    this.value = 0;
 }
 
 function makeBoard() { //Fyller board med celler
@@ -135,7 +167,7 @@ function expand(evt) { //Kjører når man trykker på musehjulet og sjekker om f
     let targetCell = { //Cella man trykker på
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
-    } 
+    }
     if (board[targetCell.x] && board[targetCell.x][targetCell.y]) { //Hvis den finnes
         if (board[targetCell.x][targetCell.y].isClicked) { //Hvis den er åpnet
             let value = board[targetCell.x][targetCell.y].value; //Finner hvor mange miner som må være rundt
@@ -195,8 +227,6 @@ function gameWin() {
     document.removeEventListener("auxclick", expand);
     buttonEl.src = "images/Cool.png";
     clearInterval(timer); //Stopper timer
-    winScreenEl.style.visibility = 'visible'; //Endscreen er synlig
-    winScreenTimeEl.innerHTML = 'You Won! \<br>\ Time: ' + time; //Viser at man vant og hva tiden var
 }
 
 function getMousePos(canvas, evt) { //Finner hvor musa er og sender x og y verdiene tilbake
@@ -216,62 +246,44 @@ function checkWin() { //Returnerer true når alle celler er flagged ELLER åpnet
 
 function flag(evt) { //Flagger en celle
     evt.preventDefault(); //Gjør at man ikke får opp rullegardin når man trykker på høyreklikk i browser
-    let mousePos = getMousePos(canvas, evt);
-    let targetCell = {
+    let mousePos = getMousePos(canvas, evt); //Lagrer stedet man trykker
+    let targetCell = { //finner x og y verdiene til board arrayet
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
     }
-    if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
-        if (!board[targetCell.x][targetCell.y].isFlagged && !board[targetCell.x][targetCell.y].isClicked) {
-            board[targetCell.x][targetCell.y].isFlagged = true;
+    if (board[targetCell.x] && board[targetCell.x][targetCell.y]) { //Hvis cellen finnes
+        if (!board[targetCell.x][targetCell.y].isFlagged && !board[targetCell.x][targetCell.y].isClicked) { //Hvis den ikke er flagget eller åpnet
+            if(mineCount == 0) return;
+            board[targetCell.x][targetCell.y].isFlagged = true; //Flagger cellen
             mineCount--;
-            mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
-        } else if (board[targetCell.x][targetCell.y].isFlagged) {
-            board[targetCell.x][targetCell.y].isFlagged = false;
+            mineCountEl.innerHTML = String(mineCount).padStart(3, '0'); //Displayer hvor mange flagg man har igjen
+        } else if (board[targetCell.x][targetCell.y].isFlagged) { //Hvis den er flagget
+            board[targetCell.x][targetCell.y].isFlagged = false; //Unflagger cellen
             mineCount++;
-            mineCountEl.innerHTML = String(mineCount).padStart(3, '0');
+            mineCountEl.innerHTML = String(mineCount).padStart(3, '0'); //Displayer hvor mange flagg man har igjen
         }
     }
-    draw();
-    if (checkWin()) gameWin();
+    draw(); //Tegner boardet
+    if (checkWin()) gameWin(); //Sjekker for seier
 }
 
-function click(evt) {
-    document.removeEventListener("mousemove", updateMousePos);
-    if (evt.which == 1) {
-        mouseDown = false;
-        let mousePos = getMousePos(canvas, evt);
-        let targetCell = {
-            x: Math.floor(mousePos.x / scale),
-            y: Math.floor(mousePos.y / scale),
-        }
-        if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
-            openCell(targetCell.x, targetCell.y);
-        }
-        draw();
-        if (checkWin()) gameWin();
-    } else if (evt.which == 2) {
-        expand(evt);
-    }
-}
-
-function handleMouseDown(e) {
-    document.addEventListener("mousemove", updateMousePos);
+function handleMouseDown(e) { //Når musen trykkes
+    document.addEventListener("mousemove", updateMousePos); //Sjekker om musa beveger seg og oppdaterer musekoordinatene hvis den gjør det
     mouseDown = true;
-    let mousePos = getMousePos(canvas, e);
+    let mousePos = getMousePos(canvas, e); //Finner musekoordinater
     let targetCell = {
         x: Math.floor(mousePos.x / scale),
         y: Math.floor(mousePos.y / scale),
-    }
-    if (e.which == 1) {
-        if (board[targetCell.x] && board[targetCell.x][targetCell.y]) {
-            if (!board[targetCell.x][targetCell.y].isClicked && !board[targetCell.x][targetCell.y].isFlagged) {
-                ctx.drawImage(imgs[0], targetCell.x * scale, targetCell.y * scale, scale, scale);
+    } //Finner x og y i board arrayet
+    if (e.which == 1) { //Hvis det er venstreklikk
+        if (board[targetCell.x] && board[targetCell.x][targetCell.y]) { //Hvis cellen finnes
+            if (!board[targetCell.x][targetCell.y].isClicked && !board[targetCell.x][targetCell.y].isFlagged) { //Hvis den ikke er åpnet og den ikke er et flagg
+                ctx.drawImage(imgs[0], targetCell.x * scale, targetCell.y * scale, scale, scale); //Selecter cellen
             }
         }
-    } else if (e.which == 2) {
-        if (board[targetCell.x] && board[targetCell.x][targetCell.y]) {
-            if (board[targetCell.x][targetCell.y].isClicked) {
+    } else if (e.which == 2) { //Hvis det er musehjulklikk
+        if (board[targetCell.x] && board[targetCell.x][targetCell.y]) { //Hvis cellen finnes
+            if (board[targetCell.x][targetCell.y].isClicked) { //Hvis den er åpnet selecter alle celler rundt som ikke er åpne eller flagg
                 for (let y2 = -1; y2 < 2; y2++) {
                     for (let x2 = -1; x2 < 2; x2++) {
                         if (y2 == 0 && x2 == 0) continue
@@ -288,8 +300,43 @@ function handleMouseDown(e) {
 }
 
 function updateMousePos(e) {
-    if (mouseDown) {
+    if (mouseDown) { //Hvis musenklikket er nede
+        draw(); //Tegner at man holder inne (cellen blir grå)
+        handleMouseDown(e); //Sjekker hvilken celle dette er
+    }
+}
+
+function click(evt) {
+    document.removeEventListener("mousemove", updateMousePos); //Fjerner mouseUpdate
+    mouseDown = false;
+    if (evt.which == 1) { //Hvis det er venstreklikk finner celleposisjonen og åpner cella
+        let mousePos = getMousePos(canvas, evt);
+        let targetCell = {
+            x: Math.floor(mousePos.x / scale),
+            y: Math.floor(mousePos.y / scale),
+        }
+        openCell(targetCell.x, targetCell.y);
         draw();
-        handleMouseDown(e);
+        if (checkWin()) gameWin();
+    } else if (evt.which == 2) { //Hvis det er musehjul klikk expand fra celleposisjonen
+        expand(evt);
+    }
+}
+
+function openSettings() {
+    if (settingsBoxEl.style.visibility == 'hidden') {
+        settingsBoxEl.style.visibility = 'visible';
+        document.removeEventListener("mousedown", handleMouseDown);
+        document.removeEventListener('mouseup', click);
+        document.removeEventListener('contextmenu', flag);
+        document.removeEventListener("dblclick", expand);
+        document.removeEventListener("auxclick", expand);
+    } else {
+        settingsBoxEl.style.visibility = 'hidden';
+        document.addEventListener("mousedown", handleMouseDown); //Mus ned
+        document.addEventListener("mouseup", click); //Mus opp
+        document.addEventListener("contextmenu", flag); //Høyreklikk
+        document.addEventListener("dblclick", expand); //Dobbel klikk
+        document.addEventListener("auxclick", expand); //Musehjul klikk
     }
 }

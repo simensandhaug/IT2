@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Quantico&display=swap');
+<<<<<<< HEAD
 body {
     background-color: #777777;
     text-align: center;
     user-select: none;
     overflow: hidden;
+=======
+
+body {
+    background-color: white;
+    user-select: none;
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
 }
 
 #canvas {
@@ -18,15 +25,26 @@ img {
 
 #header {
     background-color: #aaa9a9;
+<<<<<<< HEAD
     width: 500px;
+=======
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
     margin: auto;
     text-align: center;
     border: 8px solid #dadada;
     border-style: ridge;
+<<<<<<< HEAD
+=======
+    height: 50px;
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
 }
 
 #button {
     text-align: center;
+<<<<<<< HEAD
+=======
+    margin-top: 10px;
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
     width: 30px;
     height: 30px;
     border: none;
@@ -44,7 +62,12 @@ img {
     color: red;
     background-color: black;
     box-shadow: 0px 0px 2px 3px #888888;
+<<<<<<< HEAD
     margin-right: 125px;
+=======
+    float: left;
+    margin-left: 10px;
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
     padding: 0;
 }
 
@@ -55,6 +78,7 @@ img {
     background-color: black;
     box-shadow: 0px 0px 2px 3px #888888;
     height: 30;
+<<<<<<< HEAD
     margin-left: 125px;
     padding: 0;
 }
@@ -70,6 +94,13 @@ img {
     margin-top: -514px;
 }
 
+=======
+    float: right;
+    margin-right: 10px;
+    padding: 0;
+}
+
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
 #endTime {
     opacity: 1;
     color: black;
@@ -79,4 +110,91 @@ img {
     width: 20px;
     height: 20px;
     padding: 0;
+<<<<<<< HEAD
 }
+=======
+}
+
+#taskbar {
+    margin: auto;
+}
+
+#settings {
+    margin-bottom: 2px;
+    text-decoration: blue;
+    text-decoration-line: underline;
+    color: blue;
+    text-align: left;
+}
+#settings:hover {
+    cursor: pointer;
+}
+
+#settingsBox {
+    left: 50%;
+    position: absolute;
+    width: 250px;
+    height: 168px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+#settingsBoxHeader {
+    background-color: blue;
+    color: white;
+    width: auto;
+    height: 20px;
+}
+
+#settingsBoxDisplay {
+    background-color: lightgray;
+}
+
+#settingsBoxDisplayTable {
+    margin-left: auto;
+}
+
+th {
+    font-size: small;
+}
+
+td {
+    width: 30px;
+}
+
+#tableDisplayBeginner {
+    display: inline;
+    margin-left: 60px;
+}
+
+#tableDisplayIntermediate {
+    display: inline;
+    margin-left: 35px;
+}
+
+#tableDisplayExpert {
+    display: inline;
+    margin-left: 75px;
+}
+
+#tableDisplayCustom {
+    margin-left: 40px;
+    display: inline;
+}
+
+#NewGameButton {
+    margin-left: 5px;
+}
+
+.custom {
+    width: 30px;
+    appearance: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+>>>>>>> 731faa524f19d4edb1299af9bf843d2cd01c11d8
