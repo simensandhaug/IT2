@@ -1,9 +1,40 @@
 function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier osv
+    settingsBoxEl.style.visibility = 'hidden';
+    //Gamevindu
+    if (document.getElementById('Intermediate').checked) {
+        canvas.width = scale * 16;
+        canvas.height = scale * 16;
+        mines = 40;
+        headerEl.style.width = scale * 16 + 'px';
+        taskbarEl.style.width = scale * 16 + 'px';
+        settingsBoxEl.style.marginLeft = -8 * scale + 'px';
+    } else if (document.getElementById('Expert').checked) {
+        canvas.width = scale * 30;
+        canvas.height = scale * 16;
+        mines = 99;
+        headerEl.style.width = scale * 30 + 'px';
+        taskbarEl.style.width = scale * 30 + 'px';
+        settingsBoxEl.style.marginLeft = -15 * scale + 'px';
+    } else if (document.getElementById('Beginner').checked) {
+        canvas.width = scale * 9;
+        canvas.height = scale * 9;
+        mines = 10;
+        headerEl.style.width = scale * 9 + 'px';
+        taskbarEl.style.width = scale * 9 + 'px';
+        settingsBoxEl.style.marginLeft = -4.5 * scale + 'px';
+    } else if (document.getElementById('Custom').checked) {
+        canvas.width = scale * parseInt(document.getElementById("customWidth").value);
+        canvas.height = scale * parseInt(document.getElementById("customHeight").value);
+        mines = parseInt(document.getElementById("customMines").value);
+        headerEl.style.width = scale * parseInt(document.getElementById("customWidth").value) + 'px';
+        taskbarEl.style.width = scale * parseInt(document.getElementById("customWidth").value) + 'px';
+        settingsBoxEl.style.marginLeft = scale * -(parseInt(document.getElementById("customWidth").value)/2) + 'px';
+    }
+
+    //Setup
     clearInterval(timer); //Resetter timer
     buttonEl.src = "images/Smile.png"; //Smilefjesbilde på knappen
-    winScreenEl.style.visibility = 'hidden'; //Winscreenen er invsible
     board = Array.from(Array(canvas.width / scale), () => new Array(canvas.height / scale)); //Lager et 2d array
-    mines = 99; //Self explanatory
     mineCount = mines; //Variabel brukt for å vise antall miner igjen i mineDisplay;
     time = 0; ////Variabel brukt for å vise tiden i timeDisplay;
     mineCountEl.innerHTML = String(mineCount).padStart(3, '0'); //Viser mineCount med 3 siffer eks 007
@@ -13,6 +44,7 @@ function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier 
         time++;
         timerEl.innerHTML = String(time).padStart(3, '0'); //Oppdaterer timecount
     }, 1000) //Kjører hvert 1000 ms
+    25
 
     makeBoard(); //Lager cellene i boardet
     placeMines(); //Plasserer miner
@@ -188,13 +220,11 @@ function gameWin() {
     //Fjerner alle eventlisteners
     document.removeEventListener("mousedown", handleMouseDown);
     document.removeEventListener('mouseup', click);
-    document.removeEventListener('contextmenu', flag); 
-    document.removeEventListener("dblclick", expand); 
+    document.removeEventListener('contextmenu', flag);
+    document.removeEventListener("dblclick", expand);
     document.removeEventListener("auxclick", expand);
     buttonEl.src = "images/Cool.png";
     clearInterval(timer); //Stopper timer
-    winScreenEl.style.visibility = 'visible'; //Endscreen er synlig
-    winScreenTimeEl.innerHTML = 'You Won! \<br>\ Time: ' + time; //Viser at man vant og hva tiden var
 }
 
 function getMousePos(canvas, evt) { //Finner hvor musa er og sender x og y verdiene tilbake
@@ -236,7 +266,7 @@ function flag(evt) { //Flagger en celle
 
 function handleMouseDown(e) { //Når musen trykkes
     document.addEventListener("mousemove", updateMousePos); //Sjekker om musa beveger seg og oppdaterer musekoordinatene hvis den gjør det
-    mouseDown = true; 
+    mouseDown = true;
     let mousePos = getMousePos(canvas, e); //Finner musekoordinater
     let targetCell = {
         x: Math.floor(mousePos.x / scale),
@@ -282,12 +312,28 @@ function click(evt) {
             x: Math.floor(mousePos.x / scale),
             y: Math.floor(mousePos.y / scale),
         }
-        if (targetCell.x >= 0 && targetCell.x <= canvas.width / scale && targetCell.y >= 0 && targetCell.y <= canvas.height) {
-            openCell(targetCell.x, targetCell.y);
-        }
+        openCell(targetCell.x, targetCell.y);
         draw();
         if (checkWin()) gameWin();
     } else if (evt.which == 2) { //Hvis det er musehjul klikk expand fra celleposisjonen
         expand(evt);
+    }
+}
+
+function openSettings() {
+    if (settingsBoxEl.style.visibility == 'hidden') {
+        settingsBoxEl.style.visibility = 'visible';
+        document.removeEventListener("mousedown", handleMouseDown);
+        document.removeEventListener('mouseup', click);
+        document.removeEventListener('contextmenu', flag);
+        document.removeEventListener("dblclick", expand);
+        document.removeEventListener("auxclick", expand);
+    } else {
+        settingsBoxEl.style.visibility = 'hidden';
+        document.addEventListener("mousedown", handleMouseDown); //Mus ned
+        document.addEventListener("mouseup", click); //Mus opp
+        document.addEventListener("contextmenu", flag); //Høyreklikk
+        document.addEventListener("dblclick", expand); //Dobbel klikk
+        document.addEventListener("auxclick", expand); //Musehjul klikk
     }
 }
