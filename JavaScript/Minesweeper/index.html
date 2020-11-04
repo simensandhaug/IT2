@@ -8,7 +8,7 @@
 
     <script src="functions.js" defer></script>
     <script src="app.js" defer></script>
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -42,13 +42,41 @@
         </div>
         <div>
             <input type="radio" id="Beginner" name="Difficulty" value="Beginner">
-            <label for="Beginner">Beginner</label><table id="tableDisplayBeginner"><tr><td>9</td><td>9</td><td>10</td></tr></table><br>
+            <label for="Beginner">Beginner</label>
+            <table id="tableDisplayBeginner">
+                <tr>
+                    <td>9</td>
+                    <td>9</td>
+                    <td>10</td>
+                </tr>
+            </table><br>
             <input type="radio" id="Intermediate" name="Difficulty" value="Intermediate">
-            <label for="Intermediate">Intermediate</label><table id="tableDisplayIntermediate"><tr><td>16</td><td>16</td><td>40</td></tr></table><br>
+            <label for="Intermediate">Intermediate</label>
+            <table id="tableDisplayIntermediate">
+                <tr>
+                    <td>16</td>
+                    <td>16</td>
+                    <td>40</td>
+                </tr>
+            </table><br>
             <input type="radio" id="Expert" name="Difficulty" value="Expert" checked>
-            <label for="Expert">Expert</label><table id="tableDisplayExpert"><tr><td>30</td><td>16</td><td>99</td></tr></table><br>
+            <label for="Expert">Expert</label>
+            <table id="tableDisplayExpert">
+                <tr>
+                    <td>30</td>
+                    <td>16</td>
+                    <td>99</td>
+                </tr>
+            </table><br>
             <input type="radio" id="Custom" name="Difficulty" value="Custom">
-            <label for="Custom">Custom</label><table id="tableDisplayCustom"><tr><td><input class="custom" type="number" id="customWidth" min="9" required></td><td><input class="custom" type="number" id="customHeight" required></td><td><input class="custom" type="number" id="customMines" required></td></tr></table><br>
+            <label for="Custom">Custom</label>
+            <table id="tableDisplayCustom">
+                <tr>
+                    <td><input class="custom" type="number" id="customWidth" min="9" required></td>
+                    <td><input class="custom" type="number" id="customHeight" required></td>
+                    <td><input class="custom" type="number" id="customMines" required></td>
+                </tr>
+            </table><br>
             <button type="submit" id="NewGameButton">New Game</button>
         </div>
     </div>
@@ -61,4 +89,5 @@
         <canvas id="canvas" width="500" height="500"></canvas>
     </div>
 </body>
+
 </html>

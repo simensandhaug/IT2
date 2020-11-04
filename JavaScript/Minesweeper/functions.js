@@ -23,14 +23,14 @@ function setup() { //Deklarerer alt som trengs. Setter verdier til startverdier 
         taskbarEl.style.width = scale * 9 + 'px';
         settingsBoxEl.style.marginLeft = -4.5 * scale + 'px';
     } else if (document.getElementById('Custom').checked) {
-        if(parseInt(document.getElementById("customWidth").value) < 9 || parseInt(document.getElementById("customWidth").value) > 50) return;
-        if(parseInt(document.getElementById("customHeight").value > 16 || parseInt(document.getElementById("customHeight").value) < 9)) return;
+        if (parseInt(document.getElementById("customWidth").value) < 9 || parseInt(document.getElementById("customWidth").value) > 50) return;
+        if (parseInt(document.getElementById("customHeight").value > 16 || parseInt(document.getElementById("customHeight").value) < 9)) return;
         canvas.width = scale * parseInt(document.getElementById("customWidth").value);
         canvas.height = scale * parseInt(document.getElementById("customHeight").value);
         mines = parseInt(document.getElementById("customMines").value);
         headerEl.style.width = scale * parseInt(document.getElementById("customWidth").value) + 'px';
         taskbarEl.style.width = scale * parseInt(document.getElementById("customWidth").value) + 'px';
-        settingsBoxEl.style.marginLeft = scale * -(parseInt(document.getElementById("customWidth").value)/2) + 'px';
+        settingsBoxEl.style.marginLeft = scale * -(parseInt(document.getElementById("customWidth").value) / 2) + 'px';
     }
 
     //Setup
@@ -253,7 +253,7 @@ function flag(evt) { //Flagger en celle
     }
     if (board[targetCell.x] && board[targetCell.x][targetCell.y]) { //Hvis cellen finnes
         if (!board[targetCell.x][targetCell.y].isFlagged && !board[targetCell.x][targetCell.y].isClicked) { //Hvis den ikke er flagget eller åpnet
-            if(mineCount == 0) return;
+            if (mineCount == 0) return;
             board[targetCell.x][targetCell.y].isFlagged = true; //Flagger cellen
             mineCount--;
             mineCountEl.innerHTML = String(mineCount).padStart(3, '0'); //Displayer hvor mange flagg man har igjen
