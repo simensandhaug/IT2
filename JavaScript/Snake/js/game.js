@@ -15,16 +15,18 @@ let timer;
 let seconds;
 let score;
 let currentDir;
+let playerName;
+let highscore;
 
-if(parseInt(localStorage.getItem("highscore")) % 1 !== 0) {
-    localStorage.setItem("highscore", 0);
-}
+// if(parseInt(localStorage.getItem("highscore")) % 1 !== 0) {
+//     localStorage.setItem("highscore", 0);
+// }
 
 //highScoreDisplay.innerHTML = "Highscore: " + getCookie("highscore") + " by " + getCookie("player");
 
 function setup() {
     endScreen.style.visibility = "hidden";
-    highScoreDisplay.innerHTML = "Highscore: " + localStorage.getItem("highscore") + " by " + localStorage.getItem("player");
+    displayJson();
     clearInterval(gameLoop, 1000);
     clearInterval(timer, 1000);
     snake = new Snake();
@@ -98,20 +100,22 @@ const endGame = () => {
     endScore.innerHTML = "Score: " + score;
     endTime.innerHTML = "Time: " + seconds;
 
-    checkHighscore(score);
+    checkHighscore();
 }
 
-const checkHighscore = (a) => {
-    currentHighscore = localStorage.getItem("highscore");
-    if (currentHighscore != "null" || currentHighscore != null) {
-        if (a > parseInt(currentHighscore)) {
-            localStorage.setItem("highscore", a);
-            localStorage.setItem("player", prompt("Highscore name:"));
-        }
-    } else {
-        localStorage.setItem("highscore", a);
-        localStorage.setItem("player", prompt("Highscore name:"));
+const checkHighscore = () => {
+    if(score > highscore) {
+        console.log(score + " > " + highscore);
+        console.log("Gratulerer, men highscoren din blir ikke lagra fordi JSON suger pikk");
     }
-    highScoreDisplay.innerHTML = "Highscore: " + currentHighscore + " by " + localStorage.getItem("player");
 }
+
+async function displayJson() {
+    const res = await fetch('highscore.json');
+    const data = await res.json();
+    highscore = data.highscore;
+    playerName = data.playerName;
+    highScoreDisplay.innerHTML = "Highscore: " + highscore + " by " + playerName; 
+}
+
 setup();
