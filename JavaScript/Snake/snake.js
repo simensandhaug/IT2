@@ -21,10 +21,10 @@ function Snake() {
         this.x += this.dx;
         this.y += this.dy;
         for (let i = 0; i < this.tail.length - 1; i++) {
-            if(this.tail[i].x < 0) this.tail[i].x = canvas.width - scale;
-            if(this.tail[i].x >= canvas.width) this.tail[i].x = 0;
-            if(this.tail[i].y < 0) this.tail[i].y = canvas.height - scale;
-            if(this.tail[i].y >= canvas.height) this.tail[i].y = 0;
+            if (this.tail[i].x < 0) this.tail[i].x = canvas.width - scale;
+            if (this.tail[i].x >= canvas.width) this.tail[i].x = 0;
+            if (this.tail[i].y < 0) this.tail[i].y = canvas.height - scale;
+            if (this.tail[i].y >= canvas.height) this.tail[i].y = 0;
 
             this.tail[i] = this.tail[i + 1];
         }

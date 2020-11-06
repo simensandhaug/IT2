@@ -9,6 +9,9 @@ const highScoreDisplay = document.getElementById("highScoreDisplay");
 const endScreen = document.getElementById("endScreen");
 const endScore = document.getElementById("endScore");
 const endTime = document.getElementById("endTime");
+
+let JSONdata;
+
 let snake;
 let gameLoop;
 let timer;
@@ -16,15 +19,24 @@ let seconds;
 let score;
 let currentDir;
 
-if(parseInt(localStorage.getItem("highscore")) % 1 != 0) {
-    localStorage.setItem("highscore", 0);
-}
-
-//highScoreDisplay.innerHTML = "Highscore: " + getCookie("highscore") + " by " + getCookie("player");
-
 function setup() {
+    let file = 'highscore.json';
+    fetch(file, {
+            cache: 'no-cache'
+        })
+        .then(function (response) {
+
+            if (response.status !== 200) {
+                console.log(response.status);
+            }
+
+            response.json().then(function (data) {
+                highScoreDisplay.innerHTML = "Highscore: " + data.highscore + " by " + data.highscorePlayer;
+            })
+        })
+
+
     endScreen.style.visibility = "hidden";
-    highScoreDisplay.innerHTML = "Highscore: " + localStorage.getItem("highscore") + " by " + localStorage.getItem("player");
     clearInterval(gameLoop, 1000);
     clearInterval(timer, 1000);
     snake = new Snake();
@@ -98,58 +110,33 @@ const endGame = () => {
     endScore.innerHTML = "Score: " + score;
     endTime.innerHTML = "Time: " + seconds;
 
-    checkHighscore(score);
+    checkHighscore();
 }
 
-const checkHighscore = (a) => {
-    currentHighscore = localStorage.getItem("highscore");
-    if (currentHighscore != "null" || currentHighscore != null) {
-        if (a > parseInt(currentHighscore)) {
-            localStorage.setItem("highscore", a);
-            localStorage.setItem("player", prompt("Highscore name:"));
-        }
-    } else {
-        localStorage.setItem("highscore", a);
-        localStorage.setItem("player", prompt("Highscore name:"));
-    }
-    highScoreDisplay.innerHTML = "Highscore: " + currentHighscore + " by " + localStorage.getItem("player");
+const checkHighscore = () => {
+    let file = 'highscore.json';
+    fetch(file, {
+            cache: 'no-cache'
+        })
+        .then(function (response) {
+
+            if (response.status !== 200) {
+                console.log(response.status);
+            }
+
+            response.json().then(function (data) {
+                if (data.highscore < score) {
+                    JSONdata = data;
+                    let playerName = prompt("Highscore Name: ");
+                    highScoreDisplay.innerHTML = "Highscore: " + score + " by " + playerName;
+
+                    let edit = "{highscore: " + score + ", higscorePlayer: " + playerName + "}"
+
+                    data = edit;
+                    //Trenger å edite highscore.json her
+                }
+            })
+        })
 }
-
-// function setCookie(cname,cvalue,exdays) {
-//     var d = new Date();
-//     d.setTime(d.getTime() + (exdays*24*60*60*1000));
-//     var expires = "expires=" + d.toGMTString();
-//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-//   }
-
-//   function getCookie(cname) {
-//     var name = cname + "=";
-//     var decodedCookie = decodeURIComponent(document.cookie);
-//     var ca = decodedCookie.split(';');
-//     for(var i = 0; i < ca.length; i++) {
-//       var c = ca[i];
-//       while (c.charAt(0) == ' ') {
-//         c = c.substring(1);
-//       }
-//       if (c.indexOf(name) == 0) {
-//         return c.substring(name.length, c.length);
-//       }
-//     }
-//     return "";
-//   }
-
-// function checkCookie() {
-// let highscore=getCookie("highscore");
-//     if(parseInt(highscore) < score) {
-//         setCookie("player", prompt("Please enter your name:", ""), 30)
-//         setCookie("highscore", score, 30);
-//         highScoreDisplay.innerHTML = "Highscore: " + getCookie("highscore") + " by " + getCookie("player");
-//     }
-//     else if(highscore === undefined || highscore === null || highscore === "") {
-//         setCookie("player", prompt("Please enter your name:", ""), 30)
-//         setCookie("highscore", score, 30);
-//         highScoreDisplay.innerHTML = "Highscore: " + getCookie("highscore") + " by " + getCookie("player");
-//     }
-// }
 
 setup();
