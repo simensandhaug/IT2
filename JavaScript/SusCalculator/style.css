@@ -1,0 +1,22 @@
+#header {
+    text-align: center;
+}
+
+#main {
+    text-align: center;
+}
+
+#PlayerSelector {
+    position: absolute;
+    display: inline-block;
+    width: 500px;
+    text-align: left;
+}
+
+#PairSelector {
+    display: inline-block;
+    width: 500px;
+}
+
+/* #white,#black,#brown,#cyan,#red,#blue,#yellow,#green,#lime,#pink,#purple,#orange {
+} */
