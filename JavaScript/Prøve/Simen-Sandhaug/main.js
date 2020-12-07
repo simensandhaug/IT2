@@ -18,13 +18,13 @@ if(document.getElementById("button1") != null) document.getElementById("button1"
 
     totalpris = getRingePris(ringeminutter) + getMmsPris(antallmms) + getSmsPris(antallsms); //Finner totalpris
     oppg1Output.innerHTML = //Skriver ut output til websiden
-        `
+    `
     Ringepris: ${getRingePris(ringeminutter)}kr </br>
     MMSPris: ${getMmsPris(antallmms)}kr </br>
     SMSPris: ${getSmsPris(antallsms)}kr </br>
     Totalpris: ${totalpris.toFixed(2)}kr </br>
     ${getSluttSetning()}
-     `
+    `
 });
 
 //Oppgave 2
