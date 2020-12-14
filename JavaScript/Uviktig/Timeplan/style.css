@@ -2,16 +2,18 @@ body {
     background-color: rgb(87, 83, 83);
 }
 
+h1, h2, h3 {
+    color: #ffffff;
+    margin: 0;
+}
+
+canvas {
+    position: absolute;
+    margin-top: 21px;
+}
+
 table {
     border-collapse: collapse;
-}
-
-td {
-    border: 1px solid black;
-}
-
-th {
-    border: 1px solid black;
 }
 
 tr {
@@ -90,4 +92,16 @@ h3 {
 }
 p {
     margin: 0;
+}
+
+.timer {
+    height: 48px;
+}
+
+.pause14min {
+    height: 14px;
+}
+
+.pause39min {
+    height: 39px;
 }

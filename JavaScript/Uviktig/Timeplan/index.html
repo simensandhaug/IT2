@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timeplan</title>
     <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
 </head>
 
 <body>
+    <h1 id="displayDate"></h1>
+    <h2 id="displayTime"></h2>
+    <h3 id="fulldate"></h3>
 
+    <canvas id="canvas" width="651" height="457"></canvas>
     <table>
         <tr class="header">
             <th>Time</th>
@@ -19,7 +24,7 @@
             <th>Torsdag</th>
             <th>Fredag</th>
         </tr>
-        <tr>
+        <tr class="timer">
             <td class="time">1 <br> 08.00 - 08.48</td>
             <td class="IT2">IT2/Biologi 1</td>
             <td class="Fysikk">Fysikk 1/Psykologi</td>
@@ -27,7 +32,7 @@
             <td class="Kjemi">Kjemi 1</td>
             <td class="Matte">Matte R1/Matte S1</td>
         </tr>
-        <tr>
+        <tr class="timer">
             <td class="time">2 <br> 08.48 - 09.36</td>
             <td class="IT2">IT2/Biologi 1</td>
             <td class="Fysikk">Fysikk 1/Psykologi</td>
@@ -36,6 +41,14 @@
             <td class="Matte">Matte R1/Matte S1</td>
         </tr>
         <tr>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+        </tr>
+        <tr class="timer">
             <td class="time">3 <br> 09.50 - 10.38</td>
             <td class="IT2">IT2/Biologi 1</td>
             <td class="Fysikk">Fysikk 1/Psykologi</td>
@@ -43,8 +56,8 @@
             <td class="Kjemi">Kjemi 1</td>
             <td class="Matte">Matte R1/Matte S1</td>
         </tr>
-        <tr>
-            <td class="time">4 <br> 10.40 - 11.26</td>
+        <tr class="timer">
+            <td class="time">4 <br> 10.38 - 11.26</td>
             <td class="Ktime">K-time</td>
             <td class="Leksehjelp">Leksehjelp</td>
             <td class="Spansk">Spansk II</td>
@@ -52,6 +65,14 @@
             <td class="Spansk">Spansk II</td>
         </tr>
         <tr>
+            <td class="pause39min"></td>
+            <td class="pause39min"></td>
+            <td class="pause39min"></td>
+            <td class="pause39min"></td>
+            <td class="pause39min"></td>
+            <td class="pause39min"></td>
+        </tr>
+        <tr class="timer">
             <td class="time">5 <br> 12.05 - 12.53</td>
             <td class="Gym">Gym</td>
             <td class="Samfunnsfag">Samfunnsfag</td>
@@ -59,7 +80,7 @@
             <td class="Norsk">Norsk</td>
             <td class="Spansk">Spansk II</td>
         </tr>
-        <tr>
+        <tr class="timer">
             <td class="time">6 <br> 12.53 - 13.41</td>
             <td class="Gym">Gym</td>
             <td class="Samfunnsfag">Samfunnsfag</td>
@@ -68,6 +89,14 @@
             <td class="Samfunnsfag">Samfunnsfag/Norsk</td>
         </tr>
         <tr>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+            <td class="pause14min"></td>
+        </tr>
+        <tr class="timer">
             <td class="time">7 <br> 13.55 - 14.43</td>
             <td class="Kjemi">Kjemi 1</td>
             <td class="Matte">Matte R1/Matte S1</td>
@@ -75,7 +104,7 @@
             <td class="Fysikk">Fysikk 1/Psykologi</td>
             <td class="Samfunnsfag">Samfunnsfag/Norsk</td>
         </tr>
-        <tr>
+        <tr class="timer">
             <td class="time">8 <br> 14.43 - 15.31</td>
             <td class="Kjemi">Kjemi 1</td>
             <td class="Matte">Matte R1/Matte S1</td>
@@ -84,7 +113,6 @@
             <td></td>
         </tr>
     </table>
-
 
 </body>
 
