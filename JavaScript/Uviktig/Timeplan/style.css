@@ -1,5 +1,7 @@
 body {
     background-color: rgb(87, 83, 83);
+    padding: 0;
+    margin: 8px;
 }
 
 h1, h2, h3 {
@@ -19,6 +21,10 @@ table {
 tr {
     margin: auto;
     padding: auto;
+}
+
+th {
+    padding: 0;
 }
 
 .IT2 {
