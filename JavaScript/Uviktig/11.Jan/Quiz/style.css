@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+
+input[type="radio"] {
+    margin: 10px;
+}
+
+.question {
+    font-family: 'Kanit', sans-serif;
+    font-size: medium;
+}
+
+.answers {
+    margin-bottom: 20px;
+}
