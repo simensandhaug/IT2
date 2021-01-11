@@ -1,30 +1,26 @@
-let navnEl = document.getElementById("navn");
-let alderEl = document.getElementById("alder");
+let nameEl = document.getElementById("navn");
+let ageEl = document.getElementById("alder")
 let tableEl = document.getElementById("table");
-let deleteEl = document.getElementById("delete");
-let personer = [];
+let persons = [];
 
 const sortByAge = (a, b) => a.alder - b.alder;
 
+const deleteName = i => {
+    persons.splice(i, 1);
+    pushTable();
+}
+
 const pushTable = () => {
-    if (!navnEl == "" || alderEl == "") {
-        personer.push({
-            navn: navnEl.value,
-            alder: alderEl.value
+    if (!nameEl.value == "" && !ageEl.value == "") {
+        persons.push({
+            navn: nameEl.value,
+            alder: ageEl.value
         });
     }
-    navnEl.value = "";
-    alder.value = "",
-        personer.sort(sortByAge);
-    tableEl.innerHTML = "<tbody><th>Navn</th><th>Alder</th><th>Slett</th>";
-    for (i in personer) {
-        tableEl.innerHTML += `<tr><td>${personer[i].navn}</td><td>${personer[i].alder}</td><td><button id="button${i}">Delete</button></td></tr>`;
-        document.getElementById(`button${i}`).addEventListener("click", () => {
-            console.log(i)
-            personer.splice(i, 1);
-            pushTable();
-        });
-    }
-    tableEl.innerHTML += "</tbody>"
+    nameEl.value = "";
+    ageEl.value = "",
+        persons.sort(sortByAge);
+    tableEl.innerHTML = "<th>Navn</th><th>Alder</th><th>Delete</th>";
+    for (i in persons) tableEl.innerHTML += `<tr><td>${persons[i].navn}</td><td>${persons[i].alder}</td><td><span id="button${i}" onclick="deleteName(${i})"><img src="trash.png"></span></td></tr>`;
 }
 document.getElementById("button").addEventListener("click", pushTable);
