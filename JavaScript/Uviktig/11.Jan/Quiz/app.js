@@ -1,20 +1,20 @@
 //Functions
 function buildQuiz() {
     const output = [];
-    myQuestions.forEach(
-        (currentQuestion, questionNumber) => {
+    questions.forEach(
+        (currentQ, qNr) => {
             const answers = [];
-            for (letter in currentQuestion.answers) {
+            for (letter in currentQ.answers) {
                 answers.push(
                     `<label>
-            <input type="radio" name="question${questionNumber}" value="${letter}">
+            <input type="radio" name="question${qNr}" value="${letter}">
             ${letter} :
-            ${currentQuestion.answers[letter]}
+            ${currentQ.answers[letter]}
           </label>`
                 );
             }
             output.push(
-                `<div class="question"> ${currentQuestion.question} </div>
+                `<div class="question"> ${currentQ.question} </div>
         <div class="answers"> ${answers.join('')} </div>`
             );
         }
@@ -25,23 +25,23 @@ function buildQuiz() {
 function showResults() {
     const answerContainers = quizContainer.querySelectorAll('.answers');
     let numCorrect = 0;
-    myQuestions.forEach((currentQuestion, questionNumber) => {
-        const answerContainer = answerContainers[questionNumber];
-        const selector = `input[name=question${questionNumber}]:checked`;
+    questions.forEach((currentQ, qNr) => {
+        const answerContainer = answerContainers[qNr];
+        const selector = `input[name=question${qNr}]:checked`;
         const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-        if (userAnswer === currentQuestion.correctAnswer) {
+        if (userAnswer === currentQ.correctAnswer) {
             numCorrect++;
-            answerContainers[questionNumber].style.color = 'lightgreen';
-        } else answerContainers[questionNumber].style.color = 'red';
+            answerContainers[qNr].style.color = 'lightgreen';
+        } else answerContainers[qNr].style.color = 'red';
     });
-    resultsContainer.innerHTML = `${numCorrect} ut av ${myQuestions.length}`;
+    resultsContainer.innerHTML = `${numCorrect} ut av ${questions.length}`;
 }
 
 //Variables
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
 const submitBtn = document.getElementById('submit');
-const myQuestions = [{
+const questions = [{
         question: "Hvem av disse er skuespillere i Game Of Thrones?",
         answers: {
             a: "Dwayne Johnson",
