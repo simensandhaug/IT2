@@ -49,11 +49,10 @@
 }
 
 #score {
-    height: 30px;
+    font-size: large;
     width: 50%;
     margin: auto;
     text-align: center;
-    color: #0ed15f;
     font-weight: bold;
 }
 

@@ -5,15 +5,20 @@ let typeEl = document.getElementById("type");
 let radioContainerEl = document.getElementById("radioContainer");
 let labelContainerEl = document.getElementById("labelContainer");
 let containerEl = document.getElementById("container");
+let nxtButtonEl = document.getElementById("nxtButton");
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
 let currentQ = 0;
 let score = 0;
 let question;
+
+nxtButtonEl.innerHTML = `<button id="next">Next</button>`;
 
 const questions = [{
         q: "Hva er Elon Musk?",
         choices: {
             a: "Entrepenør",
-            b: "Fashiondesigner", 
+            b: "Fashiondesigner",
             c: "Bilmekaniker"
         },
         type: "Single Choice",
@@ -88,7 +93,38 @@ class Question {
     }
 }
 
-const endQuiz = () => scoreEl.innerHTML = `Du fikk ${score} ut av ${currentQ} <br> Gratulerer!`;
+const drawResult = (score, currentQ) => {
+
+    let p = score / currentQ;
+
+    ctx.beginPath();
+    ctx.lineWidth = 10;
+    ctx.arc(canvas.width / 2, 100, 75, 0, 2 * Math.PI);
+    ctx.moveTo(canvas.width / 2 + 50, 100);
+    ctx.arc(canvas.width / 2, 100, 50, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.lineWidth = 15;
+    ctx.strokeStyle = "#58dced";
+    ctx.moveTo(canvas.width / 2 + 62.5, 100);
+    ctx.arc(canvas.width / 2, 100, 62.5, 0, 2 * p * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2, canvas.height / 2);
+    ctx.font = "30px Arial";
+    let x = (Math.round(p * 100) == 100) ? (canvas.width / 2 - 35) : (canvas.width / 2 - 30);
+    let y = canvas.height / 2 - 40;
+    ctx.fillText(`${Math.round(p*100)}%`, x, y);
+}
+
+const endQuiz = () => {
+    quizContainerEl.innerHTML = `<p id="score">${score} / ${currentQ}</p>`;
+    typeEl.innerHTML = "";
+    questionEl.innerHTML = "";
+    nxtButtonEl.innerHTML = "";
+
+    drawResult(score, currentQ);
+}
 
 const nextQ = qNr => {
     if (questions[qNr]) {
@@ -113,7 +149,7 @@ document.getElementById("next").addEventListener("click", () => {
         });
         if (answers.length == 0 && correctAns) score++;
     }
-    for (let i in choices) choices[i].checked = false;
+    choices.forEach(choice => choice.checked = false);
     currentQ++;
     nextQ(currentQ);
 });
