@@ -30,7 +30,7 @@
 
 #labelContainer {
     margin: auto;
-    width: 50%;
+    width: 55%;
     float: left;
     text-align: right;
 }
@@ -43,7 +43,7 @@
 #radioContainer {
     margin: auto;
     margin-top: 2.5px;
-    width: 50%;
+    width: 45%;
     float: right;
     text-align: left;
 }
