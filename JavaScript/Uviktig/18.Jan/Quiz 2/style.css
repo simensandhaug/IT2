@@ -1,9 +1,81 @@
 #container {
-    width: 33%;
+    width: 50%;
+    height: 50%;
     margin: auto;
     text-align: center;
 
     background-color: #c7c7c7;
     border-radius: 10px;
     padding: 10px;
+}
+
+#type {
+    margin-bottom: 25px;
+    margin-top: 0px;
+}
+
+#question {
+    margin-bottom: 0;
+}
+
+#break {
+    height: 1px;
+}
+
+#quizContainer {
+    margin: auto;
+    width: 50%;
+    text-align: left;
+}
+
+#labelContainer {
+    margin: auto;
+    width: 50%;
+    float: left;
+    text-align: right;
+}
+
+#chartContainer {
+    width: 50%;
+    margin: auto;
+}
+
+#radioContainer {
+    margin: auto;
+    margin-top: 2.5px;
+    width: 50%;
+    float: right;
+    text-align: left;
+}
+
+#score {
+    height: 30px;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    color: #0ed15f;
+    font-weight: bold;
+}
+
+#nxtButton {
+    margin: auto;
+    width: 10%;
+
+}
+
+#next {
+    margin-top: 30px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.choice {
+    padding: 10px;
+    margin: auto;
+    margin-left: 5px;
+}
+
+canvas {
+    top: 100px;
 }
