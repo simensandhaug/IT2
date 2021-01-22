@@ -1,11 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-image: url("background.jpeg");
+    background-position: center;
+    background-position-x: -500px;
+}
+
 #container {
-    width: 50%;
+    width: 100%;
     height: 50%;
     margin: auto;
     text-align: center;
-
-    background-color: #c7c7c7;
-    border-radius: 10px;
     padding: 10px;
 }
 
@@ -24,36 +30,39 @@
 
 #quizContainer {
     margin: auto;
-    width: 50%;
-    text-align: left;
+    width: 33%;
+    text-align: center;
+}
+
+#qContainer {
+    width: 33%;
+    text-align: center;
+    margin: auto;
 }
 
 #labelContainer {
+    font-size: 16px;
     margin: auto;
-    width: 50%;
+    width: auto;
     float: left;
-    text-align: right;
-}
-
-#chartContainer {
-    width: 50%;
-    margin: auto;
+    text-align: left;
+    width: 70%;
 }
 
 #radioContainer {
+    font-size: 16px;
     margin: auto;
     margin-top: 2.5px;
-    width: 50%;
+    width: 30%;
     float: right;
     text-align: left;
 }
 
 #score {
-    height: 30px;
+    font-size: large;
     width: 50%;
     margin: auto;
     text-align: center;
-    color: #0ed15f;
     font-weight: bold;
 }
 
@@ -64,9 +73,10 @@
 }
 
 #next {
+    font-size: 20px;
     margin-top: 30px;
-    width: 80px;
-    height: 30px;
+    width: 100px;
+    height: 50px;
     cursor: pointer;
 }
 
@@ -74,6 +84,8 @@
     padding: 10px;
     margin: auto;
     margin-left: 5px;
+    width: 16px;
+    height: 16px;
 }
 
 canvas {
