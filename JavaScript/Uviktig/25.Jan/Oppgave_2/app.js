@@ -28,25 +28,22 @@ const years = [{
         speed: 12264
     }
 ];
-
 const printOutput = () => {
     let minYear;
-    let min = years[0].drunk + years[0].speed;
+    let min = Infinity;
     years.forEach(year => {
-        if (year.drunk + year.speed < min) {
+        if ((year.drunk + year.speed) < min) {
             min = year.drunk + year.speed;
-            minYear = year.name;
+            output.innerHTML = `Lowest amount of cases in: ${year.name}. Drunk Driving: ${year.drunk}. Speeding: ${year.speed}`;
         }
     });
-    output.innerHTML = `Lowest amount of cases in: ${minYear}`;
 }
-
-years.forEach(year => {
-    yearEl.innerHTML += `<option>${year.name}</option>`
-});
+years.forEach(year => {yearEl.innerHTML += `<option>${year.name}</option>`});
 document.getElementById("button").addEventListener("click", () => {
     if (drunk.value != ``) years[yearEl.selectedIndex].drunk = parseInt(drunk.value);
     if (drunk.value != ``) years[yearEl.selectedIndex].speed = parseInt(speed.value);
     drunk.value = ``;
     speed.value = ``;
+    printOutput();
 });
+printOutput();
