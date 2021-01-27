@@ -364,7 +364,7 @@ document.getElementById("next").addEventListener("click", () => {
     });
     if(question.getType == "Multiple Choice") questions[currentQ].playerAnswer = playerAnswer.join(",");
     else questions[currentQ].playerAnswer = playerAnswer.join("");
-    console.log(questions[currentQ].playerAnswer)
+    console.log(questions[currentQ].playerAnswer);
     choices.forEach(choice => choice.checked = false);
     currentQ++;
     nextQ(currentQ);
