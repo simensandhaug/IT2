@@ -1,15 +1,14 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const c = document.getElementById("canvas");
+const ctx = c.getContext("2d");
 const input = document.getElementById("letterInput");
 
-//Random Words
-var wordList;
-fetch('http://random-word-api.herokuapp.com//word?number=1000')
-    .then(res => res.json())
-    .then(data => wordList = data)
-    .then(() => console.log(wordList))
 //Variables
 let hangman;
+
+//Randomword
+fetch('http://random-word-api.herokuapp.com//word?number=10')
+    .then(res => res.json())
+    .then(data => newGame(data))
 
 //Classes
 class Hangman {
@@ -17,29 +16,42 @@ class Hangman {
         this.word = words[Math.floor(Math.random() * words.length)];
         this.guesses = 0;
         this.amountGuessed = 0;
+        this.guessList = [];
     }
     win() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '60px Arial';
-        ctx.fillText("You Win!", canvas.width / 2 - 130, canvas.height / 2)
         setTimeout(() => {
-            newGame();
-        }, 5000);
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.font = '60px Arial';
+            ctx.fillText("You Win!", c.width / 2 - 130, c.height / 2)
+            setTimeout(() => {
+                location.reload();
+            }, 5000);
+        }, 500);
     }
     lose() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, c.width, c.height);
         ctx.font = '60px Arial';
-        ctx.fillText("You Lose!", canvas.width / 2 - 145, canvas.height / 2)
+        ctx.fillText("You Lose!", c.width / 2 - 145, c.height / 2);
+        ctx.fillText(this.word, c.width / 2 - 145, c.height / 2 + 100);
         setTimeout(() => {
-            newGame();
+            location.reload();
         }, 5000);
+    }
+    addToGuessed(guess) {
+        if (!this.guessList.includes(guess)) {
+            this.guessList.push(guess);
+            ctx.clearRect(0, c.height, 200, c.height - 100);
+            ctx.font = '30px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(this.guessList.join(" "), 20, c.height - 20)
+        }
     }
     drawLetterOnPos(i) {
         this.amountGuessed++;
         ctx.beginPath();
         ctx.font = '45px Arial'
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(this.word[i], canvas.width / this.word.length * i + 62.5, canvas.height / 2 - 358);
+        ctx.fillText(this.word[i], (c.width / this.word.length * i + 25) + (((c.width / this.word.length * i + c.width / this.word.length - 40)) - (c.width / this.word.length * i + 25)) / 2 - 15, c.height / 2 - 358);
         ctx.closePath();
     }
     showLetter(n) {
@@ -48,24 +60,24 @@ class Hangman {
         }
     }
     draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, c.width, c.height);
         for (let i = 0; i < this.word.length; i++) {
             ctx.beginPath();
-            ctx.moveTo(canvas.width / this.word.length * i + 50, canvas.height / 2 - 350);
-            ctx.lineTo(canvas.width / this.word.length * i + 100, canvas.height / 2 - 350);
+            ctx.moveTo(c.width / this.word.length * i + 25, c.height / 2 - 350);
+            ctx.lineTo(c.width / this.word.length * i + c.width / this.word.length - 40, c.height / 2 - 350);
             ctx.strokeStyle = '#ffffff';
             ctx.stroke();
             ctx.closePath();
         }
         ctx.beginPath();
-        ctx.moveTo(canvas.width / 2 - 200, canvas.height / 2 + 300);
-        ctx.lineTo(canvas.width / 2 - 250, canvas.height / 2 + 350);
-        ctx.moveTo(canvas.width / 2 - 200, canvas.height / 2 + 300);
-        ctx.lineTo(canvas.width / 2 - 150, canvas.height / 2 + 350);
-        ctx.moveTo(canvas.width / 2 - 200, canvas.height / 2 + 300);
-        ctx.lineTo(canvas.width / 2 - 200, canvas.height / 2 - 275);
-        ctx.lineTo(canvas.width / 2, canvas.height / 2 - 275);
-        ctx.lineTo(canvas.width / 2, canvas.height / 2 - 225);
+        ctx.moveTo(c.width / 2 - 200, c.height / 2 + 300);
+        ctx.lineTo(c.width / 2 - 250, c.height / 2 + 350);
+        ctx.moveTo(c.width / 2 - 200, c.height / 2 + 300);
+        ctx.lineTo(c.width / 2 - 150, c.height / 2 + 350);
+        ctx.moveTo(c.width / 2 - 200, c.height / 2 + 300);
+        ctx.lineTo(c.width / 2 - 200, c.height / 2 - 275);
+        ctx.lineTo(c.width / 2, c.height / 2 - 275);
+        ctx.lineTo(c.width / 2, c.height / 2 - 225);
         ctx.strokeStyle = '#ffffff';
         ctx.stroke();
         ctx.closePath();
@@ -74,40 +86,40 @@ class Hangman {
         ctx.beginPath();
         switch (n) {
             case 0:
-                ctx.arc(canvas.width / 2, canvas.height / 2 - 150, 75, 0, Math.PI * 2);
+                ctx.arc(c.width / 2, c.height / 2 - 150, 75, 0, Math.PI * 2);
                 break;
             case 1:
-                ctx.moveTo(canvas.width / 2, canvas.height / 2 - 75);
-                ctx.lineTo(canvas.width / 2, canvas.height / 2 + 250);
+                ctx.moveTo(c.width / 2, c.height / 2 - 75);
+                ctx.lineTo(c.width / 2, c.height / 2 + 250);
                 break;
             case 2:
-                ctx.moveTo(canvas.width / 2, canvas.height / 2);
-                ctx.lineTo(canvas.width / 2 - 75, canvas.height / 2 + 100);
+                ctx.moveTo(c.width / 2, c.height / 2);
+                ctx.lineTo(c.width / 2 - 75, c.height / 2 + 100);
                 break;
             case 3:
-                ctx.moveTo(canvas.width / 2, canvas.height / 2);
-                ctx.lineTo(canvas.width / 2 + 75, canvas.height / 2 + 100);
+                ctx.moveTo(c.width / 2, c.height / 2);
+                ctx.lineTo(c.width / 2 + 75, c.height / 2 + 100);
                 break;
             case 4:
-                ctx.moveTo(canvas.width / 2, canvas.height / 2 + 250);
-                ctx.lineTo(canvas.width / 2 + 75, canvas.height / 2 + 350);
+                ctx.moveTo(c.width / 2, c.height / 2 + 250);
+                ctx.lineTo(c.width / 2 + 75, c.height / 2 + 350);
                 break;
             case 5:
-                ctx.moveTo(canvas.width / 2, canvas.height / 2 + 250);
-                ctx.lineTo(canvas.width / 2 - 75, canvas.height / 2 + 350);
+                ctx.moveTo(c.width / 2, c.height / 2 + 250);
+                ctx.lineTo(c.width / 2 - 75, c.height / 2 + 350);
                 break;
             case 6:
-                ctx.arc(canvas.width / 2 + 30, canvas.height / 2 - 160, 5, 0, Math.PI * 2);
+                ctx.arc(c.width / 2 + 30, c.height / 2 - 160, 5, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
                 break;
             case 7:
-                ctx.arc(canvas.width / 2 - 30, canvas.height / 2 - 160, 5, 0, Math.PI * 2);
+                ctx.arc(c.width / 2 - 30, c.height / 2 - 160, 5, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
                 break;
             case 8:
-                ctx.arc(canvas.width / 2, canvas.height / 2 - 90, 40, 11 * Math.PI / 6, 7 * Math.PI / 6, true);
+                ctx.arc(c.width / 2, c.height / 2 - 90, 40, 11 * Math.PI / 6, 7 * Math.PI / 6, true);
                 break;
             case 9:
                 this.lose();
@@ -131,6 +143,7 @@ class Guess {
     }
     incorrect() {
         hangman.drawBody(hangman.guesses);
+        hangman.addToGuessed(this.guess);
     }
 }
 
@@ -148,8 +161,7 @@ document.addEventListener("keypress", (e) => {
 });
 
 //Functions
-const newGame = () => {
+const newGame = wordList => {
     hangman = new Hangman(wordList);
     hangman.draw();
 }
-newGame();
