@@ -4,6 +4,7 @@ const input = document.getElementById("letterInput");
 
 //Variables
 let hangman;
+let guessList = [];
 
 //Randomword
 fetch('http://random-word-api.herokuapp.com//word?number=10')
@@ -23,6 +24,7 @@ class Hangman {
             ctx.clearRect(0, 0, c.width, c.height);
             ctx.font = '60px Arial';
             ctx.fillText("You Win!", c.width / 2 - 130, c.height / 2)
+            ctx.fillText(this.word, c.width / 2 - 145, c.height / 2 + 100);
             setTimeout(() => {
                 location.reload();
             }, 5000);
@@ -151,7 +153,9 @@ class Guess {
 document.addEventListener("keypress", (e) => {
     if (e.key == "Enter") {
         if ((/[a-zA-Z]/).test(input.value)) {
+            if(guessList.includes(input.value)) return;
             let guess = new Guess(input.value);
+            guessList.push(input.value);
             if (guess.inWord()) guess.correct();
             else guess.incorrect();
             if (hangman.amountGuessed == hangman.word.length) hangman.win();
