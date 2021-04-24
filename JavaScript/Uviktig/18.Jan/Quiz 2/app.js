@@ -64,7 +64,7 @@ const questions = [{
         playerAnswer: "",
     },
     {
-        q: "Alberta is a province i which country?",
+        q: "Alberta is a province in which country?",
         choices: {
             a: "South-Africa",
             b: "Britain",

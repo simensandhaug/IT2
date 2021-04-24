@@ -5,6 +5,7 @@ body {
     background-image: url("background.jpeg");
     background-position: center;
     background-position-x: -500px;
+    overflow-x: hidden;
 }
 
 #container {
