@@ -1,0 +1,16 @@
+#barChart { 
+    display: flex;
+    width: 600px;
+    height: 500px;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 20px;    
+}
+#barChart > div { 
+    background-color: rgb(64, 189, 64);
+    margin: 5px;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    font-family: arial, verdana, sans-serif;
+}
