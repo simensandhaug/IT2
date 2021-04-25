@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Sirkel som følger musepekeren</title>
+  <meta charset="UTF-8">
+  <style>
+
+  body {
+    background-color: #323232;
+    cursor: none; /* skjuler musepekeren */
+    overflow: hidden; /* hindrer scrollbar */
+  }
+  div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  </style>
+</head>
+<body>
+
+<div></div>
+  
+<script>
+// Henter body-elementet og div-elementet
+var bodyEl = document.querySelector("body");
+var sirkelEl = document.querySelector("div");
+
+// Lytter etter musebevegelser på body-elementet
+bodyEl.addEventListener("mousemove", flyttSirkel);
+
+// Funksjonen flyttSirkel() flytter sirkelen etter musepekeren
+function flyttSirkel(e) {
+  // Setter sirkelens left-egenskap lik musepekerens x-koordinat
+  sirkelEl.style.left = (e.clientX - 25) + "px";
+
+  // Setter sirkelens top-egenskap lik musepekerens y-koordinat
+  sirkelEl.style.top = (e.clientY - 25) + "px";
+  
+  // Lar musepekerens posisjon styre sirkelens farge
+  sirkelEl.style.backgroundColor = "hsl(" + e.clientX + "," + e.clientY + "% , 50%)";
+sirkelEl.style.width = e.clientX;
+  sirkelEl.style.height = e.clientX;
+    
+}
+
+</script>  
+</body>
+</html>

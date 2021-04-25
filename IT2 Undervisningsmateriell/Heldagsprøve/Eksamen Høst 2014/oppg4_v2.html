@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ford</title>
+        <style>
+            #innhold{
+                width:70%;
+                background-color: beige;
+                margin-left: auto;
+                margin-right: auto;
+                border:solid black;
+            }
+            .smal{
+                width:200px;
+                margin-left: auto;
+                margin-right: auto;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            h1{
+                text-align: center;
+            }
+
+            #uttekst{
+                height: 200px
+            }
+        </style>
+    </head>
+    <body>
+        <div id="innhold">  <!--den ytterste div-boksen -->
+            <h1>Velg modell og tilleggsutstyr</h1>
+            <div class="smal">
+           
+                <label for "cbModell">Velg modell</label><br>
+                <select id="cbModell">
+                    
+                </select>
+            </div>
+            <div class="smal">
+                <label>Velg variant</label><br>
+                <label><input type="radio" id="rbTrend" name="rbVariant" checked>Trend</label>
+                <label><input type="radio" id="rbTitanium" name="rbVariant">Titanium</label>
+            </div>
+            <div class="smal">
+                <label>Du kan velge en eller flere av våre utstyrspakker</label><br><br>
+                
+                <input type= "checkbox" id="cbFam">
+                <label for "cbFam">Familiepakke</label><br>
+                <input type= "checkbox" id="cbFørerass">
+                <label for "cbFørerass">Førerassistentpakke</label><br>
+                <input type= "checkbox" id="cbStil">
+                <label for "cbStil">Stilpakke</label><br>
+            </div>
+            <div class="smal">
+                <button id="btnPris">Sjekk pris</button><br><br>
+                <div id="utTekst"></div>
+            </div>
+        </div>
+        
+        <script>
+            //Variabeldeklarasjon
+            
+            var cbModell=document.getElementById("cbModell");
+            var rbTrend=document.getElementById("rbTrend");
+            var rbTitanium=document.getElementById("rbTitanium");
+            var cbFam=document.getElementById("cbFam");
+            var cbFørerass=document.getElementById("cbFørerass");
+            var cbStil=document.getElementById("cbStil");
+            var btnPris=document.getElementById("btnPris");
+            var utTekst=document.getElementById("utTekst");
+            var pris=0;
+            var bil;  //brukes til å lagre objekt fra tabellen biler
+            
+            var biler=[ {modell:"Kuga",trend:401000,titanium:420000,familiepakke:1000,førerassistentpakke:10200,stilpakke:9200},
+                {modell:"C-max", trend:320000,  titanium:335000, familiepakke:1000, førerassistentpakke:9400,stilpakke:3600},
+                {modell:"Focus",trend:255000,titanium:325000,familiepakke:900,førerassistentpakke:12500,stilpakke:9000},
+                {modell:"Mondeo",trend:281000,titanium:361000,familiepakke:1100,førerassistentpakke:9900,stilpakke:7200}
+            ];
+            
+            
+            //Beregner pris, og skriver ut info om dette til brukeren
+            btnPris.onclick=function(){
+                pris=0;
+                for (bil of biler){
+                    if (bil.modell===cbModell.value){
+                        break; //Går ut av løkka etter å ha funnet riktig modell. Riktig objekt fra arrayen ligger nå i variabelen bil
+                    }
+                }
+                
+                //Sjekker brukerens valg, og legger til pris for valgene
+                if (rbTrend.checked){
+                    pris=pris+Number(bil.trend);
+                }
+                else if (rbTitanium.checked){
+                    pris=pris+Number(bil.titanium);
+                }
+                if (cbFam.checked){
+                    pris=pris+Number(bil.familiepakke);
+                }
+                if (cbFørerass.checked){
+                    pris=pris+Number(bil.førerassistentpakke);
+                }
+                if (cbStil.checked){
+                    pris=pris+Number(bil.stilpakke);
+                }
+                
+                //Skriver ut info til brukeren
+                utTekst.innerHTML="En Ford "+ bil.modell+" i varianten og med det tilleggsutstyret du har valgt, vil komme på <b>"+pris+" kroner</b>";
+                
+            }
+            
+            //Koden under kjøres ved oppstart
+            //Fyller bilmodeller inn i nedtrekksliste
+            for (bil of biler){   
+                cbModell.innerHTML+="<option value="+bil.modell+">"+bil.modell+"</option>";
+            }
+        </script>
+    </body>
+</html>

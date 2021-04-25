@@ -1,0 +1,60 @@
+<html>
+<head>
+  <title>Styre en firkant</title>
+  <meta charset="UTF-8">
+  <style>
+  body {
+    background-color: #323232;
+    cursor: none; /* skjuler musepekeren */
+    overflow: hidden; /* hindrer scrollbar */
+  }
+  div {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: LightBlue;
+  }
+  </style>
+</head>
+<body>
+
+<div></div>
+  
+<script>
+// Henter body-elementet og div-elementet
+var bodyEl = document.querySelector("body");
+var boksEl = document.querySelector("div");
+
+// Variabler for left- og top-egenskapene til boksen
+var venstre = 0;
+var topp = 0;
+
+// Setter boksens fart (flyttelengde)
+var fart = 10;
+
+// Lytter etter tastaturtrykk på body-elementet
+bodyEl.addEventListener("keydown", flyttBoks);
+
+// Funksjonen flyttBoks() flytter boksen
+function flyttBoks(e) {
+  // Finner ut hvilken tast som ble trykket
+  if (e.keyCode === 37) {  // Venstre tast
+    venstre -= fart;
+  } else if (e.keyCode === 39) { // Høyre tast
+    venstre += fart;
+  } else if (e.keyCode === 38) {  // Oppovertast
+    topp -= fart;
+  } else if (e.keyCode === 40) { // Nedovertast
+    topp += fart;
+  }
+  
+  // Setter boksens top- og left-egenskaper
+  boksEl.style.top = topp + "px";
+  boksEl.style.left = venstre + "px";
+}
+
+</script>  
+</body>
+</html>

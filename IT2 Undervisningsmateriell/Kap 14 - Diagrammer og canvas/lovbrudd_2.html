@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Eksempler</title>
+        <style>
+            #innramming{
+                width: 650px;
+                height: auto;
+                background-color: lightskyblue;
+                border-radius: 15px;
+                margin: auto;
+                padding: 20px;
+                text-align: center;
+            }
+            
+            #tabell{
+                width: 400px;
+                border: 1;
+                margin: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="innramming">
+            <h2>Registrer lovbrudd</h2>
+            
+            <select id="liste"></select>
+            <input type="number" id="inpProm" placeholder="Lovbrudd promille">
+            <input type="number" id="inpUh" placeholder="Lovbrudd hastighet">
+            <button id="leggTil">Legg til - endre</button>
+            <button id="slett">Slett</button>
+            <p id="utskrift"></p>
+            <table id="tabell"></table>
+            
+        </div>
+        <script>
+            var liste = document.getElementById("liste");
+            var inpProm = document.getElementById("inpProm");
+            var inpUh = document.getElementById("inpUh");
+            var leggTil = document.getElementById("leggTil");
+            var slett = document.getElementById("slett");
+            var utskrift = document.getElementById("utskrift");
+            var tabell = document.getElementById("tabell");
+            var endre = false; // variabel for å sjekke om man skal utføre endring eller ny registrering
+            
+            // array som inneholder årstall
+            var tabAar = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
+            
+            // array hvor registrerte lovbrudd skal inn
+            var tabLovbrudd = [];
+            
+            // fyller opp nedtrekksliste
+            for (var aar of tabAar){
+                liste.innerHTML += "<option>" + aar + "</option>";
+            }
+            
+            // funksjon som legger til eller endrer valgt årstall
+            leggTil.onclick = function(){   
+                var index = liste.selectedIndex; // index til det valgte året
+                
+                // sjekker om data allerede er registrert for det valgte årstallet. Hvis dette er tilfellet endres data, bruker en boolean varabel for å skille på dette
+                for (var i=0; i<tabLovbrudd.length; i++){
+                    if (tabLovbrudd[i].aar == tabAar[index]) {
+                        tabLovbrudd[i] = {aar:tabAar[index], pr:inpProm.value, uh:inpUh.value}; 
+                        endre = true;
+                    }
+                }
+                
+                // hvis ikke endring legges informasjonen til
+                if (endre == false){
+                    utskrift.innerHTML += "legg til";
+                    tabLovbrudd.push( {aar:tabAar[index], pr:inpProm.value, uh:inpUh.value} );
+                }
+                skrivUt(); // kaller funksjonen skrivUt()
+                endre = false;  
+            }
+            
+          
+            // funksjon som sletter all data for det valgte året
+            slett.onclick = function(){
+                var index = liste.selectedIndex;
+                // finner det aktuelle året og sletter det
+                for (var i=0; i<tabLovbrudd.length; i++){
+                  if (tabLovbrudd[i].aar == tabAar[index]) tabLovbrudd.splice(i, 1);
+                }
+                skrivUt(); // kaller funksjon skrivUt
+            }
+            
+            // funksjon som skriver ut innholdet i arrayet i en tabell
+            function skrivUt(){
+                tabLovbrudd.sort(function(a,b){ return a.aar-b.aar;}); // sorterer arrayet
+                
+                var sum=0; // sum for samlet lovbrudd et år
+                var lavest= Number(tabLovbrudd[0].pr) + Number(tabLovbrudd[0].uh); // setter det laveste til å være den første raden i arrayet
+                var aar = tabLovbrudd[0].aar; // variabel år
+                
+                // denn løkken og if-setningen finner det årstallet som har lavest lovbrudd
+                for (var lovbrudd of tabLovbrudd){
+                    sum = Number(lovbrudd.pr) + Number(lovbrudd.uh);
+                    if(sum<lavest) {
+                        aar = lovbrudd.aar;
+                        lavest = sum;
+                    }
+                }
+                utskrift.innerHTML = "År med lavest lovbrudd: " + aar;
+                tabell.innerHTML ="";
+                tabell.innerHTML = "<tr><th>År</th><th>Promille</th><th>Hastighet</th></tr>";
+                for (var lovbrudd of tabLovbrudd){
+                    tabell.innerHTML += "<tr><td>"+ lovbrudd.aar + "</td><td>" + lovbrudd.pr + "</td><td>" + lovbrudd.uh + "</td></tr>";
+                }
+            }
+            
+
+        </script>
+    </body>
+</html>
+

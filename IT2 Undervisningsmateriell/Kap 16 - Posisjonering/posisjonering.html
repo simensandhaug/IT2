@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Posisjonering</title>
+        <meta charset="UTF-8">
+        <style>
+            .innpakning{
+                width: 800px;
+                height: 1200px;
+                background-color: tomato;
+                margin: 50px auto;
+            }
+            
+            .innpakning div{
+                width: 100px;
+                height: 100px;
+                background-color: lightblue;
+            }
+            
+            .absolutt{
+                position: absolute;
+                left: 150px;
+                top: 250px;
+            }
+            .relativ{
+                position: relative;
+                top: 20px;
+                left: 20px;
+            }
+            .fiksert{
+                position: fixed;
+                left: 0px;
+                top: 200px;
+            }
+        </style>
+
+    </head>
+    
+    <body>
+        <div class="innpakning">
+            <div class="absolutt">absolute</div>      
+            <div class="relativ">relative</div>      
+            <div class="fiksert">fixed</div>      
+        </div>
+    </body>
+</html>

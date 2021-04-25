@@ -1,0 +1,57 @@
+<html>
+<head>
+  <title>Styre transition med knapp</title>
+  <meta charset="UTF-8">
+  <style>
+  .boks {
+    margin: 30px;
+    margin-left: 0;
+    height: 50px;
+    width: 50px;
+    background-color: blue;
+    transition: 3s;
+  }
+  .flyttHoyre {
+    margin-left: 50%;
+  }
+  .flyttVenstre {
+    margin-left: 0;
+  }
+  </style>
+</head>
+<body>
+
+<div class="boks"></div> 
+
+<button id="knapp">start</button>
+
+<script>
+// Henter div-elementet og knappen
+var boksEl = document.querySelector(".boks");
+var knappEl = document.querySelector("#knapp");
+
+// Lytter etter click-hendelser på knappen
+knappEl.addEventListener("click", knappFunksjon);
+
+// Når knappen trykkes
+function knappFunksjon() {
+  if(knappEl.innerHTML === "start") { 
+    // Endrer knappens tekst
+    knappEl.innerHTML = "tilbake";
+    // Bruker classList for å ta bort klassen flyttVenstre
+    boksEl.classList.remove("flyttVenstre");
+    // Bruker classList for å legge til klassen flyttHoyre
+    boksEl.classList.add("flyttHoyre");
+  } else {
+    // Endrer knappens tekst
+    knappEl.innerHTML = "start";
+    // Bruker classList for å ta bort klassen flyttHoyre
+    boksEl.classList.remove("flyttHoyre");
+    // Bruker classList for å legge til klassen flyttVenstre
+    boksEl.classList.add("flyttVenstre");
+  }  
+}
+</script>  
+  
+</body>
+</html>

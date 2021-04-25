@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<title>Animasjonshendelser</title>
+<style>
+.boks, .sirkel {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  animation-name: vis;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+.boks {
+  background-color: red;
+  animation-play-state: running;
+  animation-iteration-count: 5;
+}
+.sirkel {
+  background-color: blue;
+  border-radius: 50%;
+  animation-play-state: paused;
+  animation-iteration-count: 3;
+}
+@keyframes vis {
+    0%	{ opacity: 0; }
+  100%	{ opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="boks"> </div>
+
+<div class="sirkel"> </div>
+
+<script>
+// Henter de to elementene
+var boksEl = document.querySelector(".boks");
+var sirkelEl = document.querySelector(".sirkel");
+
+// Legger til alle animasjonshendelser på begge elementene
+boksEl.addEventListener("animationstart", lytteFunksjon);
+boksEl.addEventListener("animationiteration", lytteFunksjon);
+boksEl.addEventListener("animationend", lytteFunksjon);
+sirkelEl.addEventListener("animationstart", lytteFunksjon);
+sirkelEl.addEventListener("animationiteration", lytteFunksjon);
+sirkelEl.addEventListener("animationend", lytteFunksjon);
+
+// Funksjon som kjører hver gang en hendelse fyres av
+function lytteFunksjon(e) {
+  // Skriver hvilken hendelse som inntraff, og tidspunktet
+  // til konsollen
+  console.log(e.type + " tid: " + e.elapsedTime);
+  
+  // Hvis hendelsen animationend inntreffer
+  if (e.type === "animationend") {
+    // Sett i gang animasjonen til sirkelelementet
+    sirkelEl.style.animationPlayState = "running";
+  }
+}
+
+</script>
+</body>
+</html>

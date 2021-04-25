@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bestilling Ford</title>
+        <meta charset="utf-8">
+        <style>
+            #boks{
+                width: 400px;
+                height: 400px;
+                background-color: lightskyblue;
+                padding: 15px;
+                border-radius: 20px;
+                margin: auto;
+            }
+            
+            p {
+                font-weight: bold;
+                
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="boks">
+            <h1>Bestilling av bil</h1>
+            <p>Velg bilmodell</p>
+            <select id="listeModell"></select>
+
+            <p>Velg utstyrsvariant</p>
+            <div id="radioKnapper"></div>
+
+            <p>Velg ekstrautstyr</p>
+            <div id="sjekkBokser"></div>
+            <br>
+            <button id="btnBestill">Bestill</button>
+            <p id="utskrift"></p>
+        </div>
+       <script>
+            var listeModell = document.getElementById("listeModell");
+            var btnBestill = document.getElementById("btnBestill");
+           // array med all informasjon
+            var tabBil = {
+                Modell:["Kuga", "C-max", "Focus", "Mondeo"],
+                Utstyr:["Trend", "Titanium"],
+                Pakke: ["Familiepakke", "Førerassistentpakke", "Stilpakke"]
+            };
+            
+           var tabPriser = [
+                [401000, 420000, 1000, 10200, 9200],
+                [320000, 335000, 1000, 9400, 3600],        
+                [255000, 325000, 900, 12500, 9000],
+                [281000, 361000, 1100, 9900, 7200]
+           ];
+            
+        // fyller nedtrekksliste    
+           for (var modell of tabBil.Modell){   
+               listeModell.innerHTML += "<option>" + modell + "</option>"
+           }
+           
+           // fyller to radioknapper, fleksibel løsning hvis det legges til flere modeller
+           for (var utstyr of tabBil.Utstyr){
+                radioKnapper.innerHTML += "<label><input type='radio' name='rbg' id="+utstyr+">"+utstyr +"</label>"
+           } 
+                       
+           // fyller sjekkbokser
+                for (var pakke of tabBil.Pakke){
+                    sjekkBokser.innerHTML += "<label for " + pakke+">" +pakke +"</label><input type='checkbox' id=" + pakke+">";
+                }
+           
+           btnBestill.onclick = function(){
+                var index = listeModell.selectedIndex;
+                var pris = 0;
+               
+                if(Trend.checked){
+                    pris = tabPriser[index][0];
+                }
+                else {
+                   pris = tabPriser[index][1];
+                }
+               
+               
+               if(Familiepakke.checked){
+                   pris += tabPriser[index][2];
+               }
+               if(Førerassistentpakke.checked){
+                   pris += tabPriser[index][3];
+               }
+               if(Stilpakke.checked){
+                   pris += tabPriser[index][4];
+               }
+               
+                   
+               utskrift.innerHTML = "Pris for valgt bil med utstyr: " + pris + " kroner";
+           }
+           
+        </script> 
+    </body>
+</html>

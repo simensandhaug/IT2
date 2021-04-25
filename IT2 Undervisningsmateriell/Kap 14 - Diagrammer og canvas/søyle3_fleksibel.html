@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <style>
+            #chart { /*CSS-stil til flexbox*/
+                display: flex;
+                width: 600px;
+                height: 500px;
+                flex-direction: row;
+                align-items: flex-end;
+                margin: 20px;
+                    
+            }
+            #chart > div { /*CSS-stil til flex items*/
+                background-color: DarkSeaGreen;
+                margin: 5px;
+                flex-grow: 1;
+                text-align: center;
+                color: white;
+                font-family: arial, verdana, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="chart"><!-- Fylles med data fra array med temperaturer --></div>
+        <script>
+            // deklarer variabler
+            var chart = document.getElementById("chart");
+            var temperaturer = [16, 16, 18, 21, 25, 30, 33, 33, 30, 25, 20, 17];
+            
+            // funksjon som finner høyeste verdi i arrayet temperaturer, returnerer høyeste verdi
+            function finnMaks() {
+                var maks = -Infinity;
+                for(var temp of temperaturer) { //Traverserer temperaturene
+                    if(temp > maks) {
+                        maks = temp;
+                    }
+                }
+                return maks;
+            }
+            
+            // funksjon som tegner søyler ved å bruker DIV'er. løkke som går gjennom hver verdi i arayet og genrerer en søyle ut fra verdien
+            function tegnStolper() { //Oppretter stolpene
+                var maks = finnMaks();
+                for(var temp of temperaturer) {
+                    var prosent = temp / maks * 100;
+                    chart.innerHTML += "<div style='height:" + prosent + "%' >" + temp + "</div>";
+                }
+            }
+            // funksjonskall
+            tegnStolper();
+        </script>
+    </body>
+</html>

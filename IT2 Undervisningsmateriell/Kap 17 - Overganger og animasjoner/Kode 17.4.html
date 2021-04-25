@@ -1,0 +1,59 @@
+<html>
+<head>
+  <title>Bokser som danser</title>
+  <meta charset="UTF-8">
+  <style>
+  body {
+    background-color: #323232;
+  }
+  .innpakning {
+    width: 600px;
+    height: 300px;
+    margin: 50px auto;
+    background-color: #1a4741;	
+    position: relative;
+  }
+  .animer {
+    position: absolute;
+    top: 0px;
+    width: 20px;
+    height: 5px;
+    background-color: #54ffe8;
+    animation: sprett 5s infinite ease-in;
+  }
+  @keyframes sprett {
+    0% 		{ top: 0px; }
+    50%		{ top: 295px; }
+    100%	{ top: 0px; }
+  }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+</div>
+
+<script>
+// Henter innpakningen der vi skal plassere bokser
+var innpakningEl = document.querySelector(".innpakning");
+// Bestemmer hvor mange bokser vi vil lage (og animere)
+var antallBokser = 30;
+
+// Løkke som lager og animerer alle boksene
+for (var i = 0; i < antallBokser; i++) {
+  // Lager en ny boks (et nytt div-element)
+  var nyBoks = document.createElement("div");
+  // Legger til klassen .animer til den nye boksen
+  nyBoks.className = "animer"; 
+  // evt. nyBoks.classList.add("animer");
+  // Plasserer boksene vannrett etter hverandre
+  nyBoks.style.left = i * 20 + "px";
+  // Utsetter hver animasjon, slik at de ikke starter samtidig
+  nyBoks.style.animationDelay = i * 0.2 + "s";
+  // Legger boksen til i innpakningen
+  innpakningEl.appendChild(nyBoks); 
+}
+</script>  
+  
+</body>
+</html>

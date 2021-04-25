@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <title>La brukeren rotere et div-element</title>
+        <style>
+            body {
+                padding: 50px;
+            }
+            #vektstang {
+                width: 300px;
+                height: 30px;
+                background-color: firebrick;
+                transition: 1s; /* Endringer skal ta ett sekund */
+                margin-top: 100px;
+            } 
+        </style>
+    </head>
+    <body>
+        <form id="frmGjett">
+            <input type="number" id="inpVekt" required>
+            <button type="submit">Gjett vekt</button>
+        </form>
+        <div id="vektstang"></div>
+    </body>
+    <script>
+        var frmGjett = document.getElementById("frmGjett");
+        var inpVekt = document.getElementById("inpVekt");
+        var vektstang = document.getElementById("vektstang");
+        frmGjett.onsubmit = function(evt) {
+            evt.preventDefault();
+            var vekt = Number(inpVekt.value); //Gjør om tekst-input til tall
+            if(vekt > 10) {
+                vektstang.style.transform = "rotate(20deg)";
+            }
+            else if(vekt < 10) {
+                vektstang.style.transform = "rotate(-20deg)";
+            }
+            else {
+                vektstang.style.transform = "rotate(0deg)";
+            }
+        }
+    </script>
+</html>

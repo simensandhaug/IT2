@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Styre transition med knapp</title>
+  <meta charset="UTF-8">
+  <style>
+     .boks {
+         margin: auto;
+         margin-top: 100px;
+         height: 50px;
+         width: 50px;
+         background-color: blue;
+         transition: all 1s;
+    } 
+
+  </style>
+</head>
+<body>
+
+<div class="boks"></div> 
+
+
+<script>
+    // Henter div-elementet og body-elementet
+    var boksEl = document.querySelector(".boks");
+    var bodyEl = document.querySelector("body");
+    
+    // Lytter etter tastaturhendelser
+    bodyEl.addEventListener("keydown", endring);
+    
+    // Angir bredde, høyde og endring for boksen 
+    var bredde = 50;
+    var hoyde = 50;
+    var endring = 20;
+    
+    function endring(e) {
+        if (e.key == "ArrowUp") {
+            hoyde += endring;
+         } else if (e.key == "ArrowDown") {
+            hoyde -= endring;
+         } else if (e.key == "ArrowLeft") {
+            bredde -= endring;
+         } else if (e.key == "ArrowRight") {
+            bredde += endring;
+         }
+         boksEl.style.width = bredde + "px";
+         boksEl.style.height = hoyde + "px";
+    } 
+</script>  
+  
+</body>
+</html>

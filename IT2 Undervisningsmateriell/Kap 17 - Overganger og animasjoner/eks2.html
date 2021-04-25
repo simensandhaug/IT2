@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <title>Endre bredde på tekstfelt</title>
+        <style>
+            .skalerbar {
+                width: 80px;
+                transition: width 1s;
+            }
+            .skalerbar:focus {
+                width: 300px;
+            }
+        </style>
+    </head>
+    <body>
+        <input class="skalerbar" type="text">
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>The Band</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <style>
+        
+    </style>
+</head>
+<body>
+    
+    <audio id="lyd" src="lyd1.mp3"></audio>
+    
+    <button id="btnStart">Start lyd</button>
+    <button id="btnPause">Pause</button>
+    
+    <script>
+
+        // Lyder
+        var lyd = document.getElementById("lyd");
+        /*
+        // alternativ måte å hente inn lydfilen
+        var lyd = new Audio()
+        lyd.src = "lyd1.mp3" 
+        */
+        var btnStart = document.getElementById("btnStart");
+        var btnPause = document.getElementById("btnPause");
+        
+        btnStart.onclick = function(){
+            lyd.play();
+        }
+        
+        btnPause.onclick = function(){
+            lyd.pause();
+        }
+         
+
+    </script>
+
+</body>
+</html>

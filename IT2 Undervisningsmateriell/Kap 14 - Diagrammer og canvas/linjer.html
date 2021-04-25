@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <title>canvas-elementet</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #e0e0e0;
+    }
+    #mittCanvas {
+      background-color: #ffffff;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="mittCanvas" width="500" height="300"></canvas>
+    
+</body>
+<script>
+    var canvas = document.getElementById("mittCanvas");
+    var ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.moveTo(150, 50);
+    ctx.lineTo(150, 250);
+    ctx.moveTo(200, 50);
+    ctx.lineTo(200, 250);
+    
+    ctx.strokeStyle = "green";
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(250, 50);
+    ctx.lineTo(250, 250);
+    ctx.moveTo(300, 50);
+    ctx.lineTo(300, 250);
+    
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
+    
+    
+</script>
+</html>

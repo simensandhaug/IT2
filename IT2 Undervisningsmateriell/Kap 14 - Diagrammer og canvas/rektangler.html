@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <title>canvas-elementet</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #e0e0e0;
+    }
+    #mittCanvas {
+      background-color: #ffffff;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="mittCanvas" width="500" height="300"></canvas>
+    
+</body>
+<script>
+    var canvas = document.getElementById("mittCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    // finnes tre rektangelmetoder, alle tre tar argumentene x, y, bredde og høyde
+    ctx.fillRect(50,50,100,200);
+    ctx.fillStyle = "lightblue"
+    ctx.fillRect(100,100, 100, 200);
+    
+    ctx.strokeStyle = "red";
+    ctx.lineWidth=1;
+    ctx.strokeRect(300,250, 120,40);
+    
+    ctx.clearRect(50,50,100,50)
+</script>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registrer personer</title>
+        <meta charset="utf-8">
+        
+        <style>
+            #innhold{
+                height: 300px;
+                width: 500px;
+                padding: 30px;
+                background-color: lightgrey;
+                margin: auto;
+                border-radius: 15px;
+            }
+      
+      
+        </style>
+    </head>
+    <body>
+       
+        <div id="innhold">
+            <h1>Registrer personer med alder</h1>
+            <label>Navn:<input type="text" id="inpNavn"></label>
+            <label>Alder:<input type="text" id="inpAlder"></label>
+            <br>
+            <br>
+            <button id="btnReg">Legg til</button>
+            <button id="btnVis">Vis alle</button>
+            <button id="btnSlett">Slett</button>
+            <button id="btnOppdater">Oppdater</button>
+            
+            <div id="utskrift"></div>
+            
+        </div>
+        <script>
+            var tabPers = [];
+            var inpNavn = document.getElementById("inpNavn");
+            var inpAlder = document.getElementById("inpAlder");
+            var utskrift = document.getElementById("utskrift");
+            var btnReg = document.getElementById("btnReg");
+            var btnVis = document.getElementById("btnVis");
+            var btnSlett = document.getElementById("btnSlett");
+            var btnOppdater = document.getElementById("btnOppdater");
+            
+            btnReg.onclick=function(){
+                tabPers.push( {navn:inpNavn.value, alder:inpAlder.value} )
+                inpNavn.value="";
+                inpAlder.value="";
+            }
+            
+            function sammenlignTall(a,b){
+                return a.alder - b.alder;
+            }
+            
+            btnVis.onclick=function(){
+                utskrift.innerHTML = "";
+                tabPers.sort(sammenlignTall)
+                
+                // funksjonskall, forteller at funksjonen skal kjøre
+                skrivUt();
+                
+            }
+            
+            btnSlett.onclick=function(){
+                utskrift.innerHTML = "";
+                tabPers.sort(sammenlignTall)
+                
+                for(var i=0; i<tabPers.length; i++){
+                      if (tabPers[i].navn == inpNavn.value){
+                        tabPers.splice(i,1)
+                    }
+                }
+                
+                skrivUt();
+                
+            }
+            
+            btnOppdater.onclick=function(){
+                utskrift.innerHTML = "";
+                tabPers.sort(sammenlignTall)
+                
+                for(var i=0; i<tabPers.length; i++){
+                      if (tabPers[i].navn == inpNavn.value){
+                        tabPers[i].alder = inpAlder.value;
+                    }
+                }
+                
+                skrivUt();
+                
+            }
+            
+            function skrivUt(){
+                for (var person of tabPers){
+                    utskrift.innerHTML +=  person.navn + " er " + person.alder +"<br>";
+                }
+            }
+       
+            // funkjson som ikke er helt ferdig
+            function lagTabell(){
+                var tabellEl = document.createElement("table");
+                var tbodyEl = document.createElement("tbody");
+                var overskrifter = "<tr>"
+                overskrifter += "<th>Navn</th>";
+                overskrifter += "<th>Fødselsår</th>";
+                overskrifter += "</tr>";
+                
+                tbodyEl.innerHTML += overskrifter;
+                
+                for (var i=0; i<tabPers.length;i++){
+                    var rad ="<tr>";
+                    rad += "<td>" + tabPers[i].navn + "</td>";
+                    rad += "<td>" + tabPers[i].alder + "</td>";
+                    rad += "</tr>";
+                    
+                    tbodyEl.innerHTML += rad;
+                }
+                tabellEl.appendChild(tbodyEl);
+                utskrift.appendChild(tabellEl);
+            }
+            
+        </script> 
+    </body>
+</html>

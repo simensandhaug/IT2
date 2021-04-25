@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Turistforeningen</title>
+        <meta charset="utf-8">
+        <style>
+            #boks{
+                width: 600px;
+                background-color: lightgrey;
+                padding: 15px;
+                border-radius: 20px;
+                margin: auto;
+            }
+            
+           #diagram {
+                display: flex;
+                width: 300px;
+                height: 300px;
+                flex-direction: row;
+                align-items: flex-end;
+            }
+            #diagram>div{
+                background-color: darkcyan;
+                margin: 5px;
+                padding: 5px;
+                flex-grow: 1;
+                color: white;
+                writing-mode: tb-rl;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="boks">
+            <h1>Turistforeningen - turoversikt</h1>
+            <p>Velg tur</p>
+            <select id="listeTur"></select>
+            <p id="utskrift"></p>
+            <button id="btnVisDiagram">Vis diagram</button>
+            <div id="diagram"></div><br>
+            <button id="btnH">Liste etter nivå</button>
+            <table id="tabInfo" width="550px" ></table>
+        </div>
+        
+       <script>
+            var listeTur = document.getElementById("listeTur");
+            var btnVis = document.getElementById("btnVis");
+            var utskrift = document.getElementById("utskrift");
+            var btnVisDiagram = document.getElementById("btnVisDiagram");
+            var btnH = document.getElementById("btnH");
+            var diagram = document.getElementById("diagram");
+            var tabInfo = document.getElementById("tabInfo");
+ 
+           // array med all informasjon 
+           var tabTurer = [
+               {navn:"Jotunheimen rundt", lengde:75, hoyde:4800, dager:4 },
+               {navn: "Havbris på Hvaler", lengde: 45, hoyde: 150, dager: 2},
+               {navn:"Rondanes Perler", lengde: 64, hoyde: 2300, dager:3},
+               {navn:"Østmarka rundt", lengde: 56, hoyde: 1800, dager: 3}
+               
+           ];
+           
+           // tabell for H-faktor
+           var tabH = [];
+           
+        // fyller nedtrekksliste og fyller tabell for H-faktor. merk: her bruker jeg samme løkke til å gjøre to helt foskjellige oprasjoner    
+          
+           for (var i=0; i<tabTurer.length; i++){   
+               listeTur.innerHTML += "<option>" + tabTurer[i].navn + "</option>"
+               tabH.push(Math.round(tabTurer[i].lengde*tabTurer[i].hoyde/tabTurer[i].dager/1000));
+            
+           }
+           
+           listeTur.onchange = function(){
+                var index = listeTur.selectedIndex;           
+                   
+                utskrift.innerHTML = "Du valgte turen: <b>" + tabTurer[index].navn + "</b> som er <b>" + tabTurer[index].lengde + "</b> km lang, og har <b>" + tabTurer[index].hoyde + "</b> høydemeter " + "fordelt på <b>" + tabTurer[index].dager + "</b> dager";
+           }
+           
+           btnVisDiagram.onclick = function(){
+                diagram.innerHTML = "";
+                 for (var i=0; i<tabTurer.length; i++){
+                   diagram.innerHTML += "<div style='height:"+tabTurer[i].lengde*3+"px'>"+tabTurer[i].navn+"<br>"+tabTurer[i].lengde+" km </div>";
+            }
+           }
+           
+           btnH.onclick = function(){
+                    tabInfo.innerHTML = "";
+               tabInfo.innerHTML = "<tr><th>Tur</th><th>Lengde</th><th>Antall høydemeter</th><th>Antall dager</th><th>H-faktor</th>";
+                    for (var i=0; i<tabTurer.length; i++){
+                        tabInfo.innerHTML += "<tr><td>" +tabTurer[i].navn + "</td><td>" +tabTurer[i].lengde + "</td><td>" + tabTurer[i].hoyde + "</td><td>" + tabTurer[i].dager +"</td><td>" + tabH[i] + "</td></tr> ";
+            }  
+           }
+           
+           
+        </script> 
+    </body>
+</html>
