@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regjering</title>
+    <script src="oppgave2.js" defer></script>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .flex__container {
+            border: 2px solid black;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .bar {
+            margin: 20px;
+            width: 100px;
+        }
+
+        #B {
+            color: white;
+            text-align: center;
+            background-color: teal;
+            height: 100px;
+        }
+
+        #RG {
+            color: white;
+            text-align: center;
+            background-color: tomato;
+            height: 100px;
+        }
+
+        .output__container {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Regjeringsresultater 2013</h1>
+    <div class="flex__container" id="barchart">
+        <div id="B" class="bar"></div>
+        <div id="RG" class="bar"></div>
+    </div>
+    <div class="output__container">
+        <p id="winner"></p>
+        <p id="differance"></p>
+    </div>
+</body>
+
+</html>

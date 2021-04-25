@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+  <title>Oppgave 2</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../stilark/brukerinput.css">
+  <style>
+    body {
+      background-color: #323232;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .innpakning {
+      width: 750px;
+      padding: 10px;
+      background-color: white;
+      margin: auto;
+    }
+    #menybilde {
+      width: 750px;
+      height: 422px;
+      margin-bottom: 20px;
+      background-image: url("bilder/menybilde.jpg");
+      position: relative;
+    }
+    .knapp {
+      background-color: lightgrey;
+      opacity: 0.5; /* gjør "knappene" litt gjennomsiktige */
+      position: absolute; /* posisjonerer "knappene" i forhold til elementet de er i */
+      cursor: pointer;
+    }
+    #grantoppen {
+      width: 173px;
+      height: 110px;
+      top: 143px;
+      left: 89px;
+      cursor: initial;
+    }
+    #granbo {
+      width: 100px;
+      height: 77px;
+      top: 86px;
+      left: 279px;
+    }
+    #granstua {
+      width: 104px;
+      height: 86px;
+      top: 125px;
+      left: 380px;
+    }
+    #granhaug {
+      width: 84px;
+      height: 68px;
+      top: 123px;
+      left: 484px;
+      cursor: initial;
+    }
+    #bildekarusell {
+      width: 710px;
+      margin: 30px auto;
+      padding: 20px;
+      position: absolute;
+      top: 120px;
+      z-index: 1;
+      background-color: #ffffff;
+      display: none;
+    }
+    .kolonne {
+      background-color: lightgrey;
+      padding: 10px;
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+
+
+
+<div class="innpakning">
+  <div id="bildekarusell">
+    <div class="kolonne">
+      <img src="" width="320" height="180" id="aktueltbilde"> <br>
+      <button id="forrige"> forrige bilde </button> <button id="neste"> neste bilde </button>
+    </div>
+    <div class="kolonne">
+      <p id="hytteinfo"></p>
+      <button id="lukk"> Lukk vindu </button>
+    </div>
+  </div>
+
+  <h1> Utleiehytter </h1>
+
+  <div id="menybilde">
+    <div class="knapp" id="grantoppen"></div>
+    <div class="knapp" id="granbo"></div>
+    <div class="knapp" id="granstua"></div>
+    <div class="knapp" id="granhaug"></div>
+  </div>
+
+  <h2> Se video av hyttefeltet </h2>
+  <video id="hyttevideo" controls>
+    <source src="video/hyttefelt_edit.mp4" type="video/mp4">
+  </video>
+</div>
+
+
+<script>
+// Henter elementer
+var menybildeEl = document.querySelector("#menybilde");
+var granboEl = document.querySelector("#granbo");
+var granstuaEl = document.querySelector("#granstua");
+var bildekarusellEl = document.querySelector("#bildekarusell");
+var lukkEl = document.querySelector("#lukk");
+var hytteinfoEl = document.querySelector("#hytteinfo");
+var aktueltbildeEl = document.querySelector("#aktueltbilde");
+var nesteEl = document.querySelector("#neste");
+var forrigeEl = document.querySelector("#forrige");
+
+// Legger til lyttere
+granboEl.addEventListener("click", visBilder);
+granstuaEl.addEventListener("click", visBilder);
+lukkEl.addEventListener("click", skjulBilder);
+nesteEl.addEventListener("click", nesteBilde);
+forrigeEl.addEventListener("click", forrigeBilde);
+
+// Oversikt over hyttene
+var hytteegenskaper = [
+  { hytte: "granstua", sengeplasser: 4, standard: "Høy", badstue: "Ja", ukepris: "12000" },
+  { hytte: "granbo", sengeplasser: 6, standard: "Middels", badstue: "Nei", ukepris: "15000" },
+  { hytte: "grantoppen", sengeplasser: 8, standard: "Lav", badstue: "Nei", ukepris: "16000" },
+  { hytte: "granhaug", sengeplasser: 10, standard: "Høy", badstue: "Ja", ukepris: "30000" }
+];
+
+// Lager én variabel for valgt hytte og én for hvilket bildenummer som vises
+var valgtHytte = "";
+var bildenummer = 1;
+
+// Funksjon som viser informasjon om en valgt hytte
+function visBilder(e) {
+  // Viser bildekarusell-elementet
+  bildekarusellEl.style.display = "flex";
+
+  // Finner ut hvilken hytte som er valgt
+  valgtHytte = e.target.id;
+
+  // Lager en tekst med informasjon om gitt hytte
+  var hyttetekst = "";
+
+  for (var i = 0; i < hytteegenskaper.length; i++) {
+    if (hytteegenskaper[i].hytte == valgtHytte) {
+      for (egenskap in hytteegenskaper[i]) {
+        hyttetekst += "<p><b>" + egenskap + ":</b> " + hytteegenskaper[i][egenskap] + "</p>";
+      }
+    }
+  }
+
+  // Skriver ut tekst om gitt hytte til nettsiden
+  hytteinfoEl.innerHTML = hyttetekst;
+
+  // Legger til første bilde for gitt hytte
+  aktueltbildeEl.src = "bilder/" + valgtHytte + "0" + bildenummer + ".jpg";
+}
+
+// Funksjon som bytter til neste bilde
+function nesteBilde() {
+  if (bildenummer == 3) {
+    bildenummer = 1;
+  } else {
+    bildenummer++;
+  }
+
+  // Legger til neste bilde for gitt hytte
+  aktueltbildeEl.src = "bilder/" + valgtHytte + "0" + bildenummer + ".jpg";
+}
+
+// Funksjon som bytter til forrige bilde
+function forrigeBilde() {
+  if (bildenummer == 1) {
+    bildenummer = 3;
+  } else {
+    bildenummer--;
+  }
+
+  // Legger til neste bilde for gitt hytte
+  aktueltbildeEl.src = "bilder/" + valgtHytte + "0" + bildenummer + ".jpg";
+}
+
+// Funksjon som skjuler bildekarusellen
+function skjulBilder() {
+  bildekarusellEl.style.display = "none";
+}
+
+</script>
+
+</body>
+</html>

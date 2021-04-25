@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 2 og 3 </title>
+  <link rel="stylesheet" href="../brukerinput.css">
+  <link rel="stylesheet" href="tabellstil.css">
+  <style>
+  body {
+    background-color: #e0e0e0;
+    font-family: "Century Gothic", Arial, sans-serif;
+    font-size: 14px;
+    color: #323232;
+  }
+  #hoved, #resultater {
+    width: 800px;
+    border-radius: 5px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: Azure;
+  }
+  </style>
+</head>
+<body>
+
+<div id="hoved">
+  <h1> Registrer resultater </h1>
+  Velg hjemmelag: <select id="velgHjemmelag"></select>
+  Antall mål scoret av hjemmelag: <input type="number" id="velgHjemmemaal">
+  Velg bortelag: <select id="velgBortelag"></select>
+  Antall mål scoret av bortelag: <input type="number" id="velgBortemaal">
+
+  <button> Legg til kamp </button>
+
+  <p id="bekreftelse"></p>
+</div>
+
+<div id="resultater">
+</div>
+
+<script>
+// Henter HTML-elementer
+var hovedEl = document.querySelector("#hoved");
+var velgHjemmelagEl = document.querySelector("#velgHjemmelag");
+var velgHjemmemaalEl = document.querySelector("#velgHjemmemaal");
+var velgBortelagEl = document.querySelector("#velgBortelag");
+var velgBortemaalEl = document.querySelector("#velgBortemaal");
+var knappEl = document.querySelector("button");
+var bekreftelseEl = document.querySelector("#bekreftelse");
+var resultatEl = document.querySelector("#resultater");
+
+// Legger til en lytter på knappen
+knappEl.addEventListener("click", registrerKamp)
+
+// Array med oversikt over lagene
+var lag = [
+  { lagid: 0, navn: "AC Milan", antallKamper: 0, kamperVunnet: 0, kamperUavgjort: 0, kamperTapt: 0, egneMaal: 0, maalMot: 0, maalforskjell: 0, poengsum: 0 },
+  { lagid: 1, navn: "AS Roma", antallKamper: 0, kamperVunnet: 0, kamperUavgjort: 0, kamperTapt: 0, egneMaal: 0, maalMot: 0, maalforskjell: 0, poengsum: 0 },
+  { lagid: 2, navn: "FC Inter", antallKamper: 0, kamperVunnet: 0, kamperUavgjort: 0, kamperTapt: 0, egneMaal: 0, maalMot: 0, maalforskjell: 0, poengsum: 0 }
+];
+
+// Fyller de to nedtrekksmenyene med lagnavnene
+for (var i = 0; i < lag.length; i++) {
+  // Lager et option-element for hjemme- og bortelag
+  var optionHjemmeEl = document.createElement("option");
+  var optionBorteEl = document.createElement("option");
+  // Legger til informasjon om laget (i begge option-elementene)
+  optionHjemmeEl.value = lag[i].lagid;
+  optionHjemmeEl.innerHTML = lag[i].navn;
+  optionBorteEl.value = lag[i].lagid;
+  optionBorteEl.innerHTML = lag[i].navn;
+  // Legger til elementet i begge nedtrekksmenyene
+  velgHjemmelagEl.appendChild(optionHjemmeEl);
+  velgBortelagEl.appendChild(optionBorteEl);
+}
+
+// Array med oversikt over kampene som spilles
+var kamper = [];
+
+// Funksjon som registrerer en kamp
+function registrerKamp() {
+  // Henter verdiene
+  var valgtHjemmelag = Number(velgHjemmelagEl.value);
+  var valgtHjemmemaal = Number(velgHjemmemaalEl.value);
+  var valgtBortelag = Number(velgBortelagEl.value);
+  var valgtBortemaal = Number(velgBortemaalEl.value);
+
+  // Sjekker at ikke samme lag er valgt to ganger
+  if (valgtHjemmelag == valgtBortelag) {
+    bekreftelseEl.innerHTML = "Du kan ikke velge samme lag to ganger.";
+    return;
+  }
+
+  // Sjekker at kampen ikke allerede har blitt spilt
+  for (var i = 0; i < kamper.length; i++) {
+    if ((kamper[i].hjemmelag == valgtHjemmelag && kamper[i].bortelag == valgtBortelag) || (kamper[i].hjemmelag == valgtBortelag && kamper[i].bortelag == valgtHjemmelag)) {
+      bekreftelseEl.innerHTML = "Kamp mellom de valgte lagene er allerede registrert.";
+      return;
+    }
+  }
+
+  // Hvis vi har kommet hit, kan vi registrere kampen
+  registrertKamp = { hjemmelag: valgtHjemmelag, bortelag: valgtBortelag, maalHjemmelag: valgtHjemmemaal, maalBortelag: valgtBortemaal }
+  kamper.push(registrertKamp)
+
+  // Finner ut hvilke lag som spilte (husk at arrayen forandrer seg underveis pga sortering)
+  for (var i = 0; i < lag.length; i++) {
+    if (lag[i].lagid == valgtHjemmelag) {
+      var hlag = lag[i];
+    }
+    if (lag[i].lagid == valgtBortelag) {
+      var blag = lag[i];
+    }
+  }
+
+  // Øker antall kamper for begge lagene
+  hlag.antallKamper++;
+  blag.antallKamper++;
+
+  // Lager variabler til utskriften nedenfor
+  hlagResultat = "";
+  blagResultat = "";
+  hlagMaalforskjell = valgtHjemmemaal - valgtBortemaal;
+  blagMaalforskjell = valgtBortemaal - valgtHjemmemaal;
+  hlagPoeng = 0;
+  blagPoeng = 0;
+
+  // Oppdaterer mål for, mål mot og målforskjell for begge lagene
+  hlag.egneMaal += valgtHjemmemaal;
+  hlag.maalMot += valgtBortemaal;
+  hlag.maalforskjell += hlagMaalforskjell;
+  blag.egneMaal += valgtBortemaal;
+  blag.maalMot += valgtHjemmemaal;
+  blag.maalforskjell += blagMaalforskjell;
+
+  // Finner ut hvem som vant
+  if (valgtHjemmemaal > valgtBortemaal) {
+    hlag.kamperVunnet++
+    hlagResultat = "Seier";
+    hlagPoeng = 3;
+    blag.kamperTapt++;
+    blagResultat = "Tap";
+  } else if (valgtBortemaal > valgtHjemmemaal) {
+    blag.kamperVunnet++;
+    blagResultat = "Seier";
+    blagPoeng = 3;
+    hlag.kamperTapt++;
+    hlagResultat = "Tap";
+  } else {
+    hlag.kamperUavgjort++;
+    hlagResultat = "Uavgjort";
+    hlagPoeng = 1;
+    blag.kamperUavgjort++;
+    blagResultat = "Uavgjort";
+    blagPoeng = 1;
+  }
+
+  // Oppdaterer den totale poengsummen til de to lagene
+  hlag.poengsum += hlagPoeng;
+  blag.poengsum += blagPoeng;
+
+  // Skriver ut en bekreftelse på registrert kamp
+  bekreftelseEl.innerHTML  = "<b>" + hlag.navn + ":</b> <br>";
+  bekreftelseEl.innerHTML += " - Resultat: " + hlagResultat + "<br>";
+  bekreftelseEl.innerHTML += " - Målforskjell: " + hlagMaalforskjell + "<br>";
+  bekreftelseEl.innerHTML += " - Poeng: " + hlagPoeng + "<br>";
+  bekreftelseEl.innerHTML += "<br>";
+  bekreftelseEl.innerHTML += "<b>" + blag.navn + ":</b> <br>";
+  bekreftelseEl.innerHTML += " - Resultat: " + blagResultat + "<br>";
+  bekreftelseEl.innerHTML += " - Målforskjell: " + blagMaalforskjell + "<br>";
+  bekreftelseEl.innerHTML += " - Poeng: " + blagPoeng + "<br>";
+
+  // Lager oppdatert resultattabell
+  lagResultattabell();
+}
+
+// Funksjon som beregner resultattabell
+function lagResultattabell() {
+  // Starter med å sortere resultatarrayen
+  lag.sort(sorterResultater)
+
+  // Tømmer resultatelementet
+  resultatEl.innerHTML = "";
+
+  // Lager et table- og et tbody-element
+  var tabellEl = document.createElement("table");
+  var tbodyEl = document.createElement("tbody");
+
+  // Lager en overskriftsrad
+  var overskrifter = ["Nr", "Lag", "Antall kamper", "Antall kamper vunnet", "Antall kamper uavgjort", "Antall kamper tapt", "Egne mål", "Mål mot", "Målforskjell", "Poengsum"];
+  var trEl = document.createElement("tr");
+
+  // Lager et th-element for hver overskrift
+  for (var i = 0; i < overskrifter.length; i++) {
+    // Lager et th-element
+    var thEl = document.createElement("th");
+    // Legger til overskriten i th-elementet
+    thEl.innerHTML = overskrifter[i];
+    // Legger til th-elementet i tr-elementet
+    trEl.appendChild(thEl);
+  }
+
+  // Legger til overskriftsraden i tbody-elementet
+  tbodyEl.appendChild(trEl);
+
+  for (var i = 0; i < lag.length; i++) {
+    // Lager en tabellrad
+    var trEl = document.createElement("tr");
+
+    // Legger inn nummeret (plasseringen) til laget
+    // Lager et td-element
+    var tdEl = document.createElement("td");
+    // Legger til lagets plassering (arrayen er sortert etter plassering)
+    tdEl.innerHTML = i + 1;
+    // Legger til td-elementet i tr-elementet
+    trEl.appendChild(tdEl);
+
+    // Lager td-elementer for egenskapene i lag-arrayen
+    for (var egenskap in lag[i]) {
+      // Dropper egenskapen lagid i tabellen
+      if (egenskap != "lagid") {
+        // Lager et td-element
+        var tdEl = document.createElement("td");
+        // Legger til verdien i gjeldende egenskap i td-elementet
+        tdEl.innerHTML = lag[i][egenskap];
+        // Legger til td-elementet i tr-elementet
+        trEl.appendChild(tdEl);
+      }
+    }
+
+    // Legger til tabellraden i tbody-elementet
+    tbodyEl.appendChild(trEl);
+  }
+
+  // Legger til tbody i table, og table i resultatelementet
+  tabellEl.appendChild(tbodyEl);
+  resultatEl.appendChild(tabellEl);
+}
+
+// Funksjon som sorterer resultatarrayen etter poengsum, målforskjell og egne mål
+function sorterResultater(a, b) {
+  if (a.poengsum > b.poengsum) {
+    return -1;
+  } else if (a.poengsum < b.poengsum) {
+    return 1;
+  } else {
+    // Dette betyr at de har lik poengsum, vi må sammenligne neste egenskap
+    if (a.maalforskjell > b.maalforskjell) {
+      return -1;
+    } else if (a.maalforskjell < b.maalforskjell) {
+      return 1;
+    } else {
+      // Dette betyr at de har lik poengsum og målforskjell, vi må sammenligne siste egenskap
+      if (a.egneMaal > b.egneMaal) {
+        return -1;
+      } else if (a.egneMaal < b.egneMaal) {
+        return 1;
+      } else {
+        // Alt er likt mellom disse to lagene, så vi trenger ikke flytte på noen av dem
+        return 0;
+      }
+    }
+  }
+}
+
+</script>
+</body>
+</html>

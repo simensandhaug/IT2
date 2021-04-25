@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 1 </title>
+  <link rel="stylesheet" href="../brukerinput.css">
+  <style>
+  body {
+    background-color: #e0e0e0;
+    font-family: "Century Gothic", Arial, sans-serif;
+    font-size: 14px;
+    color: #323232;
+  }
+  #hoved, #presentasjon {
+    width: 500px;
+    border-radius: 5px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: Azure;
+  }
+  img {
+    animation-name: draktanimasjon;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+  }
+  @keyframes draktanimasjon {
+    0%    { opacity: 0; }
+    50%   { opacity: 1; }
+    100%  { opacity: 0; }
+  }
+  </style>
+</head>
+<body>
+
+<div id="hoved">
+  <h1> Vis lagpresentasjon </h1>
+  Velg lag: <select id="velgLag"></select>
+  <button> Vis presentasjon </button>
+</div>
+
+<div id="presentasjon">
+  <audio>
+  <source src="" type="audio/mpeg" id="kampropfil">
+    Nettleseren din støtter ikke audio-elementet.
+  </audio>
+  <h1 id="visLagnavn"></h1>
+  <img id="visDrakt">
+</div>
+
+<script>
+// Henter HTML-elementer
+var hovedEl = document.querySelector("#hoved");
+var velgLagEl = document.querySelector("#velgLag");
+var knappEl = document.querySelector("button");
+var visLagnavnEl = document.querySelector("#visLagnavn");
+var spillKampropEl = document.querySelector("audio");
+var kampropfilEl = document.querySelector("#kampropfil");
+var visDraktEl = document.querySelector("#visDrakt");
+
+// Legger til en lytter på knappen
+knappEl.addEventListener("click", visPresentasjon)
+
+// Array med oversikt over lagene
+var lag = [
+  { navn: "AC Milan", draktfarge: "Rød",  kamprop: "milan.mp3", draktbilde: "milan.jpg" },
+  { navn: "AS Roma", draktfarge: "Grønn",  kamprop: "roma.mp3", draktbilde: "roma.jpg" },
+  { navn: "FC Inter", draktfarge: "Blå",  kamprop: "inter.mp3", draktbilde: "inter.jpg" }
+];
+
+// Fyller nedtrekksmenyen med lagnavnene
+for (var i = 0; i < lag.length; i++) {
+  // Lager et option-element for hvert lag
+  var optionEl = document.createElement("option");
+  // Legger til informasjon om laget
+  optionEl.value = i;
+  optionEl.innerHTML = lag[i].navn;
+
+  // Legger til elementet i nedtrekksmenyen
+  velgLagEl.appendChild(optionEl);
+}
+
+// Funksjon som presenterer et lag
+function visPresentasjon() {
+  // Finner ut hvilket lag som er valgt
+  var lagnummer = Number(velgLagEl.value);
+  var valgtLag = lag[lagnummer];
+
+  // Legger til lagnavnet
+  visLagnavnEl.innerHTML = valgtLag.navn;
+
+  // Spiller av kampropet
+  kampropfilEl.src = valgtLag.kamprop;
+  spillKampropEl.load();
+  spillKampropEl.play();
+
+  // Legger til draktbildet
+  visDraktEl.src = valgtLag.draktbilde;
+
+
+
+}
+
+</script>
+</body>
+</html>

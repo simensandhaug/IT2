@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 3 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../stilark/brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .innpakning {
+      width: 70%;
+      margin: 10px auto;
+      padding: 5px;
+      background-color: white;
+      border: 3px solid black;
+    }
+    #hytteoversikt {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .hytteinfo {
+      width: 250px;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 15px;
+      background-color: Lightblue;
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning" id="innlogging">
+
+  <h1> Bestill hytte </h1>
+
+  Velg ferieuke
+  <select id="ferieuke">
+    <option value="jul"> Jul </option>
+    <option value="vinterferie"> Vinterferie </option>
+    <option value="paaske"> Påske </option>
+  </select>
+
+  <div id="hytteoversikt"></div>
+</div>
+
+<script>
+// Henter elementer
+var selectEl = document.querySelector("#ferieuke");
+var hytteoversiktEl = document.querySelector("#hytteoversikt");
+
+// Legger til lyttere (bruker både change og click slik at det også går an å velge det første alternativet ved å klikke)
+selectEl.addEventListener("change", visHytter);
+selectEl.addEventListener("click", visHytter);
+
+// Oversikt over hyttene
+var hytteegenskaper = [
+  { hytte: "Granstua", sengeplasser: 4, standard: "Høy", badstue: "Ja", ukepris: "12000", bilde: "granstua.jpg", jul: "utleid", vinterferie: "utleid", paaske: "ledig" },
+  { hytte: "Granbo", sengeplasser: 6, standard: "Middels", badstue: "Nei", ukepris: "15000", bilde: "granbo.jpg", jul: "ledig", vinterferie: "ledig", paaske: "utleid" },
+  { hytte: "Grantoppen", sengeplasser: 8, standard: "Lav", badstue: "Nei", ukepris: "16000", bilde: "grantoppen.jpg", jul: "utleid", vinterferie: "ledig", paaske: "utleid" },
+  { hytte: "Granhaug", sengeplasser: 10, standard: "Høy", badstue: "Ja", ukepris: "30000", bilde: "granhaug.jpg", jul: "utleid", vinterferie: "ledig", paaske: "utleid" }
+];
+
+// Lager en variabel som tar vare på valgt ferieuke
+var ferieuke = "";
+
+// Funksjon som viser ledige hytter for valgt ferieuke
+function visHytter() {
+  ferieuke = selectEl.value;
+
+  // Tømmer div-elementet "hytteoversikt" for innhold
+  hytteoversiktEl.innerHTML = "";
+
+  // Går gjennom alle hytter
+  for (var i = 0; i < hytteegenskaper.length; i++) {
+    if (hytteegenskaper[i][ferieuke] == "ledig") {
+      // Lager et div-element med informasjon om ledig hytte
+      var divEl = document.createElement("div");
+      divEl.className = "hytteinfo";
+      divEl.innerHTML  = "<h2>" + hytteegenskaper[i].hytte + "</h2>";
+      divEl.innerHTML += "<img src='hyttebilder/" + hytteegenskaper[i].bilde + "'>";
+      divEl.innerHTML += "<p> Sengeplasser: " + hytteegenskaper[i].sengeplasser + "</p>";
+      divEl.innerHTML += "<p> Standard: " + hytteegenskaper[i].standard + "</p>";
+      divEl.innerHTML += "<p> Badstue: " + hytteegenskaper[i].badstue + "</p>";
+      divEl.innerHTML += "<p> Ukepris: " + hytteegenskaper[i].ukepris + "</p>";
+
+      // Lager en knapp for å bestille hytta
+      var knappEl = document.createElement("button");
+      knappEl.id = i;
+      knappEl.innerHTML = "Bestill";
+      knappEl.addEventListener("click", bestillHytte);
+
+      // Legger til knappen
+      divEl.appendChild(knappEl);
+
+      // Legger til div-elementet i div-elementet "hytteoversikt"
+      hytteoversiktEl.appendChild(divEl);
+    }
+  }
+}
+
+// Funksjon som endrer en hyttes status fra ledig til utleid
+function bestillHytte(e) {
+  var hytteId = e.target.id;
+
+  // Endrer status for hytta til utleid
+  hytteegenskaper[hytteId][ferieuke] = "utleid";
+
+  // Skriver ut en bekreftelse
+  hytteoversiktEl.innerHTML = "<h2> Du har bestilt " + hytteegenskaper[hytteId].hytte + " for ferieuke: " + ferieuke + " </h2>";
+}
+
+</script>
+
+</body>
+</html>

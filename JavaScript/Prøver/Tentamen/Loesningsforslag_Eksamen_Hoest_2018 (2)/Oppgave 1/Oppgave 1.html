@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 1 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../stilark/brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: white;
+      border: 3px solid black;
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Beregn pris for heiskort </h1>
+
+  Oppgi alder
+  <input type="number" id="alder">
+
+  Velg antall dager
+  <select id="dager">
+    <option value="1"> 1 </option>
+    <option value="2"> 2 </option>
+    <option value="3"> 3 </option>
+    <option value="4"> 4 </option>
+    <option value="5"> 5 </option>
+    <option value="6"> 6 </option>
+    <option value="7"> 7 </option>
+  </select>
+
+  <button> Beregn pris </button>
+
+  <p>
+  </p>
+</div>
+
+<script>
+// Henter HTML-elementer
+var alderEl = document.querySelector("#alder");
+var dagerEl = document.querySelector("#dager");
+var knappEl = document.querySelector("button");
+var beskjedEl = document.querySelector("p");
+
+// Legger til lytter
+knappEl.addEventListener("click", beregn);
+
+// Funksjon som beregner og skriver ut heiskortpris
+function beregn() {
+  // Henter inn alder og antall dager
+  var alder = alderEl.value;
+  var dager = dagerEl.value;
+
+  // Lager variabler for standardprisene og antall rabatterte dager
+  var voksenpris = 200;
+  var barnepris = 100;
+  var rabattdager = 0;
+
+  // Sjekker om alderen er utenfor intervallet mellom 0 og 100 år
+  if (alder < 0 || alder > 100) {
+    // Brukeren må ha oppgitt feil alder
+    beskjedEl.innerHTML = "Du må oppgi en alder mellom 0 og 100 år.";
+  } else {
+    // Alderen er godkjent
+    // Beregner antall rabatterte dager
+    if (dager > 5) {
+      rabattdager = dager - 5;
+    }
+
+
+    // Undersøker om personen er barn (under 13 år) eller voksen
+    if (alder < 13) {
+      // Barnepris
+      var pris = dager * barnepris;
+
+      // Er det rabatt?
+      if (rabattdager > 0) {
+        // Beregner rabatt
+        var rabatt = rabattdager * barnepris;
+
+        // Trekker fra rabatten
+        pris -= rabatt;
+      }
+    } else {
+      // Voksenpris
+      var pris = dager * voksenpris;
+
+      // Er det rabatt?
+      if (rabattdager > 0) {
+        // Beregner rabatt
+        var rabatt = rabattdager * voksenpris;
+
+        // Trekker fra rabatten
+        pris -= rabatt;
+      }
+    }
+
+    // Lager en utskrift med og en utskrift uten rabatt
+    if (rabattdager > 0) {
+      beskjedEl.innerHTML = "Prisen for " + dager + " dag(er) blir " + pris + " kroner (med " + rabatt + " kroner i rabatt).";
+    } else {
+      beskjedEl.innerHTML = "Prisen for " + dager + " dag(er) blir " + pris + " kroner.";
+    }
+  }
+}
+</script>
+
+</body>
+</html>
