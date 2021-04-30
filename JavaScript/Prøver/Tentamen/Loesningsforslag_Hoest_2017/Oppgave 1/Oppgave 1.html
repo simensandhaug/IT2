@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+  <title>Oppgave 1</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #323232;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    h1 {
+      width: 500px;
+      padding: 10px;
+      margin: 20px auto;
+      background-color: #cce6ed;
+    }
+    .innpakning {
+      width: 500px;
+      padding: 10px;
+      font-size: 0;
+      background-color: white;
+      margin: auto;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+    }
+    #spvideo {
+      width: 320px;
+      margin: 30px auto;
+      display: none;
+    }
+    #lukksp {
+      cursor: pointer;
+      text-align: center;
+      margin: 0;
+      padding: 2px;
+      background-color: rgba(200, 200, 200, 0.5);
+    }
+    #bildekarusell {
+      width: 320px;
+      height: 240px;
+      margin: 30px auto;
+      animation: bildekarusell 6s infinite;
+      display: none;
+    }
+    #lukkmdg {
+      cursor: pointer;
+      text-align: center;
+      padding: 2px;
+      background-color: rgba(200, 200, 200, 0.5);
+    }
+    @keyframes bildekarusell {
+        0% { background-image: url("bildekarusell/bildegalleri01.jpg"); }
+       33% { background-image: url("bildekarusell/bildegalleri02.jpg"); }
+       66% { background-image: url("bildekarusell/bildegalleri03.jpg"); }
+      100% { background-image: url("bildekarusell/bildegalleri01.jpg"); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- overskrift -->
+<h1> Lær mer om partiene </h1>
+
+<!-- div-element med partilogoene -->
+<div class="innpakning">
+  <img src="partier/ap.png">
+  <img src="partier/frp.jpg">
+  <img src="partier/hoyre.png">
+  <img src="partier/krf.jpg">
+  <img src="partier/miljopartiet.png" id="mdgbilde">
+  <img src="partier/piratpartiet.png">
+  <img src="partier/raudt.png">
+  <img src="partier/sp.png" id="spbilde">
+  <img src="partier/sv.jpg">
+  <img src="partier/venstre.png">
+</div>
+
+<!-- div-element med bildekarusellen (kan vises og skjules) -->
+<div id="bildekarusell">
+  <p id="lukkmdg"> Lukk vindu </p>
+
+  <audio id="piano" loop>
+    <source src="bildekarusell/piano.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<!-- div-element med sp-videoen (kan vises og skjules) -->
+<div id="spvideo">
+  <p id="lukksp"> Lukk vindu </p>
+
+  <video id="spvideofil" controls>
+    <source src="senterpartiet_redigert.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+// Henter elementer
+var mdgbildeEl = document.querySelector("#mdgbilde");
+var lukkmdgEl = document.querySelector("#lukkmdg");
+var pianoEl = document.querySelector("#piano");
+var bildekarusellEl = document.querySelector("#bildekarusell");
+var spbildeEl = document.querySelector("#spbilde");
+var lukkspEl = document.querySelector("#lukksp");
+var spvideoEl = document.querySelector("#spvideo");
+var spvideofilEl = document.querySelector("#spvideofil");
+
+// Legger til lyttere på partilogoene
+mdgbildeEl.addEventListener("click", vismdg);
+spbildeEl.addEventListener("click", vissp);
+
+// Legger til lyttere på knappene som lukker vinduene
+lukkmdgEl.addEventListener("click", lukkmdg);
+lukkspEl.addEventListener("click", lukksp);
+
+// Funksjon som viser div-elementet med bildekarusellen
+// (og som starter pianomusikken)
+function vismdg() {
+  bildekarusellEl.style.display = "block";
+  pianoEl.play();
+}
+
+// Funksjon som skjuler div-elementet med bildekarusellen
+// (og som stopper pianomusikken)
+function lukkmdg() {
+  bildekarusellEl.style.display = "none";
+  pianoEl.pause();
+}
+
+// Funksjon som viser div-elementet med sp-videoen
+// (og som starter avspilling av filmen)
+function vissp() {
+  spvideoEl.style.display = "block";
+  spvideofilEl.play();
+}
+
+// Funksjon som skjuler div-elementet med sp-videoen
+// (og som stopper avspilling av filmen)
+function lukksp() {
+  spvideoEl.style.display = "none";
+  spvideofilEl.pause();
+}
+
+</script>
+
+</body>
+</html>

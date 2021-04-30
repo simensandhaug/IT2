@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="no" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Prøve 3. Mars 2021</title>
+    <style>
+        .innpakning{
+            display: flex;
+            flex-direction: column;
+        } 
+        
+        .innhold{
+            display:flex;
+            flex-direction:row;
+        }
+        .innhold div{
+            margin-left: 50px;
+        }
+    </style>
+  </head>
+  <body>
+    
+    <div>
+        <h2>Antall besøkede i fjellheimen</h2>
+    </div>
+    <div class= "innhold">
+    <div>
+        
+        <h3>Velg område:</h3>
+        <select id="område">
+        </select><p></p>
+        <h3>Grafisk fremstilling av utviklingen av antall besøkende:</h3>
+          <canvas id="canvas" width="500" height="300"></canvas><p></p>
+    </div>
+    <div>
+        <h3>Finn økningen av antall besøkende i et område:</h3>
+        <p>Velg sted:</p>
+        <select id="sted">
+        </select>
+        <p>Velg det første årstallet:</p>
+        <select id="år1">
+        </select>
+        <p id="oop"></p>
+        <p>Velg det andre årstallet:</p>
+        <select id="år2">
+        </select><p></p>
+        <button type="button" name="button" id="knapp">Finn økning</button><p></p>
+        <p id="økning"></p>
+    </div>
+    </div>
+      
+    <script>
+    // array som inneholder antall besøkende til hvert område
+    var arr = [{n:"Jotunheimen", år:[6,11,18,25,29,41]},
+               {n:"Rondane", år:[4,7,11,15,23,30]},
+               {n:"Hardangervidda", år:[2,8,13,20,24,30]}];
+    var årarr = [1950,1960,1975,1990,2000,2015];
+
+    var selectel = document.getElementById("område");
+    // løkke som fyller opp nedtrekksliste med områder
+    for (var i = 0; i < arr.length; i++) {
+      var opt = document.createElement("option");
+      opt.text = arr[i].n;
+      opt.value = i;
+      selectel.appendChild(opt);
+    }
+    
+    selectel.addEventListener("change", vis);
+        
+    // variabler for canvasinnstillinger
+    var tekstbredde = 110;
+    var totalbredde = canvas.width;
+    var søylebredde = totalbredde - tekstbredde - 10;
+    canvas.height = årarr.length * 40;
+
+    // funkjson som regner ut maks verdi
+    function maks(){
+      var maks = -Infinity;
+      for (var i = 0; i < arr[selectel.value].år.length; i++) {
+        if (arr[selectel.value].år[i]>maks) {
+          maks = arr[selectel.value].år[i];
+        }
+      }
+      return maks;
+    }
+
+    // funksjon som viser canvas med grafisk framstilling
+    function vis(){
+      var max = maks();
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for (var i = 0; i < arr[selectel.value].år.length; i++) {
+        var prosent = arr[selectel.value].år[i] / max * søylebredde;
+        ctx.font = "14px comic sans MS";
+        ctx.textAlign = "end";
+        ctx.textBaseline = "hanging";
+        ctx.fillStyle = "grey";
+        ctx.fillText( årarr[i] + " (" + arr[selectel.value].år[i] +  " tusen)", tekstbredde,(40*i)+6)
+
+        ctx.fillStyle = "DarkSeaGreen";
+        ctx.fillRect(tekstbredde+6, (40*i), prosent, 32);
+      }
+    }
+
+    var stedel = document.getElementById("sted");
+    // løkke som fyller opp nedtrekksliste med områder
+    for (var i = 0; i < arr.length; i++) {
+      var optio = document.createElement("option");
+      optio.text = arr[i].n;
+      optio.value = i;
+      stedel.appendChild(optio);
+    }
+
+    var år1el = document.getElementById("år1");
+     // løkke som fyller opp nedtrekksliste med årstall
+    for (var i = 0; i < årarr.length; i++) {
+      var aar = document.createElement("option");
+      aar.text = årarr[i];
+      aar.value = i;
+      år1el.appendChild(aar);
+    }
+
+
+    var knappel = document.getElementById("knapp");
+    knappel.addEventListener("click", regnut);
+    var økningel = document.getElementById("økning");
+
+    // funksjon som regner ut økning og prosent
+    function regnut(){
+      var sted = arr[stedel.value].n;
+      var tall1 = arr[stedel.value].år[år1el.value];
+      var tall2 = arr[stedel.value].år[år2el.value];
+      var år1 = årarr[år1el.value];
+      var år2 = årarr[år2el.value];
+      var talløkning = tall2 - tall1;
+      var prosentøkning = Math.round((((tall2/tall1)-1)*100));
+      økningel.innerHTML = "I perioden mellom " + år1 + " og " + år2 + " skjedde det en økning av antall besøkende i " + sted + " på " + talløkning*1000 + " personer. Noe som tilsvarer en økning på ca. " + prosentøkning + "%.";
+    }
+
+    år1el.addEventListener("change", endre);
+    var år2el = document.getElementById("år2");
+
+    // funkjson som fyller nedtrekksliste med årstall ut i fra hva som ble valgt i den første nedtrekkslisten
+    function endre() {
+      år2el.innerHTML ="";
+      var start = Number(år1el.value)+1;
+      for (var i = start; i < årarr.length; i++) {
+        var aar2 = document.createElement("option");
+        aar2.text = årarr[i];
+        aar2.value = i;
+        år2el.appendChild(aar2);
+      }
+    }
+    endre();
+    vis();
+    </script>
+  </body>
+</html>

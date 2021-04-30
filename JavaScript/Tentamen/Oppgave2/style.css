@@ -1,0 +1,33 @@
+.flex__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#chart { /*CSS-stil til flexbox*/
+    display: flex;
+    width: 600px;
+    height: 500px;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 20px;
+        
+}
+#chart > div { /*CSS-stil til flex items*/
+    margin: 5px;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    font-family: arial, verdana, sans-serif;
+}
+
+#chart > div:nth-child(1) {
+    background-color: gold;
+}
+#chart > div:nth-child(2) {
+    background-color: silver;
+}
+#chart > div:nth-child(3) {
+    background-color: #cd7f32;
+}

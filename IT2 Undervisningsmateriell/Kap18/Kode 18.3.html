@@ -1,0 +1,54 @@
+<html>
+<head>
+  <title>Snurrende firkanter</title>
+  <meta charset="UTF-8">
+  <style>
+  body {
+    background-color: #323232;
+  }
+  .innpakning {
+    width: 600px;
+    height: 200px;
+    margin: 100px auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .boks {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    animation: roter linear infinite;
+  }
+  @keyframes roter {
+     0%  { transform: rotate(0deg);   background-color: red;    }
+     50% { transform: rotate(45deg);  background-color: yellow; }
+    100% { transform: rotate(180deg); background-color: red;    }
+  }
+  </style>
+</head>
+<body>
+
+<div class="innpakning"> </div>
+
+<script>
+// Henter inn innpaknings-elementet
+var innpakningEl = document.querySelector(".innpakning");
+
+// Genererer 48 div-elementer inni innpakningen
+for (var i = 0; i < 48; i++) {
+  // Lager et nytt div-element
+  var div = document.createElement("div");
+  
+  // Gir elementet klassen .boks
+  div.className = "boks";
+  
+  // Setter elementets animasjonsfart til en tilfeldig fart
+  div.style.animationDuration = (Math.random() * 5 + 1) + "s";
+
+  // Legger til elementet i innpakningselementet
+  innpakningEl.appendChild(div);
+}
+</script>
+</body>
+</html>

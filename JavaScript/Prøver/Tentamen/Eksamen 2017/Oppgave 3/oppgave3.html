@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skolevalg</title>
+    <script src="oppgave3.js" defer></script>
+</head>
+
+<body>
+    <div id="loginpage">
+        <h1>Login</h1>
+        <input type="text" id="password" placeholder="Passord">
+        <button id="loginbtn">Login</button>
+        <br>
+        <button id="count">Tell opp stemmer</button>
+        <p id="passworderror"></p>
+    </div>
+    <div id="votingpage">
+        <h1>Stemmeside</h1>
+        <select id="partyselect">
+        </select>
+        <br>
+        <div id="confirmdiv">
+            <p id="confirmationoutput"></p>
+            <button id="confirm">Ja</button>
+        </div>
+    </div>
+    <div id="tablepage">
+        <h1>Resultater</h1>
+        <table id="tableoutput">
+            <tr>
+                <th>Parti</th>
+                <th>Oppslutning</th>
+                <th>Oppslutning(2013)</th>
+                <th>Endring</th>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

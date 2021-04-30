@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <title>Endre bakgrunnsfarge på nettsiden</title>
+        <style>
+            body {
+                background-color: khaki;
+                transition: background-color 3s; /*Animasjonen varer ett sek*/
+            }
+        </style>
+    </head>
+    <body>
+        <input id="fargevelger" type="color" placeholder="Velg farge på nettsiden">
+        <script>
+            var fargevelger = document.getElementById("fargevelger");
+            
+            fargevelger.oninput = function() { //En hendelsesstyrt funksjon
+                document.body.style.backgroundColor = fargevelger.value;
+            }
+        </script>
+    </body>
+</html>

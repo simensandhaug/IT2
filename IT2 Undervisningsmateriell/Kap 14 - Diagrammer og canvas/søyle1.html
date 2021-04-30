@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #chart {
+            	display: flex;
+            	width: 1000px;
+            	height: 400px;
+            	flex-direction: row;
+            	align-items: flex-end;  /*kan settes til flex-start*/
+                border: solid 1px;
+        	}
+        	#chart > div { /*CSS-stil på stolpene*/
+            	background-color: DarkSeaGreen;
+            	margin: 5px;
+            	flex-grow: 1;
+        	}
+        </style>
+    </head>
+    <body>
+        <div id="chart"></div>
+        <script>
+            var chart = document.getElementById("chart");
+            var temperaturer = [16, 16, 18, 21, 25, 30, 30, 33, 30, 25, 20, 17];
+            
+            for(var temp of temperaturer){
+                chart.innerHTML += "<div style = 'height: "+ temp * 10 + "px'>"+ temp +"</div>";
+            }
+        </script>
+    </body>
+</html>

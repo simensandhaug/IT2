@@ -1,0 +1,167 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Quiz</title>
+
+<style>
+    
+       
+ #boks {
+            text-align: center;
+            padding-top: 10px;
+            height: 670px;
+            width:600px;
+            margin: auto;
+            background-color:lightgray;
+            border-radius: 25px;
+    }
+    
+    #DisplayPoeng {
+        height:30px;
+        width:70px;
+        left:530px;
+        top: -30px;
+    
+    }
+       
+
+        
+</style>
+    
+    </head>
+
+        <body>
+                <div id="boks">
+                    <h1>Quiz</h1>
+                    
+                    <p id="input"></p>
+                    <div id="AlleSporsmal">
+                       
+                        <h3 id="SporsmalTittel"></h3> 
+                            <br>
+                                <div id="divSvarAlt"></div>
+                            <br><br>
+                           
+                            <button id="neste">Neste</button>
+
+                    </div>
+                    <br><br><br>
+                            <div id="info"></div>
+                                                
+                        <div id="DisplayPoeng"></div>
+                </div>
+
+        <script>
+
+            // Definerer variabler
+            var boks = document.getElementById("boks");
+            var divSvarAlt = document.getElementById("divSvarAlt");
+            var DisplayPoeng = document.getElementById("DisplayPoeng");
+            var input = document.getElementById("input");
+            var brukernavn = document.getElementById("brukernavn");
+            var brukerDIV = document.getElementById("brukerDIV");
+            var AlleSporsmal = document.getElementById("AlleSporsmal");
+            var info = document.getElementById("info");
+            var SporsmalTittel = document.getElementById("SporsmalTittel");
+            
+            // Telleren for hvilket spørsmål som skal skrives ut eller om quizen er over. 
+            var nr = 0;
+
+            var score = 0;
+            
+            // Array med alle spørsmålene. Oppdelt i sporsmal, valg og riktigSvar. 
+            var SporsmalArray = [{
+                    sporsmal: "Hvilket lag har vunnet flest ganger i PL?",
+                    valg: ["Chelsea", "Manchester United", "Liverpool"],
+                    riktigSvar: 1,
+                    type: "radio"
+                }, {
+                    sporsmal: "Hvilket engelsk lag har vunnet flest Champions League?",
+                    valg: ["Manchester United", "Chelsea", "Liverpool", "Manchester United"],
+                    riktigSvar: 2,
+                    type:"checkbox"
+                }, {
+                    sporsmal: "Hvilken lag leder PL nå?",
+                    valg: ["Liverpool", "Tottenham", "Manchester United"],
+                    riktigSvar: 2,
+                    type:"radio"
+                }];
+            
+            
+            StartQuiz();
+
+            // funksjon som bytter spørsmål
+            function settTittel(sporsmalNr) {
+                SporsmalTittel.innerHTML = SporsmalArray[sporsmalNr].sporsmal;
+            }
+
+            // funksjon som fyller radioknapper med svaralternativer
+            function setSvar(id, sporsmalNr, valgNr) {
+                var valg = document.getElementById(id);
+                valg.innerHTML = SporsmalArray[sporsmalNr].valg[valgNr];
+            }
+
+            //  funksjon som gjør at funksjonene for å legge til spørsmål og svaralternativer blir kjørt (funksjonene rett over). Denne funksjonen inneholder kun fire funksjonskall. Denne funksjonen blir kjørt hver gang bruker trykker på knappen neste.
+
+            function StartQuiz() {
+                divSvarAlt.innerHTML = "";
+                settTittel(nr);
+                for (var i=0; i<SporsmalArray[nr].valg.length; i++) {
+                    divSvarAlt.innerHTML += "<input class='altClass' type='" + SporsmalArray[nr].type + "' name='svaralternativer' value="+ i +">" + SporsmalArray[nr].valg[i] + "<br>";
+                }
+
+       
+            }
+
+
+            function oppdaterScore() {
+                // variabel med fasitsvar
+                var riktigSvar = SporsmalArray[nr].riktigSvar;
+                // nodelist (nesten som et array)
+                var svar = document.querySelectorAll(".altClass");
+                
+                for (var i=0; i<svar.length; i++){
+                    if (svar[i].checked){
+                        if (svar[i].value == riktigSvar){
+                            score++;
+                        }
+                    } 
+                }
+                DisplayPoeng.innerHTML = "<b>Poeng: " + score + "</b>";
+            }
+
+
+
+            // Kjøres når brukeren trykker på "Neste"-knappen. Kjører da alle de nevnte funksjonene. 
+            function nesteSporsmal() {
+                oppdaterScore();
+                nr++;
+                if (nr >= SporsmalArray.length) {
+                    AlleSporsmal.innerHTML = "";
+                    input.innerHTML = "<br><br><h2>Du fikk " + score + " poeng!</h2>";
+                    DisplayPoeng.innerHTML = "";
+                }
+                else{
+                    StartQuiz();    
+                }
+                
+
+            }
+
+            //Tar i bruk addEventListner som står nevnt i boka for at man kan sjekke om brukeren har                      trykket på knappen. 
+
+            var nesteKnapp = document.getElementById("neste");
+            nesteKnapp.addEventListener("click", nesteSporsmal, false);
+
+            // Gjør brukerDIV elementet tomt etter at brukeren har trykket på "neste"-knappen for første gang. Dette fjerner da div elementet som har et input element for brukeren inni seg. Slik at da ikke dette feltet vises gjennom hele quizen og kun ved den første siden. 
+
+            nesteKnapp.onclick = function() {
+                //divSvarAlt.innerHTML = "";
+            }
+
+
+        </script>
+
+    </body>
+</html> 

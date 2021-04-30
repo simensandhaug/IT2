@@ -1,0 +1,32 @@
+<html>
+    <head></head>
+    <body>
+        <img src="snowball.png" id="snowball">
+        <script>
+            var snowball = document.getElementById("snowball");
+            var animasjon = snowball.animate([
+                {transform: "rotate(0deg)" , marginLeft: "10px"}, //Før animasjonen
+                {transform: "rotate(1440deg)" , marginLeft: "500px"} //Etter animasjonen
+            ], {
+                duration: 3000, //Varighet 3000 millisekunder
+                direction: "alternate", //Går annenhver gang fram og tilbake
+                iterations: Infinity, //Fortsetter i det uendelige
+                easing: "ease-in-out" //Tar det rolig i starten og på slutten
+                
+            });
+            
+            animasjon.pause();
+            var aktiv = false;
+            snowball.onclick = function(){
+                if (!aktiv){
+                    animasjon.play();
+                    aktiv = true;
+                }
+                else{
+                    animasjon.pause();
+                    aktiv=false;
+                }
+            }
+        </script>
+    </body>
+</html>

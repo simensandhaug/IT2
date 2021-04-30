@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 2 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: white;
+      border: 3px solid black;
+    }
+    #borgerlig {
+      margin-top: 5px;
+      height: 30px;
+      width: 0;
+      background-color: blue;
+    }
+    #rodgronn {
+      margin-top: 5px;
+      height: 30px;
+      width: 0;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Beregn regjeringsblokker </h1>
+  Rødt
+  <input type="number" id="stemmerRodt" value="3.7">
+  SV
+  <input type="number" id="stemmerSv" value="5.0">
+  A
+  <input type="number" id="stemmerA" value="2.0">
+  SP
+  <input type="number" id="stemmerSP" value="4.2">
+  MDG
+  <input type="number" id="stemmerMDG" value="3.8">
+  KrF
+  <input type="number" id="stemmerKrF" value="2.8">
+  V
+  <input type="number" id="stemmerV" value="6.7">
+  H
+  <input type="number" id="stemmerH" value="28.2">
+  FrP
+  <input type="number" id="stemmerFrP" value="15.6">
+  PIR
+  <input type="number" id="stemmerPIR" value="4.3">
+
+  <button> Beregn </button>
+
+  <p>
+  </p>
+
+  <div id="borgerlig"></div>
+  <div id="rodgronn"></div>
+</div>
+
+<script>
+// Henter HTML-elementer
+var beskjedEl = document.querySelector("p");
+var borgerligEl = document.querySelector("#borgerlig");
+var rodgronnEl = document.querySelector("#rodgronn");
+var stemmerEl = document.querySelectorAll("input");
+var knappEl = document.querySelector("button");
+
+knappEl.addEventListener("click", beregn);
+
+var oppslutning = [
+  { parti: "Rødt", prosent: 0 },
+  { parti: "SV", prosent: 0 },
+  { parti: "A", prosent: 0 },
+  { parti: "SP", prosent: 0 },
+  { parti: "MDG", prosent: 0 },
+  { parti: "KrF", prosent: 0 },
+  { parti: "V", prosent: 0 },
+  { parti: "H", prosent: 0 },
+  { parti: "FrP", prosent: 0 },
+  { parti: "PIR", prosent: 0 }
+];
+
+function beregn() {
+  // Legger inn alle stemmene i objektene våre.
+  // Her utnytter vi at inputelementene til partiene har samme rekkefølge
+  // som partiene har i oppslutning-arrayen.
+  for (var i = 0; i < stemmerEl.length; i++) {
+    oppslutning[i].prosent = Number(stemmerEl[i].value);
+  }
+
+  // Variabler for å holde på summen av stemmene innen hver blokk
+  var borgerlig = 0;
+  var rodgronn = 0;
+
+  // Summerer prosentene for borgerlig og rødgrønn blokk,
+  // og justerer bredden til de to "søylene" som skal
+  // være en grafisk illustrasjon av blokkenes størrelser.
+  for (var i = 0; i < oppslutning.length; i++) {
+    var p = oppslutning[i].parti;
+
+    if (p == "H" || p == "FrP" || p == "KrF" || p == "V") {
+      borgerlig += oppslutning[i].prosent;
+    } else if (p == "A" || p == "SV" || p == "SP") {
+      rodgronn += oppslutning[i].prosent;
+    }
+
+    borgerligEl.style.width = borgerlig + "%";
+    rodgronnEl.style.width = rodgronn + "%";
+  }
+
+  // Forskjellen mellom blokkene i prosentpoeng
+  var forskjell = 0;
+
+  // Sjekker hvilken blokk som er størst, og beregner forskjell og
+  // skriver ut en passende beskjed til nettsiden.
+  if (borgerlig > rodgronn) {
+    forskjell = borgerlig - rodgronn;
+
+    beskjedEl.innerHTML  = "Den borgerlige blokken er størst (";
+    beskjedEl.innerHTML += forskjell.toFixed(1);
+    beskjedEl.innerHTML += " prosentpoeng større enn den rødgrønne blokken).";
+
+  } else if (rodgronn > borgerlig) {
+    forskjell = rodgronn - borgerlig;
+
+    beskjedEl.innerHTML  = "Den rødgrønne blokken er størst (";
+    beskjedEl.innerHTML += forskjell.toFixed(1);
+    beskjedEl.innerHTML += " prosentpoeng større enn den borgerlige blokken).";
+  }
+}
+</script>
+
+</body>
+</html>

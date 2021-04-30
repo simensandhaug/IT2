@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>Sirkler</title>
+  <meta charset="UTF-8">
+  <style>
+  body {
+    background-color: #323232;
+    overflow: hidden;
+  }
+  div {
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 7px solid tomato;
+  }
+  .sirkel1 {
+    animation: skaler 2s infinite linear;
+  }
+  .sirkel2 {
+    animation: skaler 3.5s infinite ease-in-out;
+  }
+  .sirkel3 {
+    animation: skaler 4.2s infinite;
+  }
+  @keyframes skaler {
+    0% 		{ transform: scale(0); }
+    100%	{ transform: scale(6); }
+  }
+  </style>
+</head>
+<body>
+
+<div class="sirkel1"> </div>
+<div class="sirkel2"> </div>
+<div class="sirkel3"> </div>
+
+</body>
+</html>

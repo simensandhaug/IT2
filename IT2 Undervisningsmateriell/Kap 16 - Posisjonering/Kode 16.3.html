@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title>flexbox i flexbox</title>
+<style>
+body {
+  background-color: #e0e0e0;
+  font-family: "Century Gothic", sans-serif;
+  font-size: 14px;
+  color: #323232;
+}
+.innpakning {
+  width: 700px;
+  min-height: 300px;
+  margin: 50px auto;
+  background-color: #323232;
+  display: flex;
+}
+.venstre, .hoyre {
+  margin: 5px;
+}
+.venstre {
+  background-color: #c3c3c3;
+  flex-grow: 1;
+}
+.hoyre {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  background-color: #FF6A36;
+}
+.innhold {
+  flex-grow: 1;
+  background-color: #c3c3c3;
+  margin: 5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="innpakning">
+  <div class="venstre"> </div>
+  <div class="hoyre">
+    <div class="innhold"> </div>
+    <div class="innhold"> </div>
+  </div>   
+</div>
+
+</body>
+</html>

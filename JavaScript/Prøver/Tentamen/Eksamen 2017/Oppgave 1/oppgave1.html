@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasjon av Partier</title>
+    <script src="oppgave1.js" defer></script>
+    <style>
+        body {
+            text-align: center;
+            background-color: #c3c3c3;
+        }
+
+        .flex__container {
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #container {
+            background-color: white;
+            width: 540px;
+            height: 200px;
+            padding: 20px;
+            margin: auto;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+
+        @keyframes carousel {
+            0% {
+                background-image: url("images/bildegalleri01.jpg");
+            }
+
+            33% {
+                background-image: url("images/bildegalleri02.jpg");
+            }
+
+            66% {
+                background-image: url("images/bildegalleri03.jpg");
+            }
+
+            100% {
+                background-image: url("images/bildegalleri01.jpg");
+            }
+        }
+
+        #mdgDiv {
+            text-align: center;
+            width: 320px;
+            height: 240px;
+            margin: 30px auto;
+            animation: carousel 6s infinite;
+            display: none;
+            background-size: contain;
+        }
+
+        #spDiv {
+            margin: 30px auto;
+            display: none;
+        }
+
+        #closesp {
+            cursor: pointer;
+        }
+
+        #closemdg {
+            cursor: pointer;
+        }
+
+        #spvideo {
+            margin: auto;
+            width: 320px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex__container">
+        <h1>Partiene</h1>
+        <div id="container">
+            <img src="images/raudt.png" alt="raudt">
+            <img src="images/sv.jpg" alt="sv">
+            <img src="images/ap.png" alt="ap">
+            <img src="images/sp.png" alt="sp" id="sp">
+            <img src="images/miljopartiet.png" alt="mdg" id="mdg">
+            <img src="images/krf.jpg" alt="krf">
+            <img src="images/venstre.png" alt="venstre">
+            <img src="images/hoyre.png" alt="hoyre">
+            <img src="images/frp.jpg" alt="frp">
+            <img src="images/piratpartiet.png" alt="pp">
+        </div>
+        <div id="spDiv">
+            <p id="closesp">Lukk</p>
+
+            <video id="spvideo" controls>
+                <source src="senterpartiet.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div id="mdgDiv">
+            <p id="closemdg">Lukk</p>
+            <audio id="piano" loop>
+                <source src="piano.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+</body>
+
+</html>

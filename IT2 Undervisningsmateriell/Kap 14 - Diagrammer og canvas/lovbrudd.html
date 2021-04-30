@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--Kommentar: Denne oppgaven kan løses på mange måter og tolkes på flere måter. -->
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Eksempler</title>
+        <style>
+            #innramming{
+                width: 450px;
+                height: auto;
+                background-color: lightgray;
+                border-radius: 15px;
+                margin: auto;
+                padding: 20px;
+            }
+            #soyle {
+                display: flex;
+                width: 300px;
+                height: 300px;
+                flex-direction: row;
+                align-items: flex-end;
+            }
+                #soyle>div{
+                    background-color: darkcyan;
+                    margin: 5px;
+                    flex-grow: 1;
+                    color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="innramming">
+            <h2>Skriv inn to årstall</h2>
+            <select id="lstAar1"></select>
+            <select id="lstAar2"></select>
+          
+            <p id="utskrift"></p>
+            <h2>Velg lovbrudd for å se søylediagram</h2>
+            <label><input type="radio" name="rbg" id="rbProm">Promillekjøring</label>
+            <label><input type="radio" name="rbg" id="rbUf">Ulovlig fart</label>
+            <div id="soyle"></div>
+        </div>
+        <script>
+            var lstAar1 = document.getElementById("lstAar1");
+            var lstAar2 = document.getElementById("lstAar2");
+            var beregn = document.getElementById("beregn");
+            var utskrift = document.getElementById("utskrift");
+            var soyle = document.getElementById("soyle");
+            
+            // array med objekter med info
+            var tabLovbrudd = [
+                {aar:2002, pr:9631, uf:9863},
+                {aar:2003, pr:8593, uf:12217},
+                {aar:2004, pr:8363, uf:14920},
+                {aar:2005, pr:8128, uf:14929},
+                {aar:2006, pr:8514, uf:15425},
+                {aar:2007, pr:8534, uf:18010}    
+            ];
+            
+            // kjører funkskonen fyllLister
+            fyllLister();
+            
+            // funksjon som kjører nå den andre nedtrekkslisten blir valgt
+            lstAar2.onchange = function(){
+                var index1 = lstAar1.selectedIndex;
+                var index2 = lstAar2.selectedIndex;
+                var differanse = tabLovbrudd[index2].pr - tabLovbrudd[index1].pr;
+                
+                if (differanse < 0){
+                    utskrift.innerHTML = "Positiv utvikling"
+                } 
+                else{
+                    utskrift.innerHTML = "Negativ utvikling"
+                }
+                
+            }
+            
+            // funksjon som legger inn årstall i nedtrekkslistene. Henter årstallene fra arrayet
+            // her kan dere gjerne legge til teksten Velg år som første valg
+            function fyllLister(){
+                for (var i=0; i<tabLovbrudd.length;i++){
+                    lstAar1.innerHTML += "<option>" + tabLovbrudd[i].aar + "</option>";
+                    lstAar2.innerHTML += "<option>" + tabLovbrudd[i].aar + "</option>";
+                }
+                
+            }
+            
+            
+            // legger til lyttere på radioknappene
+            rbProm.onclick=rbUf.onclick = visSoyle;
+            
+            // funksjon som skriver ut søyler ut i fra hvilken radioknapp som er valgt
+            function visSoyle(){   
+                soyle.innerHTML = "";
+                
+               if (rbProm.checked){ 
+                    for (var lovbrudd of tabLovbrudd){
+                        soyle.innerHTML += "<div style='height:"+lovbrudd.pr/50+"px'>"+lovbrudd.pr+"</div>";
+                    }
+               }
+                if (rbUf.checked){ 
+                    for (var lovbrudd of tabLovbrudd){
+                        soyle.innerHTML += "<div style='height:"+lovbrudd.uf/75+"px'>"+lovbrudd.uf+"</div>";
+                    }
+                   
+            }
+                
+            }
+            
+        </script>
+    </body>
+</html>
+

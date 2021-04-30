@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <title>canvas-elementet</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #e0e0e0;
+    }
+    #mittCanvas {
+      background-color: #ffffff;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="mittCanvas" width="700" height="300"></canvas>
+
+</body>
+<script>
+    // se kommandoer s. 220
+    
+        var canvas = document.getElementById("mittCanvas");
+        var ctx = canvas.getContext("2d");
+    
+        var lag =[
+            {navn: "Manchester United", ligagull: 13},
+            {navn: "Blackburn", ligagull: 1},
+            {navn: "Arsenal", ligagull: 3},
+            {navn: "Chelsea", ligagull: 5},
+            {navn: "Manchester City", ligagull: 4},
+            {navn: "Leicester", ligagull: 1},
+            {navn: "Liverpool", ligagull: 1}
+        ];
+    
+        var tekstBredde = 270;
+        var totalBredde = canvas.width;
+    
+        var soylebredde = totalBredde -tekstBredde -10;
+        canvas.height = lag.length * 30;
+        var max=0;
+        for (var i=0; i< lag.length; i++){
+            if(lag[i].ligagull >max){
+                max = lag[i].ligagull;
+            }
+        }
+    
+         ctx.font = "24px 'Century Gothic'";
+        ctx.textAlign = "end";
+        ctx.textBaseline = "hanging";
+    
+        for (var i=0; i< lag.length; i++){
+            var andel = (lag[i].ligagull/max) *soylebredde;
+            
+            ctx.fillStyle ="black";
+            ctx.fillText(lag[i].navn + "(" + lag[i].ligagull + ")", tekstBredde, (30 * i)+3)
+        
+            //ctx.fillStyle = "hsl(" + i *30+ ", 100%, 70%)";
+            ctx.fillStyle = "red"
+            ctx.fillRect(tekstBredde + 5, (30*i) + 3, andel, 24)
+        }
+        
+        
+        
+</script>   
+</html>
