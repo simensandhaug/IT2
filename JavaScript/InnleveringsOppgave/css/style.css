@@ -1,0 +1,101 @@
+body {
+    background-color: #2B87D1;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    width: 200px;
+    height: 200px;
+    background-color: #2573C1;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.button:hover {
+    box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.7);
+}
+
+.buttonAnimation {
+    animation: blink .5s ease-in-out forwards;
+}
+
+.buttonAnimationFalse {
+    animation: falseAnim .5s ease-in-out forwards;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+}
+
+p {
+    font-size: 40px;
+}
+
+.level {
+    color: white;
+    margin-left: 10px;
+}
+
+@keyframes falseAnim {
+    0% {
+        background-color: #2573C1;
+    }
+
+    50% {
+        background-color: red;
+    }
+
+    100% {
+        background-color: #2573C1;
+    }
+}
+
+@keyframes blink {
+    0% {
+        background-color: #2573C1;
+    }
+
+    50% {
+        background-color: white;
+    }
+
+    100% {
+        background-color: #2573C1;
+    }
+}
+
+#endScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#restartButton {
+    padding: 12px 30px;
+    background: rgb(255, 209, 84);
+    display: inline-block;
+    border: none;
+    border-radius: 3px;
+    transition: background 0.1s linear 0s;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    margin: 5px 5px 0px;
+    color: rgb(51, 51, 51) !important;
+    text-decoration: none !important;
+}
+
+h1 {
+    color: white;
+}
