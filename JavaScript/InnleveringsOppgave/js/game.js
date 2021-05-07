@@ -81,7 +81,7 @@ const gameOver = id => { //Slutter spillet
 const compareArrays = (arr1, arr2) => {//Funksjon som sammenligner 2 arrays
     let result = true; //Antar at de er like
     for (let i = 0; i < arr1.length; i++) { //Looper gjennom arrayet
-        if (arr1[i] != arr2[i]) result = false; //Hvis samme index i begge array ikke matcher er de ikke like og dermed er resultat false
+        if (arr1[i] != arr2[i]) result = false; //Hvis samme index i begge arrays ikke matcher er de ikke like og dermed er resultat false
     }
     return result; //Returnerer result
 }
@@ -91,6 +91,6 @@ const target = id => { //Når man trykker på en rute
     if (guess.length < sequence.length) guess.push(id); //Så lenge antall gjett er mindre enn sekvenslengden legger man til gjettet rute
     if (guess.length == sequence.length) {
         if(compareArrays(guess, sequence)) newStep(); //Når man har gjettet like mange ruter som i sekvensen sjekkes det om det er riktig og sender videre
-        else gameOver(id); //Ellers er spillet over
     }
+    if(!compareArrays(guess, sequence)) gameOver(id); //Ellers er spillet over
 }
