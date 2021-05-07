@@ -74,8 +74,8 @@ const gameOver = id => { //Slutter spillet
         }, 500);
     }, 500);
 
-    if(!localStorage.getItem("highscore") || level > localStorage.getItem("highscore")) localStorage.setItem("highscore", level); //Setter highscore
-    highscoreEl.innerHTML = localStorage.getItem("highscore"); //Displayer highscore
+    if(!localStorage.highscore || level > localStorage.highscore) localStorage.highscore = level; //Setter highscore
+    highscoreEl.innerHTML = localStorage.highscore; //Displayer highscore
 }
 
 const compareArrays = (arr1, arr2) => {//Funksjon som sammenligner 2 arrays
